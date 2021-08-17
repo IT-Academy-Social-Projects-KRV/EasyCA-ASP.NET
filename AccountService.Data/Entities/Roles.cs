@@ -1,8 +1,9 @@
-﻿namespace AccountService.Data.Entities
+﻿using AspNetCore.Identity.MongoDbCore.Models;
+
+namespace AccountService.Data.Entities
+
 {
-    public class Roles
+    public class Roles: MongoIdentityRole
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
 }

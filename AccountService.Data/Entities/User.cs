@@ -1,18 +1,14 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using MongoDB.Bson;
-using System;
+﻿    using System;
+    using AspNetCore.Identity.MongoDbCore.Models;
 
-namespace AccountService.Data.Entities
-{
-    public class User: IdentityUser
+    namespace AccountService.Data.Entities
     {
-        public ObjectId Id { get; set; }
-        public int RoleId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public PersonalData UserData { get; set; }
-        public DriverLicense UserDriverLicense { get; set; }
-        public string RefreshToken { get; set; }
-        public DateTime RefreshTokenExpireTime { get; set; }
+        public class User : MongoIdentityUser
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public PersonalData UserData { get; set; }
+        
+        }
     }
-}
+    
