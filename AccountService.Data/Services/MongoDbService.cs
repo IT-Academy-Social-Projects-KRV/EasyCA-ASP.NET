@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
-namespace AccountService.WebApi.Services
+namespace AccountService.Data.Services
 {
     public class MongoDbService : IMongoDbService
     {
