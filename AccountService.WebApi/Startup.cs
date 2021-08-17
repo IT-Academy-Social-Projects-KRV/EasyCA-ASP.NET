@@ -1,3 +1,4 @@
+using AccountService.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,7 @@ namespace AccountService.WebApi
         {
 
             services.AddControllers();
+            services.AddSingleton<IMongoDbService, MongoDbService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AccountService.WebApi", Version = "v1" });
