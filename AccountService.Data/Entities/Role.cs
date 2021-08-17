@@ -3,7 +3,7 @@
 namespace AccountService.Data.Entities
 
 {
-    public class Roles: MongoIdentityRole
+    public class Role: MongoIdentityRole
     {
     }
 }
