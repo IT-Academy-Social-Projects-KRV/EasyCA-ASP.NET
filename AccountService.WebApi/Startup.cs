@@ -1,5 +1,7 @@
 using AccountService.Data;
 using AccountService.Data.Entities;
+using AccountService.Domain.Interfaces;
+using AccountService.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +29,7 @@ namespace AccountService.WebApi
             
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ApplicationDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
-
+            services.AddTransient<IServiceAccount, ServiceAccount>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AccountService.WebApi", Version = "v1" });
