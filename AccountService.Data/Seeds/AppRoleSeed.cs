@@ -15,7 +15,6 @@ namespace AccountService.Data.Seeds
         {
             if (!manager.Roles.Any())
             {
-
                 var roles = new List<Role>
                 {
                     new Role

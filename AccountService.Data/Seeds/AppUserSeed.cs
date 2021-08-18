@@ -29,8 +29,6 @@ namespace AccountService.Data.Seeds
                 {
                     await manager.CreateAsync(user,"Qwerty211@");
                     await manager.AddToRoleAsync(user, "admin");
-
-
                 }
             }
         }

@@ -2,7 +2,6 @@ using System;
 using AccountService.Data;
 using AccountService.Data.Entities;
 using AccountService.Data.Seeds;
-using AspNetCore.Identity.MongoDbCore.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,14 +19,12 @@ namespace AccountService.WebApi
             {
                 var services = scope.ServiceProvider;
                 try
-
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<User>>();
                     var roleManager = services.GetRequiredService<RoleManager<Role>>();
                     AppRoleSeed.SeedRoleData(roleManager).Wait();
                     AppUserSeed.SeedUserData(userManager).Wait();
-
                 }
                 catch (Exception ex)
                 {
@@ -36,7 +33,6 @@ namespace AccountService.WebApi
                 }
             }
             host.Run();
-
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
