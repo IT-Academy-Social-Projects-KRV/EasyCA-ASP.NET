@@ -1,5 +1,13 @@
+using System;
+using AccountService.Data;
+using AccountService.Data.Entities;
+using AccountService.Data.Seeds;
+using AspNetCore.Identity.MongoDbCore.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace AccountService.WebApi
 {
@@ -7,7 +15,28 @@ namespace AccountService.WebApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+
+                {
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    var roleManager = services.GetRequiredService<RoleManager<Role>>();
+                    AppRoleSeed.SeedRoleData(roleManager).Wait();
+                    AppUserSeed.SeedUserData(userManager).Wait();
+
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occured during migration");
+                }
+            }
+            host.Run();
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
