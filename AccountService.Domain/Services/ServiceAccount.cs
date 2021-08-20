@@ -68,6 +68,10 @@ namespace AccountService.Domain.Services
                var user = await _userManager.FindByEmailAsync(userRequest.Email);
                await _signInManager.SignInAsync(user, false);
             }
+            else
+            {
+                throw new ArgumentException("Result error");
+            }
         }
     }
 }
