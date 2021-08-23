@@ -28,11 +28,7 @@ namespace AccountService.Data.Seeds
                     new Role
                     {
                         Name = "participant",
-                    },
-                    new Role
-                    {
-                        Name = "guest",
-                    },
+                    }
                 };
                 foreach (var role in roles)
                 {
