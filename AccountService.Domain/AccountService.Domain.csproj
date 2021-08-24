@@ -5,11 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ResponseModels\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Azure.Core" Version="1.18.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
   </ItemGroup>
 
   <ItemGroup>

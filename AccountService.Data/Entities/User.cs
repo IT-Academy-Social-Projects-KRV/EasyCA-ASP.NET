@@ -1,5 +1,7 @@
 ﻿using AspNetCore.Identity.MongoDbCore.Models;
 using MongoDbGenericRepository.Attributes;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AccountService.Data.Entities
 {
@@ -10,6 +12,8 @@ namespace AccountService.Data.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public PersonalData UserData { get; set; }
+
+        public RefreshToken RefreshToken { get; set; }
     }
 }
 
