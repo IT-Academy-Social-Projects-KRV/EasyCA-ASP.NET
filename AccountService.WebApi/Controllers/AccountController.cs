@@ -1,4 +1,4 @@
-﻿using AccountService.Domain.Interfaces;
+using AccountService.Domain.Interfaces;
 using AccountService.Domain.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +16,7 @@ namespace AccountService.WebApi.Controllers
         {
             _serviceAccount = serviceAccount;
         }
-
+        
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserLoginRequest model)
         {
@@ -43,6 +43,12 @@ namespace AccountService.WebApi.Controllers
                 Expires = DateTime.UtcNow.AddDays(7),
             };
             Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(UserRegisterRequest userRegisterRequest)
+        {
+            await _serviceAccount.RegisterUser(userRegisterRequest);
+            return Ok();
+        }        
         }
     }
 }
