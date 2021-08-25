@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AccountService.Data.Entities;
 using AccountService.Domain.Interfaces;
@@ -15,7 +12,7 @@ namespace AccountService.Domain.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public ServiceAccount(UserManager<User> userManager,SignInManager<User> signInManager)
+        public ServiceAccount(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -57,16 +54,16 @@ namespace AccountService.Domain.Services
             {
                 throw new ArgumentException("Result error");
             }
-           
+
         }
 
         public async Task LoginUser(UserLoginRequest userRequest)
         {
-            var result=await _signInManager.PasswordSignInAsync(userRequest.Email, userRequest.Password,false,false);
-            if(result.Succeeded)
+            var result = await _signInManager.PasswordSignInAsync(userRequest.Email, userRequest.Password, false, false);
+            if (result.Succeeded)
             {
-               var user = await _userManager.FindByEmailAsync(userRequest.Email);
-               await _signInManager.SignInAsync(user, false);
+                var user = await _userManager.FindByEmailAsync(userRequest.Email);
+                await _signInManager.SignInAsync(user, false);
             }
             else
             {
