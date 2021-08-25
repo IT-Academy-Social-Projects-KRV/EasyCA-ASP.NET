@@ -1,5 +1,5 @@
 using AccountService.Domain.Interfaces;
-using AccountService.Domain.RequestModels;
+using AccountService.Domain.ApiModel.RequestApiModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +21,7 @@ namespace AccountService.WebApi.Controllers
         }
         
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(UserLoginRequest model)
+        public async Task<IActionResult> Login(LoginApiModel model)
         {
             var response = await _serviceAccount.LoginUser(model);
             SetRefreshTokenInCookie(response.RefreshToken);
@@ -48,7 +48,7 @@ namespace AccountService.WebApi.Controllers
             Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(UserRegisterRequest userRegisterRequest)
+        public async Task<IActionResult> Register(RegisterApiModel userRegisterRequest)
         {
             await _serviceAccount.RegisterUser(userRegisterRequest);
             return Ok();

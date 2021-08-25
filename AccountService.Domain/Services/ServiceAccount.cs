@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AccountService.Data.Entities;
 using AccountService.Domain.Interfaces;
-using AccountService.Domain.RequestModels;
-using AccountService.Domain.ResponseModels;
+using AccountService.Domain.ApiModel.RequestApiModels;
+using AccountService.Domain.ApiModel.ResponseApiModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -20,31 +20,20 @@ namespace AccountService.Domain.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
-
         public ServiceAccount(UserManager<User> userManager,SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
         }
-        public async Task RegisterUser(UserRegisterRequest userRequest)
+        public async Task RegisterUser(RegisterApiModel userRequest)
         {
             User user = new User()
             {
                 FirstName = userRequest.FirstName,
                 LastName = userRequest.LastName,
-                UserData = new PersonalData()
-                {
-                    Address = userRequest.Address,
-                    IPN = userRequest.IPN,
-                    ServiceId = userRequest.ServiceId,
-                    BirthDay = userRequest.BirthDay,
-                    JobPosition = userRequest.Job,
-                    UserDriverLicense = new DriverLicense()
-                },
                 Email = userRequest.Email,
                 UserName = userRequest.Email,
-                PhoneNumber = userRequest.PhoneNumber,
             };
 
             var result = await _userManager.CreateAsync(user, userRequest.Password);
@@ -64,7 +53,7 @@ namespace AccountService.Domain.Services
                 throw new ArgumentException("Result error");
             }         
         }
-        public async Task<AuthenticateResponse> LoginUser(UserLoginRequest userRequest)
+        public async Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest)
         {
             var result = await _signInManager.PasswordSignInAsync(userRequest.Email, userRequest.Password,false,false);
             var user = await _userManager.FindByEmailAsync(userRequest.Email);
@@ -77,7 +66,7 @@ namespace AccountService.Domain.Services
             user.RefreshToken = refreshtoken;
             await _userManager.UpdateAsync(user);
             await _signInManager.SignInAsync(user, false);
-            return new AuthenticateResponse(user, token, refreshtoken.Token);
+            return new AuthenticateResponseApiModel(user.Email, token, refreshtoken.Token);
         }        
         private string CreateJwtToken(User user)
         {
@@ -95,7 +84,7 @@ namespace AccountService.Domain.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-        public async Task<AuthenticateResponse> RefreshTokenAsync(string token)
+        public async Task<AuthenticateResponseApiModel> RefreshTokenAsync(string token)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.RefreshToken.Token == token);
             var refreshToken = user.RefreshToken;
@@ -108,7 +97,7 @@ namespace AccountService.Domain.Services
             user.RefreshToken = newRefreshToken;
             await _userManager.UpdateAsync(user);
             var JWTToken = CreateJwtToken(user);
-            return new AuthenticateResponse(user, JWTToken, newRefreshToken.Token);            
+            return new AuthenticateResponseApiModel(user.Email, JWTToken, newRefreshToken.Token);            
         }        
         private RefreshToken CreateRefreshToken()
         {

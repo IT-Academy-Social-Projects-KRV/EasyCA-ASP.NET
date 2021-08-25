@@ -15,7 +15,6 @@ namespace AccountService.Domain.ApiModel.ResponseApiModels
             RefreshToken = refreshToken;
             Email = email;
         }
-
         /// <summary>
         /// Gets or sets the token for response result.
         /// </summary>

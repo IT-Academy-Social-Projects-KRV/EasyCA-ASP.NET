@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using AccountService.Data.Entities;
-using AccountService.Domain.RequestModels;
-using AccountService.Domain.ResponseModels;
+﻿using System.Threading.Tasks;
+using AccountService.Domain.ApiModel.RequestApiModels;
+using AccountService.Domain.ApiModel.ResponseApiModels;
 
 namespace AccountService.Domain.Interfaces
 {
     public interface IServiceAccount
     {
-        public Task RegisterUser(UserRegisterRequest user);
-        public Task<AuthenticateResponse> LoginUser(UserLoginRequest userRequest);
-        public Task<AuthenticateResponse> RefreshTokenAsync(string token);
+        public Task RegisterUser(RegisterApiModel user);
+        public Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest);
+        public Task<AuthenticateResponseApiModel> RefreshTokenAsync(string token);
         public bool RevokeToken(string token);
     }
 }

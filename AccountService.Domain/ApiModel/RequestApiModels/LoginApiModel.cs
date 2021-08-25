@@ -1,6 +1,6 @@
 ﻿namespace AccountService.Domain.ApiModel.RequestApiModels
 {
-    class LoginApiModel
+    public class LoginApiModel
     {
         /// <summary>
         /// User email

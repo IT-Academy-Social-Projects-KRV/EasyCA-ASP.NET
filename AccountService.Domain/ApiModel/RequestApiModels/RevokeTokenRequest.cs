@@ -1,5 +1,4 @@
-﻿
-namespace AccountService.Domain.RequestModels
+﻿namespace AccountService.Domain.ApiModel.RequestApiModels
 {
     public class RevokeTokenRequest
     {

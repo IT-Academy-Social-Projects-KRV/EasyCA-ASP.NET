@@ -1,6 +1,6 @@
 ﻿namespace AccountService.Domain.ApiModel.RequestApiModels
 {
-    class RegisterApiModel
+    public class RegisterApiModel
     {
         /// <summary>
         /// User email address. Used for login.
