@@ -1,6 +1,6 @@
 ﻿namespace AccountService.Domain.ApiModel.IdentityDTO
 {
-    class UserDTO
+    public class UserDTO
     {
         /// <summary>
         /// Gets or sets the primary key for this user.
