@@ -43,6 +43,7 @@ namespace AccountService.WebApi.Controllers
                 Expires = DateTime.UtcNow.AddDays(7),
             };
             Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
+        }
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterRequest userRegisterRequest)
         {
