@@ -10,6 +10,7 @@ namespace AccountService.Data.Entities
         public string ServiceId { get; set; }
         public DateTime BirthDay { get; set; }
         public string JobPosition { get; set; }
+        public string Citizen { get; set; }
         public DriverLicense UserDriverLicense { get; set; }
     }
 }

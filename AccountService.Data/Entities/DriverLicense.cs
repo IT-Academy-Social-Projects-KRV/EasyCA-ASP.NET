@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 #region snippet_NewtonsoftJsonImport
 using Newtonsoft.Json;
@@ -23,6 +23,5 @@ namespace AccountService.Data.Entities
         [BsonElement("ExpirationDate")]
         [JsonProperty("ExpirationDate")]
         public BsonDateTime ExpirationDate { get; set; }
-
     }
 }

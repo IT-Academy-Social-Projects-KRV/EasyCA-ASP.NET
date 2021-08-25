@@ -1,9 +1,11 @@
 ﻿using AspNetCore.Identity.MongoDbCore.Models;
+using MongoDbGenericRepository.Attributes;
 
 namespace AccountService.Data.Entities
-
 {
-    public class Role: MongoIdentityRole
+    [CollectionName("Roles")]
+    public class Role : MongoIdentityRole<string>
     {
+
     }
 }
