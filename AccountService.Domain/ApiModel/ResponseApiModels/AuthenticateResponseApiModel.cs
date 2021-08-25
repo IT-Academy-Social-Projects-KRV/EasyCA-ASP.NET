@@ -26,6 +26,7 @@ namespace AccountService.Domain.ApiModel.ResponseApiModels
         /// Gets or sets the email for response result.
         /// </summary>
         /// <example>test@gmail.com</example>
+        [EmailAddress]
         public string Email { get; set; }
         /// <summary>
         /// Gets or sets the refresh token for response result.
