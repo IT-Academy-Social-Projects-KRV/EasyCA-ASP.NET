@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -135,7 +135,7 @@ namespace AccountService.Domain.Services
             // revoke token and save
             refreshToken.Revoked = DateTime.UtcNow;
             _userManager.UpdateAsync(user);
-            return true;
+            return true;            
         }
     }
 }
