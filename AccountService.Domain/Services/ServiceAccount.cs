@@ -89,7 +89,7 @@ namespace AccountService.Domain.Services
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<double>("TokenExpires")),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -119,7 +119,7 @@ namespace AccountService.Domain.Services
                 return new RefreshToken
                 {
                     Token = Convert.ToBase64String(randomNumber),
-                    Expires = DateTime.UtcNow.AddMinutes(2),
+                    Expires = DateTime.UtcNow.AddDays(_configuration.GetValue<double>("RefreshTokenExpires")),
                     Created = DateTime.UtcNow
                 };
             }

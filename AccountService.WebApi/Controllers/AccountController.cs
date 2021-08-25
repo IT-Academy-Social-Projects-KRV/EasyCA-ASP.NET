@@ -2,6 +2,7 @@
 using AccountService.Domain.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 
@@ -12,9 +13,11 @@ namespace AccountService.WebApi.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IServiceAccount _serviceAccount;
-        public AccountController(IServiceAccount serviceAccount)
+        private readonly IConfiguration _configuration;
+        public AccountController(IServiceAccount serviceAccount, IConfiguration configuration)
         {
             _serviceAccount = serviceAccount;
+            _configuration = configuration;
         }
 
         [HttpPost("Login")]
@@ -40,7 +43,7 @@ namespace AccountService.WebApi.Controllers
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddDays(_configuration.GetValue<double>("RefreshTokenExpires")),
             };
             Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }

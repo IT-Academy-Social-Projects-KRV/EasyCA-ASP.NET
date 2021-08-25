@@ -13,6 +13,5 @@ namespace AccountService.Domain.Interfaces
         public Task<AuthenticateResponse> LoginUser(UserLoginRequest userRequest);
         public Task<AuthenticateResponse> RefreshTokenAsync(string token);
         public bool RevokeToken(string token);
-
     }
 }
