@@ -25,16 +25,19 @@ namespace AccountService.WebApi
         }
         public IConfiguration Configuration { get; }
         
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ApplicationDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
+
             services.AddTransient<IServiceAccount, ServiceAccount>();
+            services.AddTransient<IJwtService, JwtService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AccountService.WebApi", Version = "v1" });
             });
+
             var builder = services.AddIdentity<User, Role>()
             .AddMongoDbStores<User, Role, string>
             (
@@ -42,7 +45,7 @@ namespace AccountService.WebApi
             );
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.RoleType, builder.Services);
             identityBuilder.AddSignInManager<SignInManager<User>>();
-            //Adding Athentication - JWT
+            
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Secret"]));
             services.AddAuthentication(options =>
             {
@@ -62,10 +65,10 @@ namespace AccountService.WebApi
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
             services.AddControllers();  
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -75,8 +78,10 @@ namespace AccountService.WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AccountService.WebApi v1"));
             }
             app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

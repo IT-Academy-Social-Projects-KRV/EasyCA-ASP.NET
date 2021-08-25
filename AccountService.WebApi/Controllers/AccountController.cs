@@ -14,10 +14,13 @@ namespace AccountService.WebApi.Controllers
     {
         private readonly IServiceAccount _serviceAccount;
         private readonly IConfiguration _configuration;
-        public AccountController(IServiceAccount serviceAccount, IConfiguration configuration)
+        private readonly IJwtService _jwtService;
+
+        public AccountController(IServiceAccount serviceAccount, IConfiguration configuration,IJwtService jwtService)
         {
             _serviceAccount = serviceAccount;
             _configuration = configuration;
+            _jwtService = jwtService;
         }
         
         [HttpPost("Login")]
@@ -32,7 +35,7 @@ namespace AccountService.WebApi.Controllers
         public async Task<IActionResult> RefreshToken()
         {
             var refreshToken = Request.Cookies["refreshToken"];
-            var response = await _serviceAccount.RefreshTokenAsync(refreshToken);
+            var response = await _jwtService.RefreshTokenAsync(refreshToken);
             if (!string.IsNullOrEmpty(response.RefreshToken))
                 SetRefreshTokenInCookie(response.RefreshToken);
             return Ok(response);
@@ -47,6 +50,7 @@ namespace AccountService.WebApi.Controllers
             };
             Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }
+
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterApiModel userRegisterRequest)
         {

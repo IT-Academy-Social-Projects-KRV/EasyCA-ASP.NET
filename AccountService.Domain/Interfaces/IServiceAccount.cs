@@ -6,9 +6,7 @@ namespace AccountService.Domain.Interfaces
 {
     public interface IServiceAccount
     {
-        public Task RegisterUser(RegisterApiModel user);
-        public Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest);
-        public Task<AuthenticateResponseApiModel> RefreshTokenAsync(string token);
-        public bool RevokeToken(string token);
+        Task RegisterUser(RegisterApiModel user);
+        Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest);
     }
 }

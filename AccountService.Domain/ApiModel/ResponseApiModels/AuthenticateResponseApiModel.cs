@@ -9,7 +9,7 @@ namespace AccountService.Domain.ApiModel.ResponseApiModels
         /// </summary>
         /// <param name="token">Sets the token.</param>
         /// <param name="refreshToken">Sets the refresh token.</param>
-        public AuthenticateResponseApiModel(string token = null, string refreshToken = null, string email=null)
+        public AuthenticateResponseApiModel(string email=null,string token = null, string refreshToken = null)
         {
             Token = token;
             RefreshToken = refreshToken;
