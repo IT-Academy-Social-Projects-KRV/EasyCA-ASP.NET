@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="ResponseModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AccountService.Data\AccountService.Data.csproj" />
   </ItemGroup>
 
