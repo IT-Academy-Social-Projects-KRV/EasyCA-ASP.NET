@@ -1,6 +1,9 @@
-﻿using AccountService.Domain.Interfaces;
+using AccountService.Domain.Interfaces;
 using AccountService.Domain.RequestModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Threading.Tasks;
 
 namespace AccountService.WebApi.Controllers
@@ -10,21 +13,45 @@ namespace AccountService.WebApi.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IServiceAccount _serviceAccount;
-        public AccountController(IServiceAccount serviceAccount)
+        private readonly IConfiguration _configuration;
+        public AccountController(IServiceAccount serviceAccount, IConfiguration configuration)
         {
             _serviceAccount = serviceAccount;
+            _configuration = configuration;
+        }
+        
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(UserLoginRequest model)
+        {
+            var response = await _serviceAccount.LoginUser(model);
+            SetRefreshTokenInCookie(response.RefreshToken);
+            return Ok(response);
+        }
+
+        [HttpPost("RefreshToken")]
+        public async Task<IActionResult> RefreshToken()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            var response = await _serviceAccount.RefreshTokenAsync(refreshToken);
+            if (!string.IsNullOrEmpty(response.RefreshToken))
+                SetRefreshTokenInCookie(response.RefreshToken);
+            return Ok(response);
+        }
+
+        private void SetRefreshTokenInCookie(string refreshToken)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(_configuration.GetValue<double>("RefreshTokenExpires")),
+            };
+            Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterRequest userRegisterRequest)
         {
             await _serviceAccount.RegisterUser(userRegisterRequest);
             return Ok();
-        }
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(UserLoginRequest userLoginRequest)
-        {
-            await _serviceAccount.LoginUser(userLoginRequest);
-            return Ok();
-        }
+        }        
     }
 }
