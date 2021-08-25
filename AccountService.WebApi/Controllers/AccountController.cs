@@ -50,6 +50,5 @@ namespace AccountService.WebApi.Controllers
             await _serviceAccount.RegisterUser(userRegisterRequest);
             return Ok();
         }        
-        }
     }
 }
