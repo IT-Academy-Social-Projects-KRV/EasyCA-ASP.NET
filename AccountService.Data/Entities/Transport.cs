@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace AccountService.Data.Entities
 {
-    [CollectionName("transports")]
+    [CollectionName("Transports")]
     public class Transport
     {
         [BsonId]

@@ -12,7 +12,7 @@ namespace AccountService.Data
             _dbContext = client.GetDatabase(dbName);
         }
 
-        public IMongoCollection<Transport> Transports => _dbContext.GetCollection<Transport>("transports");
-        public IMongoCollection<TransportCategory> TransportCategories => _dbContext.GetCollection<TransportCategory>("transportCategories");
+        public IMongoCollection<Transport> Transports => _dbContext.GetCollection<Transport>("Transports");
+        public IMongoCollection<TransportCategory> TransportCategories => _dbContext.GetCollection<TransportCategory>("TransportCategories");
     }
 }
