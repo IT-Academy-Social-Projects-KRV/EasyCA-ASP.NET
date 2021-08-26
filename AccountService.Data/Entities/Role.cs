@@ -2,10 +2,9 @@
 using MongoDbGenericRepository.Attributes;
 
 namespace AccountService.Data.Entities
-
 {
     [CollectionName("Roles")]
-    public class Role: MongoIdentityRole
+    public class Role: MongoIdentityRole<string>
     {
     }
 }

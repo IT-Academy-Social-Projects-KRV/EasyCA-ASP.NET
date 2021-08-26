@@ -1,9 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
-#region snippet_NewtonsoftJsonImport
 using Newtonsoft.Json;
-#endregion
 
 namespace AccountService.Data.Entities
 {
@@ -13,10 +11,8 @@ namespace AccountService.Data.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        #region snippet_UserIdProperty
         [BsonElement ("UserId")]
         [JsonProperty("UserId")]
-        #endregion
         public int UserId { get; set; }
         [BsonElement("MadeBy")]
         [JsonProperty("MadeBy")]

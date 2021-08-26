@@ -1,10 +1,8 @@
 ﻿using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-#region snippet_NewtonsoftJsonImport
 using Newtonsoft.Json;
 using System.Collections.Generic;
-#endregion
 
 namespace AccountService.Data.Entities
 {
