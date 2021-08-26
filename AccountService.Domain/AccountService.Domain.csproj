@@ -14,4 +14,8 @@
     <ProjectReference Include="..\AccountService.Data\AccountService.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ApiModel\Validators\" />
+  </ItemGroup>
+
 </Project>
