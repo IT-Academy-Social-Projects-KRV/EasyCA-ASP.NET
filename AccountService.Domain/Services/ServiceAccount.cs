@@ -57,10 +57,12 @@ namespace AccountService.Domain.Services
         {
             var result = await _signInManager.PasswordSignInAsync(userRequest.Email, userRequest.Password,false,false);
             var user = await _userManager.FindByEmailAsync(userRequest.Email);
+            
             if (user == null)
             {
                 return null;
             }
+            
             var token = CreateJwtToken(user);
             var refreshtoken = CreateRefreshToken();
             user.RefreshToken = refreshtoken;
@@ -88,10 +90,12 @@ namespace AccountService.Domain.Services
         {
             var user = _userManager.Users.FirstOrDefault(x => x.RefreshToken.Token == token);
             var refreshToken = user.RefreshToken;
+            
             if (!refreshToken.IsActive)
             {
                 return null;
             }
+            
             var newRefreshToken = CreateRefreshToken();
             refreshToken.Revoked = DateTime.UtcNow;
             user.RefreshToken = newRefreshToken;
