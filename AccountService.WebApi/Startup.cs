@@ -2,6 +2,7 @@ using AccountService.Data;
 using AccountService.Data.Entities;
 using AccountService.Domain.Interfaces;
 using AccountService.Domain.Services;
+using AccountService.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -81,6 +82,8 @@ namespace AccountService.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+  
+            app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
