@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Login.Succeeded" xml:space="preserve">
+  <data name="Login_Succeeded" xml:space="preserve">
     <value>Вхід виконано успішно</value>
   </data>
-  <data name="Login.WrongCredentials" xml:space="preserve">
+  <data name="Login_WrongCredentials" xml:space="preserve">
     <value>Невірні E-Mail або пароль.</value>
   </data>
-  <data name="Registration.Failed" xml:space="preserve">
+  <data name="Registration_Failed" xml:space="preserve">
     <value>Помилка під час реєстрації</value>
   </data>
-  <data name="Registration.Succeeded" xml:space="preserve">
+  <data name="Registration_Succeeded" xml:space="preserve">
     <value>Реєстрацію виконано успішно</value>
   </data>
 </root>

@@ -65,7 +65,7 @@ namespace AccountService.Domain.Properties {
         /// </summary>
         public static string Login_Succeeded {
             get {
-                return ResourceManager.GetString("Login.Succeeded", resourceCulture);
+                return ResourceManager.GetString("Login_Succeeded", resourceCulture);
             }
         }
         
@@ -74,7 +74,7 @@ namespace AccountService.Domain.Properties {
         /// </summary>
         public static string Login_WrongCredentials {
             get {
-                return ResourceManager.GetString("Login.WrongCredentials", resourceCulture);
+                return ResourceManager.GetString("Login_WrongCredentials", resourceCulture);
             }
         }
         
@@ -83,7 +83,7 @@ namespace AccountService.Domain.Properties {
         /// </summary>
         public static string Registration_Failed {
             get {
-                return ResourceManager.GetString("Registration.Failed", resourceCulture);
+                return ResourceManager.GetString("Registration_Failed", resourceCulture);
             }
         }
         
@@ -92,7 +92,7 @@ namespace AccountService.Domain.Properties {
         /// </summary>
         public static string Registration_Succeeded {
             get {
-                return ResourceManager.GetString("Registration.Succeeded", resourceCulture);
+                return ResourceManager.GetString("Registration_Succeeded", resourceCulture);
             }
         }
     }
