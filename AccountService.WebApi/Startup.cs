@@ -3,14 +3,18 @@ using AccountService.Data.Entities;
 using AccountService.Domain.Interfaces;
 using AccountService.Domain.Services;
 using AccountService.WebApi.Middleware;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using System;
+using System.Text;
 
 namespace AccountService.WebApi
 {
@@ -20,14 +24,11 @@ namespace AccountService.WebApi
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
         
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ApplicationDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
             services.AddTransient<IServiceAccount, ServiceAccount>();
@@ -35,7 +36,6 @@ namespace AccountService.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AccountService.WebApi", Version = "v1" });
             });
-
             var builder = services.AddIdentity<User, Role>()
             .AddMongoDbStores<User, Role, string>
             (
@@ -43,6 +43,27 @@ namespace AccountService.WebApi
             );
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.RoleType, builder.Services);
             identityBuilder.AddSignInManager<SignInManager<User>>();
+            //Adding Athentication - JWT
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Secret"]));
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = signingKey,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+            services.AddControllers();  
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,12 +75,10 @@ namespace AccountService.WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AccountService.WebApi v1"));
             }
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-
+          
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>

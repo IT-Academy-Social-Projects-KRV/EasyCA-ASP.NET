@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AccountService.Data.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -23,6 +21,7 @@ namespace AccountService.Data.Seeds
                         UserData = null,
                         UserName = "Test@gmail.com",
                         Email="Test@gmail.com",
+                        RefreshToken = null
                     }
                 };
                 foreach (var user in users)
