@@ -79,5 +79,29 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.BadRequest,"Email or Password are wrong");
             }
         }
+
+        public async Task<PersonalDataApiModel> GetPersonalData(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var personalData = user.UserData;
+
+            if(personalData==null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, "Personal Data not found");
+            }
+
+            var response = new PersonalDataApiModel()
+            {
+                Address=personalData.Address,
+                IPN=personalData.IPN,
+                BirthDay=personalData.BirthDay,
+                ServiceId=personalData.ServiceId,
+                Citizen=personalData.Citizen,
+                UserDriverLicense=personalData.UserDriverLicense,
+                JobPosition=personalData.JobPosition
+            };
+
+            return response;
+        }
     }
 }
