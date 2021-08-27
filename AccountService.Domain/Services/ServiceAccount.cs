@@ -38,7 +38,7 @@ namespace AccountService.Domain.Services
 
             if (result.Succeeded)
             {
-                if (user.UserData.ServiceId == null)
+                if (user.UserData.ServiceNumber == null)
                 {
                     await _userManager.AddToRoleAsync(user, "participant");
                 }
@@ -76,8 +76,49 @@ namespace AccountService.Domain.Services
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest,"Email or Password are wrong");
+                throw new RestException(HttpStatusCode.BadRequest, "Email or Password are wrong");
             }
+        }
+
+        public async Task<PersonalDataApiModel> GetPersonalData(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var personalData = user.UserData;
+
+            if (personalData == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, "Personal Data not found");
+            }
+
+            var UserAddress = personalData.UserAddress;
+
+            var response = new PersonalDataApiModel()
+            {
+                Address = null,
+                IPN = personalData.IPN,
+                BirthDay = personalData.BirthDay,
+                ServiceNumber = personalData.ServiceNumber,
+                UserDriverLicense = personalData.UserDriverLicense,
+                JobPosition = personalData.JobPosition,
+                UserCars=personalData.UserCars
+            };
+
+            if(UserAddress!=null)
+            {
+                response.Address = new Address()
+                {
+                    Country = UserAddress.Country,
+                    Region = UserAddress.Region,
+                    City = UserAddress.City,
+                    District = UserAddress.District,
+                    Street = UserAddress.Street,
+                    Building = UserAddress.Building,
+                    Appartament = UserAddress.Appartament,
+                    PostalCode = UserAddress.PostalCode
+                };
+            }
+
+            return response;
         }
     }
 }
