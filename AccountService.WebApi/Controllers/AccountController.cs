@@ -16,13 +16,13 @@ namespace AccountService.WebApi.Controllers
         private readonly IConfiguration _configuration;
         private readonly IJwtService _jwtService;
 
-        public AccountController(IServiceAccount serviceAccount, IConfiguration configuration,IJwtService jwtService)
+        public AccountController(IServiceAccount serviceAccount, IConfiguration configuration, IJwtService jwtService)
         {
             _serviceAccount = serviceAccount;
             _configuration = configuration;
             _jwtService = jwtService;
         }
-        
+
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginApiModel model)
         {
@@ -56,6 +56,14 @@ namespace AccountService.WebApi.Controllers
         {
             await _serviceAccount.RegisterUser(userRegisterRequest);
             return Ok();
-        }        
+        }
+
+        [HttpPut("UpdateData")]
+        public async Task<IActionResult> UpdateUserData(PersonalDataApiModel data)
+        {
+            var userId = User.FindFirst("Id").Value;
+            var response = await _serviceAccount.UpdateUserData(data, userId);
+            return Ok(response);
+        }
     }
 }
