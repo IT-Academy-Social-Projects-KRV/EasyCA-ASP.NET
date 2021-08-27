@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using System.Threading.Tasks;
 using AccountService.Data.Entities;
@@ -23,7 +22,7 @@ namespace AccountService.Domain.Services
             _jwtService = jwtService;
         }
 
-        public async Task RegisterUser(RegisterApiModel userRequest)
+        public async Task<ResponseApiModel<HttpStatusCode>> RegisterUser(RegisterApiModel userRequest)
         {
 
             User user = new User()
@@ -38,18 +37,20 @@ namespace AccountService.Domain.Services
 
             if (result.Succeeded)
             {
-                if (user.UserData.ServiceId == null)
+                if (user.UserData.ServiceNumber == null)
                 {
                     await _userManager.AddToRoleAsync(user, "participant");
+                    return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "You have succesfully registered");
                 }
                 else
                 {
                     await _userManager.AddToRoleAsync(user, "inspector");
+                    return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "You have successfully registered as an inspector");
                 }
             }
             else
             {
-                throw new ArgumentException("Result error");
+                throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
             }
         }
 
@@ -76,7 +77,7 @@ namespace AccountService.Domain.Services
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest,"Email or Password are wrong");
+                throw new RestException(HttpStatusCode.BadRequest, "Email or Password are wrong");
             }
         }
     }
