@@ -6,6 +6,7 @@ using AccountService.Domain.ApiModel.RequestApiModels;
 using AccountService.Domain.ApiModel.ResponseApiModels;
 using AccountService.Domain.Errors;
 using AccountService.Domain.Interfaces;
+using AccountService.Domain.Properties;
 using Microsoft.AspNetCore.Identity;
 
 namespace AccountService.Domain.Services
@@ -76,7 +77,7 @@ namespace AccountService.Domain.Services
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest, "Email or Password are wrong");
+                throw new RestException(HttpStatusCode.BadRequest, Resources.LoginWrongCredentials);
             }
         }
 
