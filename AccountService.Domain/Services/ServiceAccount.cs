@@ -39,7 +39,7 @@ namespace AccountService.Domain.Services
 
             if (result.Succeeded)
             {
-                if (user.UserData.ServiceId == null)
+                if (user.UserData.ServiceNumber == null)
                 {
                     await _userManager.AddToRoleAsync(user, "participant");
                 }
@@ -77,7 +77,7 @@ namespace AccountService.Domain.Services
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest, Resources.Login_WrongCredentials);
+                throw new RestException(HttpStatusCode.BadRequest, Resources.LoginWrongCredentials);
             }
         }
     }

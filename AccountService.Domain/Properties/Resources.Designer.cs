@@ -63,36 +63,36 @@ namespace AccountService.Domain.Properties {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Вхід виконано успішно.
         /// </summary>
-        public static string Login_Succeeded {
+        public static string LoginSucceeded {
             get {
-                return ResourceManager.GetString("Login_Succeeded", resourceCulture);
+                return ResourceManager.GetString("LoginSucceeded", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Невірні E-Mail або пароль..
         /// </summary>
-        public static string Login_WrongCredentials {
+        public static string LoginWrongCredentials {
             get {
-                return ResourceManager.GetString("Login_WrongCredentials", resourceCulture);
+                return ResourceManager.GetString("LoginWrongCredentials", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Помилка під час реєстрації.
         /// </summary>
-        public static string Registration_Failed {
+        public static string RegistrationFailed {
             get {
-                return ResourceManager.GetString("Registration_Failed", resourceCulture);
+                return ResourceManager.GetString("RegistrationFailed", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Реєстрацію виконано успішно.
         /// </summary>
-        public static string Registration_Succeeded {
+        public static string RegistrationSucceeded {
             get {
-                return ResourceManager.GetString("Registration_Succeeded", resourceCulture);
+                return ResourceManager.GetString("RegistrationSucceeded", resourceCulture);
             }
         }
     }
