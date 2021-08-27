@@ -84,11 +84,17 @@ namespace AccountService.Domain.Services
         public async Task<PersonalDataApiModel> GetPersonalData(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.UserNotFound);
+            }
+
             var personalData = user.UserData;
 
             if (personalData == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, "Personal Data not found");
+                throw new RestException(HttpStatusCode.NotFound, Resources.UserPersonalDataNotFound);
             }
 
             var response = new PersonalDataApiModel()
@@ -99,7 +105,7 @@ namespace AccountService.Domain.Services
                 ServiceNumber = personalData.ServiceNumber,
                 UserDriverLicense = personalData.UserDriverLicense,
                 JobPosition = personalData.JobPosition,
-                UserCars=personalData.UserCars
+                UserCars = personalData.UserCars
             };
 
             return response;
