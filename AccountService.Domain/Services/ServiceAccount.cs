@@ -90,11 +90,9 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, "Personal Data not found");
             }
 
-            var UserAddress = personalData.UserAddress;
-
             var response = new PersonalDataApiModel()
             {
-                Address = null,
+                Address = personalData.UserAddress,
                 IPN = personalData.IPN,
                 BirthDay = personalData.BirthDay,
                 ServiceNumber = personalData.ServiceNumber,
@@ -102,21 +100,6 @@ namespace AccountService.Domain.Services
                 JobPosition = personalData.JobPosition,
                 UserCars=personalData.UserCars
             };
-
-            if(UserAddress!=null)
-            {
-                response.Address = new Address()
-                {
-                    Country = UserAddress.Country,
-                    Region = UserAddress.Region,
-                    City = UserAddress.City,
-                    District = UserAddress.District,
-                    Street = UserAddress.Street,
-                    Building = UserAddress.Building,
-                    Appartament = UserAddress.Appartament,
-                    PostalCode = UserAddress.PostalCode
-                };
-            }
 
             return response;
         }
