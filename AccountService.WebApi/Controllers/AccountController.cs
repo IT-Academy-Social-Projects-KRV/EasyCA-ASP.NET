@@ -57,5 +57,14 @@ namespace AccountService.WebApi.Controllers
             var response = await _serviceAccount.RegisterUser(userRegisterRequest);
             return Ok(response);
         }
+
+        [HttpGet("GetPersonalData")]
+        public async Task<IActionResult> GetPersonalData()
+        {
+            var userId = User.FindFirst("Id").Value;
+            var response = await _serviceAccount.GetPersonalData(userId);
+
+            return Ok(response);
+        }
     }
 }
