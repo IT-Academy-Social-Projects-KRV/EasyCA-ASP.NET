@@ -8,5 +8,6 @@ namespace AccountService.Domain.Interfaces
     {
         Task RegisterUser(RegisterApiModel user);
         Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest);
+        Task<PersonalDataApiModel> GetPersonalData(string userId);
     }
 }

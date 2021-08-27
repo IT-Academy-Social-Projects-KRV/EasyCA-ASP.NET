@@ -80,5 +80,35 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.BadRequest, Resources.LoginWrongCredentials);
             }
         }
+
+        public async Task<PersonalDataApiModel> GetPersonalData(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.UserNotFound);
+            }
+
+            var personalData = user.UserData;
+
+            if (personalData == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.UserPersonalDataNotFound);
+            }
+
+            var response = new PersonalDataApiModel()
+            {
+                Address = personalData.UserAddress,
+                IPN = personalData.IPN,
+                BirthDay = personalData.BirthDay,
+                ServiceNumber = personalData.ServiceNumber,
+                UserDriverLicense = personalData.UserDriverLicense,
+                JobPosition = personalData.JobPosition,
+                UserCars = personalData.UserCars
+            };
+
+            return response;
+        }
     }
 }

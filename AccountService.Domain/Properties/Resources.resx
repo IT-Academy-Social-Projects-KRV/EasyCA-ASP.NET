@@ -129,4 +129,10 @@
   <data name="RegistrationSucceeded" xml:space="preserve">
     <value>Реєстрацію виконано успішно</value>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Користувача не знайдено</value>
+  </data>
+  <data name="UserPersonalDataNotFound" xml:space="preserve">
+    <value>Користувач не має персональних данних</value>
+  </data>
 </root>
