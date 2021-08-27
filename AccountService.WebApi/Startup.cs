@@ -32,6 +32,7 @@ namespace AccountService.WebApi
             services.AddScoped(s => new ApplicationDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
 
             services.AddTransient<IServiceAccount, ServiceAccount>();
+            services.AddTransient<ITransportService, TransportService>();
             services.AddTransient<IJwtService, JwtService>();
 
             services.AddSwaggerGen(c =>

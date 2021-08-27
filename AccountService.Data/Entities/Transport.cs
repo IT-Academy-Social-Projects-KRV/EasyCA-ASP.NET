@@ -13,7 +13,7 @@ namespace AccountService.Data.Entities
         public string Id { get; set; }
         [BsonElement ("UserId")]
         [JsonProperty("UserId")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [BsonElement("MadeBy")]
         [JsonProperty("MadeBy")]
         public string ProducedBy { get; set; }

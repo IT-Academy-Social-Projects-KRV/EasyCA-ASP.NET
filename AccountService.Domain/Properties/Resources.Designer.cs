@@ -97,6 +97,69 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Транспорт успішно додано.
+        /// </summary>
+        public static string TransportAddingSucceeded {
+            get {
+                return ResourceManager.GetString("TransportAddingSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Категорію не знайдено.
+        /// </summary>
+        public static string TransportCategoryNotFound {
+            get {
+                return ResourceManager.GetString("TransportCategoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Автомобіль не видалено.
+        /// </summary>
+        public static string TransportDeleteFailed {
+            get {
+                return ResourceManager.GetString("TransportDeleteFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Автомобіль видалено.
+        /// </summary>
+        public static string TransportDeleteSucceeded {
+            get {
+                return ResourceManager.GetString("TransportDeleteSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Автомобіль не знайден.
+        /// </summary>
+        public static string TransportNotFound {
+            get {
+                return ResourceManager.GetString("TransportNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Автомобілі не знайдені.
+        /// </summary>
+        public static string TransportsNotFound {
+            get {
+                return ResourceManager.GetString("TransportsNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Дані про транспорт успішно змінено.
+        /// </summary>
+        public static string TransportUpdatingSucceeded {
+            get {
+                return ResourceManager.GetString("TransportUpdatingSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Користувача не знайдено.
         /// </summary>
         public static string UserNotFound {
