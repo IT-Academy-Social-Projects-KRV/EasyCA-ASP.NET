@@ -10,5 +10,6 @@ namespace AccountService.Domain.Interfaces
         Task RegisterUser(RegisterApiModel user);
         Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest);
         public Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(PersonalDataApiModel data, string userId);
+        Task<PersonalDataApiModel> GetPersonalData(string userId);
     }
 }
