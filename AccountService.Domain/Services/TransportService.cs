@@ -15,6 +15,7 @@ namespace AccountService.Domain.Services
     public class TransportService : ITransportService
     {
         private readonly ApplicationDbContext _context;
+
         public TransportService(ApplicationDbContext context)
         {
             _context = context;
