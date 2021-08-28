@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AccountService.Data;
@@ -8,9 +7,8 @@ using AccountService.Domain.ApiModel.RequestApiModels;
 using AccountService.Domain.ApiModel.ResponseApiModels;
 using AccountService.Domain.Errors;
 using AccountService.Domain.Interfaces;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using AccountService.Domain.Properties;
+using MongoDB.Driver;
 
 namespace AccountService.Domain.Services
 {
@@ -41,7 +39,7 @@ namespace AccountService.Domain.Services
                 CarPlate = transportModel.CarPlate,
                 Color = transportModel.Color,
                 YearOfProduction = transportModel.YearOfProduction,
-                InsuaranceNumber=transportModel.InsuaranceNumber
+                InsuaranceNumber = transportModel.InsuaranceNumber
             };
 
             await _context.Transports.InsertOneAsync(transport);
@@ -54,7 +52,7 @@ namespace AccountService.Domain.Services
             var filter = Builders<Transport>.Filter.Eq(c => c.UserId, userId);
             var transports = await _context.Transports.Find(filter).ToListAsync();
 
-            if(transports == null)
+            if (transports == null)
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.TransportsNotFound);
             }
@@ -64,7 +62,7 @@ namespace AccountService.Domain.Services
 
         public async Task<Transport> GetTransportById(string transportId, string userId)
         {
-            var filter = Builders<Transport>.Filter.Where(x=> x.UserId == userId && x.Id == transportId);
+            var filter = Builders<Transport>.Filter.Where(x => x.UserId == userId && x.Id == transportId);
             var transport = await _context.Transports.Find(filter).FirstOrDefaultAsync();
 
             if (transport == null)
@@ -80,9 +78,9 @@ namespace AccountService.Domain.Services
             var filter = Builders<Transport>.Filter.Eq(c => c.Id, transportModel.Id);
             var carCategory = await _context.TransportCategories.Find(x => x.CategoryName == transportModel.CategoryName).FirstOrDefaultAsync();
 
-            if(carCategory == null)
+            if (carCategory == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.TransportCategoryNotFound) ;
+                throw new RestException(HttpStatusCode.NotFound, Resources.TransportCategoryNotFound);
             }
 
             var update = Builders<Transport>.Update
