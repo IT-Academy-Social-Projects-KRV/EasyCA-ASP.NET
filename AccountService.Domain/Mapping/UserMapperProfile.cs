@@ -10,8 +10,7 @@ namespace AccountService.Domain.Mapping
         {
             AllowNullDestinationValues = true;
             CreateMap<RegisterApiModel, User>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email))
-                .ForMember(dest => dest.UserData, opt => opt.MapFrom(src=>new PersonalData()));              
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));            
         }
     }
 }

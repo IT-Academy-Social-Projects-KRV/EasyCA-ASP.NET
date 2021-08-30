@@ -68,13 +68,7 @@ namespace AccountService.WebApi
                 };
             });
 
-            var config = new AutoMapper.MapperConfiguration(c =>
-              {
-                  c.AddProfile(new PersonalDataMapperProfile());
-                  c.AddProfile(new UserMapperProfile());
-              });
-            var mapper = config.CreateMapper();
-            services.AddSingleton(mapper);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers();
         }

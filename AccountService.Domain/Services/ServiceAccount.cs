@@ -29,30 +29,13 @@ namespace AccountService.Domain.Services
 
         public async Task RegisterUser(RegisterApiModel userRequest)
         {
-
-            //User user = new User()
-            //{
-            //    FirstName = userRequest.FirstName,
-            //    LastName = userRequest.LastName,
-            //    Email = userRequest.Email,
-            //    UserName = userRequest.Email,
-            //    UserData=new PersonalData()
-            //};
-
             User user = _mapper.Map<User>(userRequest);
 
             var result = await _userManager.CreateAsync(user, userRequest.Password);
 
             if (result.Succeeded)
             {
-                if (user.UserData.ServiceNumber == null)
-                {
-                    await _userManager.AddToRoleAsync(user, "participant");
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(user, "inspector");
-                }
+                await _userManager.AddToRoleAsync(user, "participant");
             }
             else
             {
