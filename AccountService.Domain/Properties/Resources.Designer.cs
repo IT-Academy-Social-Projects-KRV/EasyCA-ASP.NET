@@ -133,7 +133,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Автомобіль не знайден.
+        ///   Looks up a localized string similar to Автомобіль не знайдено.
         /// </summary>
         public static string TransportNotFound {
             get {

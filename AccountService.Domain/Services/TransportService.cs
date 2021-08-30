@@ -64,7 +64,7 @@ namespace AccountService.Domain.Services
         public async Task<Transport> GetTransportById(string transportId, string userId)
         {
             var filter = Builders<Transport>.Filter.Where(x => x.UserId == userId && x.Id == transportId);
-            var transport = await _context.Transports.Find(filter).FirstOrDefaultAsync();
+            var transport = await _context.Transports.Find(filter).SingleOrDefaultAsync();
 
             if (transport == null)
             {
@@ -95,11 +95,9 @@ namespace AccountService.Domain.Services
                    .Set(c => c.YearOfProduction, transportModel.YearOfProduction)
                    .Set(c => c.InsuaranceNumber, transportModel.InsuaranceNumber);
 
-
             var result = await _context.Transports.UpdateOneAsync(filter, update);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.TransportUpdatingSucceeded);
-
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> DeleteTransport(string transportId, string userId)

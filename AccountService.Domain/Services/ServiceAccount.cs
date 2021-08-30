@@ -39,14 +39,7 @@ namespace AccountService.Domain.Services
 
             if (result.Succeeded)
             {
-                if (user.UserData.ServiceNumber == null)
-                {
                     await _userManager.AddToRoleAsync(user, "participant");
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(user, "inspector");
-                }
             }
             else
             {

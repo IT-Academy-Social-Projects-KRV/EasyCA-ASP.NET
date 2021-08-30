@@ -142,7 +142,7 @@
     <value>Автомобіль видалено</value>
   </data>
   <data name="TransportNotFound" xml:space="preserve">
-    <value>Автомобіль не знайден</value>
+    <value>Автомобіль не знайдено</value>
   </data>
   <data name="TransportsNotFound" xml:space="preserve">
     <value>Автомобілі не знайдені</value>
