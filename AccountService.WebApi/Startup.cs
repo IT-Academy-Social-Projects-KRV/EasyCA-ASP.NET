@@ -1,6 +1,9 @@
+using System;
+using System.Text;
 using AccountService.Data;
 using AccountService.Data.Entities;
 using AccountService.Domain.Interfaces;
+using AccountService.Domain.Mapping;
 using AccountService.Domain.Services;
 using AccountService.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,8 +16,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using System;
-using System.Text;
 
 namespace AccountService.WebApi
 {
@@ -95,6 +96,8 @@ namespace AccountService.WebApi
                 };
             });
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+          
             services.AddControllers();
         }
 

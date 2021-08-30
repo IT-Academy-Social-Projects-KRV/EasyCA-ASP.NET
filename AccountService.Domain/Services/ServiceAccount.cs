@@ -8,6 +8,7 @@ using AccountService.Domain.ApiModel.ResponseApiModels;
 using AccountService.Domain.Errors;
 using AccountService.Domain.Interfaces;
 using AccountService.Domain.Properties;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 
 namespace AccountService.Domain.Services
@@ -17,29 +18,26 @@ namespace AccountService.Domain.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IJwtService _jwtService;
+        private readonly IMapper _mapper;
 
-        public ServiceAccount(UserManager<User> userManager, SignInManager<User> signInManager, IJwtService jwtService)
+        public ServiceAccount(UserManager<User> userManager, SignInManager<User> signInManager, IJwtService jwtService, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtService = jwtService;
+            _mapper = mapper;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> RegisterUser(RegisterApiModel userRequest)
         {
-            User user = new User()
-            {
-                FirstName = userRequest.FirstName,
-                LastName = userRequest.LastName,
-                Email = userRequest.Email,
-                UserName = userRequest.Email,
-            };
+            User user = _mapper.Map<User>(userRequest);
 
             var result = await _userManager.CreateAsync(user, userRequest.Password);
 
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "participant");
+
                 return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.RegistrationSucceeded);
             }
             else
@@ -108,18 +106,9 @@ namespace AccountService.Domain.Services
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.UserPersonalDataNotFound);
             }
-
-            var response = new PersonalDataResponseModel()
-            {
-                Address = personalData.UserAddress,
-                IPN = personalData.IPN,
-                BirthDay = personalData.BirthDay,
-                ServiceNumber = personalData.ServiceNumber,
-                UserDriverLicense = personalData.UserDriverLicense,
-                JobPosition = personalData.JobPosition,
-                UserCars = personalData.UserCars
-            };
-
+            
+            var response = _mapper.Map<PersonalDataResponseModel>(personalData);
+            
             return response;
         }
     }
