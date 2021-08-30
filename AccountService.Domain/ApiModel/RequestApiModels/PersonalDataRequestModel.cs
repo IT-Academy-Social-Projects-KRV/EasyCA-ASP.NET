@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace AccountService.Domain.ApiModel.RequestApiModels
 {
-    public class PersonalDataApiModel
+    public class PersonalDataRequestModel
     {
         /// <summary>
         /// User Address

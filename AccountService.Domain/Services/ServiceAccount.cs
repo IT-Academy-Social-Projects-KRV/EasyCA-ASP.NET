@@ -75,7 +75,7 @@ namespace AccountService.Domain.Services
             }
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(PersonalDataApiModel data, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(PersonalDataRequestModel data, string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
             user.UserData = new()
@@ -93,7 +93,7 @@ namespace AccountService.Domain.Services
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "��� ����������� ������ �����!");
        }
        
-       public async Task<PersonalDataApiModel> GetPersonalData(string userId)
+       public async Task<PersonalDataResponseModel> GetPersonalData(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -109,7 +109,7 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.UserPersonalDataNotFound);
             }
 
-            var response = new PersonalDataApiModel()
+            var response = new PersonalDataResponseModel()
             {
                 Address = personalData.UserAddress,
                 IPN = personalData.IPN,

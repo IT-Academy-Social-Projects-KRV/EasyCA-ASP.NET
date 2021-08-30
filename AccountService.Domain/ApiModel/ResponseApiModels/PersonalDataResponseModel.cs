@@ -4,7 +4,7 @@ using AccountService.Data.Entities;
 
 namespace AccountService.Domain.ApiModel.ResponseApiModels
 {
-    public class PersonalDataApiModel
+    public class PersonalDataResponseModel
     {
         public Address Address { get; set; }
         public string IPN { get; set; }
