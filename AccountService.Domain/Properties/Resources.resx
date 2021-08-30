@@ -129,6 +129,27 @@
   <data name="RegistrationSucceeded" xml:space="preserve">
     <value>Реєстрацію виконано успішно</value>
   </data>
+  <data name="TransportAddingSucceeded" xml:space="preserve">
+    <value>Транспорт успішно додано</value>
+  </data>
+  <data name="TransportCategoryNotFound" xml:space="preserve">
+    <value>Категорію не знайдено</value>
+  </data>
+  <data name="TransportDeleteFailed" xml:space="preserve">
+    <value>Автомобіль не видалено</value>
+  </data>
+  <data name="TransportDeleteSucceeded" xml:space="preserve">
+    <value>Автомобіль видалено</value>
+  </data>
+  <data name="TransportNotFound" xml:space="preserve">
+    <value>Автомобіль не знайдено</value>
+  </data>
+  <data name="TransportsNotFound" xml:space="preserve">
+    <value>Автомобілі не знайдені</value>
+  </data>
+  <data name="TransportUpdatingSucceeded" xml:space="preserve">
+    <value>Дані про транспорт успішно змінено</value>
+  </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>Користувача не знайдено</value>
   </data>

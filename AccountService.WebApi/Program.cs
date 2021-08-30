@@ -26,6 +26,7 @@ namespace AccountService.WebApi
                     var roleManager = services.GetRequiredService<RoleManager<Role>>();
                     AppRoleSeed.SeedRoleData(roleManager).Wait();
                     AppUserSeed.SeedUserData(userManager).Wait();
+                    TransportCategorySeed.SeedTransportCategoryData(context).Wait();
                 }
                 catch (Exception ex)
                 {

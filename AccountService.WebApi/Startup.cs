@@ -28,10 +28,13 @@ namespace AccountService.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ApplicationDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
 
             services.AddTransient<IServiceAccount, ServiceAccount>();
+            services.AddTransient<ITransportService, TransportService>();
             services.AddTransient<IJwtService, JwtService>();
 
             services.AddSwaggerGen(c =>
@@ -107,6 +110,11 @@ namespace AccountService.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
 
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
