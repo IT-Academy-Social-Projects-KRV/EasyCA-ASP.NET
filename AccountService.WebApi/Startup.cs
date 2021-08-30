@@ -1,6 +1,9 @@
+using System;
+using System.Text;
 using AccountService.Data;
 using AccountService.Data.Entities;
 using AccountService.Domain.Interfaces;
+using AccountService.Domain.Mapping;
 using AccountService.Domain.Services;
 using AccountService.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,8 +16,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using System;
-using System.Text;
 
 namespace AccountService.WebApi
 {
@@ -25,7 +26,7 @@ namespace AccountService.WebApi
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
@@ -46,7 +47,7 @@ namespace AccountService.WebApi
             );
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.RoleType, builder.Services);
             identityBuilder.AddSignInManager<SignInManager<User>>();
-            
+
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Secret"]));
             services.AddAuthentication(options =>
             {
@@ -67,7 +68,15 @@ namespace AccountService.WebApi
                 };
             });
 
-            services.AddControllers();  
+            var config = new AutoMapper.MapperConfiguration(c =>
+              {
+                  c.AddProfile(new PersonalDataMapperProfile());
+                  c.AddProfile(new UserMapperProfile());
+              });
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -82,7 +91,7 @@ namespace AccountService.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
-  
+
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
