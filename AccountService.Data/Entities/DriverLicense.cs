@@ -1,7 +1,9 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+
 namespace AccountService.Data.Entities
 {
     public class DriverLicense
@@ -14,7 +16,7 @@ namespace AccountService.Data.Entities
         public string IssuedBy { get; set; }
         [BsonElement("ExpirationDate")]
         [JsonProperty("ExpirationDate")]
-        public BsonDateTime ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
         [BsonElement("OpenedCategories")]
         [JsonProperty("OpenedCategories")]
         public List<TransportCategory> UserCategories { get; set; }

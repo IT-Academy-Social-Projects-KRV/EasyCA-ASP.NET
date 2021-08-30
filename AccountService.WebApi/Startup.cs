@@ -29,15 +29,43 @@ namespace AccountService.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ApplicationDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
 
             services.AddTransient<IServiceAccount, ServiceAccount>();
+            services.AddTransient<ITransportService, TransportService>();
             services.AddTransient<IJwtService, JwtService>();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AccountService.WebApi", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
 
             var builder = services.AddIdentity<User, Role>()
@@ -69,7 +97,7 @@ namespace AccountService.WebApi
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+          
             services.AddControllers();
         }
 
@@ -85,6 +113,11 @@ namespace AccountService.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
 
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
