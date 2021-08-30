@@ -41,17 +41,17 @@ namespace AccountService.Domain.Services
                 if (user.UserData.ServiceNumber == null)
                 {
                     await _userManager.AddToRoleAsync(user, "participant");
-                    return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "You have succesfully registered");
+                    return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.RegistrationSucceeded);
                 }
                 else
                 {
                     await _userManager.AddToRoleAsync(user, "inspector");
-                    return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "You have successfully registered as an inspector");
+                    return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.RegistrationSucceeded);
                 }
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
+                throw new RestException(HttpStatusCode.BadRequest, Resources.RegistrationFailed);
             }
         }
 
