@@ -61,7 +61,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Вхід виконано успішно.
+        ///   Looks up a localized string similar to You have successfully logged into your account.
         /// </summary>
         public static string LoginSucceeded {
             get {
@@ -70,7 +70,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Невірні E-Mail або пароль..
+        ///   Looks up a localized string similar to Invalid email or password.
         /// </summary>
         public static string LoginWrongCredentials {
             get {
@@ -79,7 +79,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Помилка під час реєстрації.
+        ///   Looks up a localized string similar to Couldn&apos;t register a new account.
         /// </summary>
         public static string RegistrationFailed {
             get {
@@ -88,7 +88,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Реєстрацію виконано успішно.
+        ///   Looks up a localized string similar to You have successfully registered a new account.
         /// </summary>
         public static string RegistrationSucceeded {
             get {
@@ -97,7 +97,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Транспорт успішно додано.
+        ///   Looks up a localized string similar to You have successfully added a new vehicle.
         /// </summary>
         public static string TransportAddingSucceeded {
             get {
@@ -106,7 +106,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Категорію не знайдено.
+        ///   Looks up a localized string similar to Invalid vehicle category.
         /// </summary>
         public static string TransportCategoryNotFound {
             get {
@@ -115,7 +115,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Автомобіль не видалено.
+        ///   Looks up a localized string similar to Coudn&apos;t delete the vehicle.
         /// </summary>
         public static string TransportDeleteFailed {
             get {
@@ -124,7 +124,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Автомобіль видалено.
+        ///   Looks up a localized string similar to The vehicle has been successfully deleted.
         /// </summary>
         public static string TransportDeleteSucceeded {
             get {
@@ -133,7 +133,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Автомобіль не знайдено.
+        ///   Looks up a localized string similar to The vehicle has not been found.
         /// </summary>
         public static string TransportNotFound {
             get {
@@ -142,7 +142,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Автомобілі не знайдені.
+        ///   Looks up a localized string similar to There are no vehicles.
         /// </summary>
         public static string TransportsNotFound {
             get {
@@ -151,7 +151,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Дані про транспорт успішно змінено.
+        ///   Looks up a localized string similar to You have successfully updated your vehicle information.
         /// </summary>
         public static string TransportUpdatingSucceeded {
             get {
@@ -160,7 +160,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Користувача не знайдено.
+        ///   Looks up a localized string similar to Couldn&apos;t find such user.
         /// </summary>
         public static string UserNotFound {
             get {
@@ -169,7 +169,7 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Користувач не має персональних данних.
+        ///   Looks up a localized string similar to The user does not have any personal data.
         /// </summary>
         public static string UserPersonalDataNotFound {
             get {
