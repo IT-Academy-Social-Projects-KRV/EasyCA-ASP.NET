@@ -7,7 +7,7 @@ namespace AccountService.Domain.Interfaces
 {
     public interface IServiceAccount
     {
-        Task RegisterUser(RegisterApiModel user);
+        Task<ResponseApiModel<HttpStatusCode>> RegisterUser(RegisterApiModel user);
         Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest);
         public Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(PersonalDataApiModel data, string userId);
         Task<PersonalDataApiModel> GetPersonalData(string userId);

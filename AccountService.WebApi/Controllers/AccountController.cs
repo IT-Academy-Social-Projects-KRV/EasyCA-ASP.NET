@@ -54,8 +54,8 @@ namespace AccountService.WebApi.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterApiModel userRegisterRequest)
         {
-            await _serviceAccount.RegisterUser(userRegisterRequest);
-            return Ok();
+            var response = await _serviceAccount.RegisterUser(userRegisterRequest);
+            return Ok(response);
         }
 
         [HttpPut("UpdateData")]
