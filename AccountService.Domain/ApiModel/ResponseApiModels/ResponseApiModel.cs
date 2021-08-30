@@ -1,4 +1,4 @@
-﻿namespace AccountService.Domain.ApiModel.ResponseApiModels
+namespace AccountService.Domain.ApiModel.ResponseApiModels
 {
     public class ResponseApiModel<T>
     {

@@ -58,6 +58,15 @@ namespace AccountService.WebApi.Controllers
             return Ok(response);
         }
 
+        [HttpPut("UpdateData")]
+        public async Task<IActionResult> UpdateUserData(PersonalDataApiModel data)
+        {
+            var userId = User.FindFirst("Id").Value;
+            var response = await _serviceAccount.UpdateUserData(data, userId);
+            
+            return Ok(response);
+        }
+        
         [HttpGet("GetPersonalData")]
         public async Task<IActionResult> GetPersonalData()
         {
