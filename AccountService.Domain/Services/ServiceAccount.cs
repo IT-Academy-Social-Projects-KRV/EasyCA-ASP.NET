@@ -38,7 +38,7 @@ namespace AccountService.Domain.Services
             var result = await _userManager.CreateAsync(user, userRequest.Password);
 
             if (result.Succeeded)
-            {                
+            {
                 await _userManager.AddToRoleAsync(user, "participant");
                 return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.RegistrationSucceeded);
             }
