@@ -43,7 +43,7 @@ namespace AccountService.Domain.Services
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest, Resources.RegistrationFailed);
+                throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
             }
         }
 
