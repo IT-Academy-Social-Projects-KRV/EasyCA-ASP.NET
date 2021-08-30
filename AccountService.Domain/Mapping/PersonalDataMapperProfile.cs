@@ -9,7 +9,7 @@ namespace AccountService.Domain.Mapping
         public PersonalDataMapperProfile()
         {
             AllowNullCollections = true;
-            CreateMap<PersonalData, PersonalDataApiModel>().ReverseMap();         
+            CreateMap<PersonalData, PersonalDataResponseModel>().ReverseMap();         
         }
     }
 }

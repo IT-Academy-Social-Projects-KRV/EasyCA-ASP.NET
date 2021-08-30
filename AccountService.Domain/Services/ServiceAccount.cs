@@ -107,7 +107,7 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.UserPersonalDataNotFound);
             }
             
-            var response = _mapper.Map<PersonalDataApiModel>(personalData);
+            var response = _mapper.Map<PersonalDataResponseModel>(personalData);
             
             return response;
         }
