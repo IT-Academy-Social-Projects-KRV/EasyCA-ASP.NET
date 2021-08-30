@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AccountService.Data.Entities;
@@ -81,7 +82,24 @@ namespace AccountService.Domain.Services
             }
         }
 
-        public async Task<PersonalDataApiModel> GetPersonalData(string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(PersonalDataApiModel data, string userId)
+        {
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+            user.UserData = new()
+            {
+                UserAddress = data.UserAddress,
+                BirthDay = data.BirthDay,
+                IPN = data.IPN,
+                ServiceNumber = data.ServiceNumber,
+                JobPosition = data.JobPosition,
+                UserDriverLicense = data.UserDriverLicense,
+                UserCars= data.UserCars
+            };
+            await _userManager.UpdateAsync(user);
+            
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "��� ����������� ������ �����!");
+       }
+       public async Task<PersonalDataApiModel> GetPersonalData(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
