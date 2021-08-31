@@ -75,5 +75,22 @@ namespace AccountService.WebApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("GetUserById")]
+        public async Task<IActionResult> GetUserById()
+        {
+            var userId = User.FindFirst("Id").Value;
+            var response = await _serviceAccount.GetUserById(userId);
+            
+            return Ok(response);
+        }
+
+        [HttpGet("GetUserById/{id}")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            var response = await _serviceAccount.GetUserById(id);
+            
+            return Ok(response);
+        }
     }
 }
