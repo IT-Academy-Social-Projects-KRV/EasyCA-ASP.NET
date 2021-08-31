@@ -111,5 +111,18 @@ namespace AccountService.Domain.Services
             
             return response;
         }
+        public async Task<UserResponseModel> GetUserById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
+            var mappedUser = _mapper.Map<UserResponseModel>(user);
+
+            return mappedUser;
+        }
     }
 }
