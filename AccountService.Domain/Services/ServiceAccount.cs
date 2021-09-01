@@ -75,10 +75,12 @@ namespace AccountService.Domain.Services
         public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(UserRequestModel data, string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+
             user.UserData = data.UserData;
             user.Email = data.Email;
             user.FirstName = data.FirstName;
             user.LastName = data.LastName;
+
             await _userManager.UpdateAsync(user);
             
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update personal data is success!");
