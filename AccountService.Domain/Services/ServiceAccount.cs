@@ -19,7 +19,7 @@ namespace AccountService.Domain.Services
         private readonly SignInManager<User> _signInManager;
         private readonly IJwtService _jwtService;
         private readonly IMapper _mapper;
-
+        
         public ServiceAccount(UserManager<User> userManager, SignInManager<User> signInManager, IJwtService jwtService, IMapper mapper)
         {
             _userManager = userManager;
@@ -38,7 +38,7 @@ namespace AccountService.Domain.Services
             {
                 await _userManager.AddToRoleAsync(user, "participant");
 
-                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.RegistrationSucceeded);
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
             }
             else
             {
@@ -69,7 +69,7 @@ namespace AccountService.Domain.Services
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest, Resources.LoginWrongCredentials);
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("LoginWrongCredentials"));
             }
         }
 
@@ -97,14 +97,14 @@ namespace AccountService.Domain.Services
 
             if (user == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.UserNotFound);
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
             var personalData = user.UserData;
 
             if (personalData == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.UserPersonalDataNotFound);
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserPersonalDataNotFound"));
             }
             
             var response = _mapper.Map<PersonalDataResponseModel>(personalData);
