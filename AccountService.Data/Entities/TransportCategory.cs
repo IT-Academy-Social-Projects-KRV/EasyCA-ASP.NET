@@ -1,9 +1,7 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
-#region snippet_NewtonsoftJsonImport
 using Newtonsoft.Json;
-#endregion
 
 namespace AccountService.Data.Entities
 {

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AccountService.Data.Entities;
@@ -6,6 +7,8 @@ using AccountService.Domain.ApiModel.RequestApiModels;
 using AccountService.Domain.ApiModel.ResponseApiModels;
 using AccountService.Domain.Errors;
 using AccountService.Domain.Interfaces;
+using AccountService.Domain.Properties;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 
 namespace AccountService.Domain.Services
@@ -15,41 +18,31 @@ namespace AccountService.Domain.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IJwtService _jwtService;
+        private readonly IMapper _mapper;
 
-        public ServiceAccount(UserManager<User> userManager, SignInManager<User> signInManager, IJwtService jwtService)
+        public ServiceAccount(UserManager<User> userManager, SignInManager<User> signInManager, IJwtService jwtService, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtService = jwtService;
+            _mapper = mapper;
         }
 
-        public async Task RegisterUser(RegisterApiModel userRequest)
+        public async Task<ResponseApiModel<HttpStatusCode>> RegisterUser(RegisterApiModel userRequest)
         {
-
-            User user = new User()
-            {
-                FirstName = userRequest.FirstName,
-                LastName = userRequest.LastName,
-                Email = userRequest.Email,
-                UserName = userRequest.Email,
-            };
+            User user = _mapper.Map<User>(userRequest);
 
             var result = await _userManager.CreateAsync(user, userRequest.Password);
 
             if (result.Succeeded)
             {
-                if (user.UserData.ServiceNumber == null)
-                {
-                    await _userManager.AddToRoleAsync(user, "participant");
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(user, "inspector");
-                }
+                await _userManager.AddToRoleAsync(user, "participant");
+
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.RegistrationSucceeded);
             }
             else
             {
-                throw new ArgumentException("Result error");
+                throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
             }
         }
 
@@ -76,8 +69,60 @@ namespace AccountService.Domain.Services
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest,"Email or Password are wrong");
+                throw new RestException(HttpStatusCode.BadRequest, Resources.LoginWrongCredentials);
             }
+        }
+
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(PersonalDataRequestModel data, string userId)
+        {
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+            user.UserData = new()
+            {
+                UserAddress = data.UserAddress,
+                BirthDay = data.BirthDay,
+                IPN = data.IPN,
+                ServiceNumber = data.ServiceNumber,
+                JobPosition = data.JobPosition,
+                UserDriverLicense = data.UserDriverLicense,
+                UserCars= data.UserCars
+            };
+            await _userManager.UpdateAsync(user);
+            
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "��� ����������� ������ �����!");
+       }
+       
+       public async Task<PersonalDataResponseModel> GetPersonalData(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.UserNotFound);
+            }
+
+            var personalData = user.UserData;
+
+            if (personalData == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.UserPersonalDataNotFound);
+            }
+            
+            var response = _mapper.Map<PersonalDataResponseModel>(personalData);
+            
+            return response;
+        }
+        public async Task<UserResponseModel> GetUserById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
+            var mappedUser = _mapper.Map<UserResponseModel>(user);
+
+            return mappedUser;
         }
     }
 }

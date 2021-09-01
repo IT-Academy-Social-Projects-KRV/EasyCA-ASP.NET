@@ -1,6 +1,9 @@
+using System;
+using System.Text;
 using AccountService.Data;
 using AccountService.Data.Entities;
 using AccountService.Domain.Interfaces;
+using AccountService.Domain.Mapping;
 using AccountService.Domain.Services;
 using AccountService.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,8 +16,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using System;
-using System.Text;
 
 namespace AccountService.WebApi
 {
@@ -25,18 +26,46 @@ namespace AccountService.WebApi
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ApplicationDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
 
             services.AddTransient<IServiceAccount, ServiceAccount>();
+            services.AddTransient<ITransportService, TransportService>();
             services.AddTransient<IJwtService, JwtService>();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AccountService.WebApi", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
 
             var builder = services.AddIdentity<User, Role>()
@@ -46,7 +75,7 @@ namespace AccountService.WebApi
             );
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.RoleType, builder.Services);
             identityBuilder.AddSignInManager<SignInManager<User>>();
-            
+
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Secret"]));
             services.AddAuthentication(options =>
             {
@@ -67,7 +96,9 @@ namespace AccountService.WebApi
                 };
             });
 
-            services.AddControllers();  
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+          
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -82,7 +113,12 @@ namespace AccountService.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
-  
+
+            app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
