@@ -65,7 +65,9 @@ namespace AccountService.Domain.Services
                 await _userManager.UpdateAsync(user);
                 await _signInManager.SignInAsync(user, false);
 
-                return new AuthenticateResponseApiModel(user.Email, token, refreshtoken.Token);
+                var roles = await _userManager.GetRolesAsync(user);
+
+                return new AuthenticateResponseApiModel(user.Email, token, refreshtoken.Token,roles.FirstOrDefault());
             }
             else
             {

@@ -36,7 +36,8 @@ namespace AccountService.Domain.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("Id",user.Id.ToString())
+                    new Claim("Id",user.Id.ToString()),
+                    new Claim("Role",user.Roles.FirstOrDefault())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<double>("TokenExpires")),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -65,7 +66,7 @@ namespace AccountService.Domain.Services
 
             var JWTToken = CreateJwtToken(user);
 
-            return new AuthenticateResponseApiModel(user.Email, JWTToken, newRefreshToken.Token);
+            return new AuthenticateResponseApiModel(user.Email, JWTToken, newRefreshToken.Token,user.Roles.FirstOrDefault());
         }
         public RefreshToken CreateRefreshToken()
         {
