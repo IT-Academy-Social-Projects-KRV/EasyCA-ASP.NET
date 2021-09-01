@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
+using AccountService.Domain.ApiModel.ResponseApiModels;
 
 namespace AccountService.WebApi.Controllers
 {
@@ -59,7 +60,7 @@ namespace AccountService.WebApi.Controllers
         }
 
         [HttpPut("UpdateData")]
-        public async Task<IActionResult> UpdateUserData(PersonalDataRequestModel data)
+        public async Task<IActionResult> UpdateUserData(UserRequestModel data)
         {
             var userId = User.FindFirst("Id").Value;
             var response = await _serviceAccount.UpdateUserData(data, userId);
@@ -90,6 +91,15 @@ namespace AccountService.WebApi.Controllers
         {
             var response = await _serviceAccount.GetUserById(id);
             
+            return Ok(response);
+        }
+
+        [HttpPost("CreatePersonalData")]
+        public async Task<IActionResult> CreatePersonalData(PersonalDataRequestModel data)
+        {
+            var userId = User.FindFirst("Id").Value;
+            var response = await _serviceAccount.CreatePersonalData(data, userId);
+
             return Ok(response);
         }
     }

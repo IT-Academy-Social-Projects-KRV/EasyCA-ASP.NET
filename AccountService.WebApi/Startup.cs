@@ -3,7 +3,6 @@ using System.Text;
 using AccountService.Data;
 using AccountService.Data.Entities;
 using AccountService.Domain.Interfaces;
-using AccountService.Domain.Mapping;
 using AccountService.Domain.Services;
 using AccountService.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

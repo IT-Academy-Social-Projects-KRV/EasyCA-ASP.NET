@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -73,25 +72,17 @@ namespace AccountService.Domain.Services
             }
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(PersonalDataRequestModel data, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(UserRequestModel data, string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
-            user.UserData = new()
-            {
-                UserAddress = data.UserAddress,
-                BirthDay = data.BirthDay,
-                IPN = data.IPN,
-                ServiceNumber = data.ServiceNumber,
-                JobPosition = data.JobPosition,
-                UserDriverLicense = data.UserDriverLicense,
-                UserCars= data.UserCars
-            };
+            var mappedUser = _mapper.Map<User>(data);
+            user.UserData = data.UserData;
             await _userManager.UpdateAsync(user);
             
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "��� ����������� ������ �����!");
-       }
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update personal data is success!");
+        }
        
-       public async Task<PersonalDataResponseModel> GetPersonalData(string userId)
+        public async Task<PersonalDataResponseModel> GetPersonalData(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -111,6 +102,7 @@ namespace AccountService.Domain.Services
             
             return response;
         }
+
         public async Task<UserResponseModel> GetUserById(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -123,6 +115,17 @@ namespace AccountService.Domain.Services
             var mappedUser = _mapper.Map<UserResponseModel>(user);
 
             return mappedUser;
+        }
+
+        public async Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestModel data, string userId)
+        {
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+            var persData = _mapper.Map<PersonalData>(data);
+            user.UserData = persData;
+
+            await _userManager.UpdateAsync(user);
+
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating personal data is success!");
         }
     }
 }
