@@ -38,7 +38,7 @@ namespace AccountService.Domain.Services
 
             if (result.Succeeded)
             {
-                if (user.UserData.ServiceId == null)
+                if (user.UserData.ServiceNumber == null)
                 {
                     await _userManager.AddToRoleAsync(user, "participant");
                 }
