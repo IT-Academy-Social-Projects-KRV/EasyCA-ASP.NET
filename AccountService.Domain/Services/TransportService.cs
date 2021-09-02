@@ -7,7 +7,6 @@ using AccountService.Domain.ApiModel.RequestApiModels;
 using AccountService.Domain.ApiModel.ResponseApiModels;
 using AccountService.Domain.Errors;
 using AccountService.Domain.Interfaces;
-using AccountService.Domain.ModelDTO.EntitiesDTO;
 using AccountService.Domain.Properties;
 using AutoMapper;
 using MongoDB.Driver;
@@ -43,8 +42,8 @@ namespace AccountService.Domain.Services
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.TransportAddingSucceeded);
         }
 
-        public async Task<IEnumerable<TransportDTO>> GetAllTransports(string userId)
-        { 
+        public async Task<IEnumerable<TransportResponseApiModel>> GetAllTransports(string userId)
+        {
             var filter = Builders<Transport>.Filter.Eq(c => c.UserId, userId);
             var transports = await _context.Transports.Find(filter).ToListAsync();
 
@@ -52,10 +51,10 @@ namespace AccountService.Domain.Services
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.TransportsNotFound);
             }
-            return _mapper.Map<IEnumerable<TransportDTO>>(transports);
+            return _mapper.Map<IEnumerable<TransportResponseApiModel>>(transports);
         }
 
-        public async Task<TransportDTO> GetTransportById(string transportId, string userId)
+        public async Task<TransportResponseApiModel> GetTransportById(string transportId, string userId)
         {
             var filter = Builders<Transport>.Filter.Where(x => x.UserId == userId && x.Id == transportId);
             var transport = await _context.Transports.Find(filter).SingleOrDefaultAsync();
@@ -65,7 +64,7 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.TransportNotFound);
             }
 
-            return _mapper.Map<TransportDTO>(transport);
+            return _mapper.Map<TransportResponseApiModel>(transport);
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> UpdateTransport(UpdateTransportRequestModel transportModel, string userId)

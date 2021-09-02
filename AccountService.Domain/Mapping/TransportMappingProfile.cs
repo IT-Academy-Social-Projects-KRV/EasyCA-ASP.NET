@@ -1,6 +1,6 @@
 ﻿using AccountService.Data.Entities;
 using AccountService.Domain.ApiModel.RequestApiModels;
-using AccountService.Domain.ModelDTO.EntitiesDTO;
+using AccountService.Domain.ApiModel.ResponseApiModels;
 using AutoMapper;
 
 namespace AccountService.Domain.Mapping
@@ -9,7 +9,7 @@ namespace AccountService.Domain.Mapping
     {
         public TransportMappingProfile()
         {
-            CreateMap<Transport, TransportDTO>()
+            CreateMap<Transport, TransportResponseApiModel>()
                 .ForMember(x => x.CategoryName, opt => opt.MapFrom(src => src.CarCategory.CategoryName)).ReverseMap();
             CreateMap<Transport, AddTransportRequestModel>().ReverseMap();
         }
