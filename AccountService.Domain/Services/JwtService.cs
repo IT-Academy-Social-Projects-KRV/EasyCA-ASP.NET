@@ -20,6 +20,7 @@ namespace AccountService.Domain.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly RoleManager<User> _manager;
 
         public JwtService(UserManager<User> userManager, IConfiguration configuration)
         {
@@ -32,12 +33,14 @@ namespace AccountService.Domain.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Secret"));
 
+            var role = user.Roles.FirstOrDefault();
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("Id",user.Id.ToString()),
-                    new Claim("Role",user.Roles.FirstOrDefault())
+                    new Claim("Role",role)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<double>("TokenExpires")),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
