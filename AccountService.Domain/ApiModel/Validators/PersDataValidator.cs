@@ -29,49 +29,96 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
         {
             string patternIPN = @"[0-9]{10}";
             Regex isIPN = new Regex(patternIPN);
-            if (isIPN.IsMatch(taxpayerIPN)) return true;
-            else return false;
+
+            if (isIPN.IsMatch(taxpayerIPN))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidDate(DateTime birthday)
         {
             DateTime today = DateTime.Today;
-            if (((birthday.Year > (today.Year - 75)) && (birthday.Year < (today.Year - 16)) && ((birthday.Month >= 1) && (birthday.Month <= 12))) && ((birthday.Day >= 1) && (birthday.Day <= 31))) return true;
-            else return false;
+            if (((birthday.Year > (today.Year - 83)) && (birthday.Year < (today.Year - 14)) && ((birthday.Month >= 1) && (birthday.Month <= 12))) && ((birthday.Day >= 1) && (birthday.Day <= 31)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidJob(string jobsString)
         {
             string jobPattern = @"^[А-ЩЬЮЯЇІЄҐA-Zа-щьюяїієґa-z]{3,20}$";
             Regex newJob = new Regex(jobPattern);
-            if (newJob.IsMatch(jobsString)) return true;
-            else return false;
+
+            if (newJob.IsMatch(jobsString))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidAddress(Address userAddress)
         {
             AddressValidator addressValidator = new AddressValidator();
-            if (addressValidator.Validate(userAddress).IsValid) return true;
-            else return false;
+            if (addressValidator.Validate(userAddress).IsValid)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidDriverLicense(DriverLicense userPass)
         {
             DriverLicenseValidator passValidator = new DriverLicenseValidator();
-            if (passValidator.Validate(userPass).IsValid) return true;
-            else return false;
+
+            if (passValidator.Validate(userPass).IsValid)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidCarList(List<Transport> cars)
         {
             TransportValidator carsValidator = new TransportValidator();
             int count = 0;
             int wrongCar = 0;
+
             if (cars.Count > 0)
             {
                 foreach (Transport vehicle in cars)
                 {
-                    if (carsValidator.Validate(vehicle).IsValid) count++;
-                    else wrongCar++;
+                    if (carsValidator.Validate(vehicle).IsValid)
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        wrongCar++;
+                    }
                 }
             }
-            if (count > 0 && wrongCar == 0) return true;
-            else return false;
+
+            if (count > 0 && wrongCar == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

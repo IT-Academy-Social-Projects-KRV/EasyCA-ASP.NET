@@ -37,55 +37,109 @@ namespace AccountService.Domain.ApiModel.Validators
         {
             string prodPattern = @"^[А-ЩЬЮЯЇІЄҐA-Z]{1}[А-ЩЬЮЯЇІЄҐA-Zа-щьюяїієґa-z]*$";
             Regex prodCompany = new Regex(prodPattern);
-            if (prodCompany.IsMatch(producer)) return true;
-            else return false;
+            
+            if (prodCompany.IsMatch(producer))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidModel(string model)
         {
             string modelPattern = @"\w*$";
             Regex modelCheck = new Regex(modelPattern);
-            if (modelCheck.IsMatch(model)) return true;
-            else return false;
+
+            if (modelCheck.IsMatch(model))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidCategory(TransportCategory category)
         {
             TransportCategoryValidator categoryValid = new TransportCategoryValidator();
-            if (categoryValid.Validate(category).IsValid) return true;
-            else return false;
+            
+            if (categoryValid.Validate(category).IsValid)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidVinCode(string vinCode)
         {
             string patternVin = @"^(([a-h,A-H,j-n,J-N,p-z,P-Z,0-9]{9})([a-h,A-H,j-n,J-N,p,P,r-t,R-T,v-z,V-Z,0-9])([a-h,A-H,j-n,J-N,p-z,P-Z,0-9])(\d{6}))$";
             Regex vinCheck = new Regex(patternVin);
-            if (vinCheck.IsMatch(vinCode)) return true;
-            else return false;
+
+            if (vinCheck.IsMatch(vinCode))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidCarPlate(string currentPlate)
         {
             string platePattern = @"^[АВСРІ]{1}[АIВСЕНКМТРХОЄ]{1}\d{4}[А-Я]{2}$";
             Regex plateReg = new Regex(platePattern);
-            if (plateReg.IsMatch(currentPlate)) return true;
-            else return false;
+
+            if (plateReg.IsMatch(currentPlate))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidColor(string color)
         {
             string colorPattern = @"^[А-ЩЬЮЯЇІЄҐA-Zа-щьюяїієґa-z]{1}[а-щьюяїієґa-z]+$";
             Regex colorCheck = new Regex(colorPattern);
-            if (colorCheck.IsMatch(color)) return true;
-            else return false;
+
+            if (colorCheck.IsMatch(color))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidYearProd(int year)
         {
             DateTime now = DateTime.Today;
-            if ((year > 1970) && (year <= now.Year)) 
+            if ((year > 1970) && (year <= now.Year))
+            {
                 return true;
-            else return false;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidInsuarance(Insuarance thisOne)
         {
             InsuaranceValidator insValid = new InsuaranceValidator();
-            if (insValid.Validate(thisOne).IsValid) return true;
-            else return false;
+
+            if (insValid.Validate(thisOne).IsValid)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

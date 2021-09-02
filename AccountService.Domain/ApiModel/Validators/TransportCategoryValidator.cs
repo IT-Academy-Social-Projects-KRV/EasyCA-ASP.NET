@@ -15,12 +15,27 @@ namespace AccountService.Domain.ApiModel.Validators
         {
             List<string> categories = new List<string>() { "A1", "A", "B1", "B", "C", "C1", "D", "D1", "BE","CE","DE", "C1E", "D1E", "T"};
             int count = 0;
+
             foreach (string item in categories)
             {
-                if (category == item) count++;
+                if (category == item)
+                {
+                    count++;
+                }
+                else 
+                {
+                    continue;
+                }
             }
-            if (count > 0) return true;
-            else return false;
+
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -28,8 +28,15 @@ namespace AccountService.Domain.ApiModel.Validators
         {
             string patternDr = @"^[А-ЩЬЮЯЇІЄҐA-ZЯ]{3}[0-9]{6}";
             Regex driverSerial = new Regex(patternDr);
-            if (driverSerial.IsMatch(driverNumber)) return true;
-            else return false;
+
+            if (driverSerial.IsMatch(driverNumber))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidAuthority(string issuedBy)
         {
@@ -40,20 +47,35 @@ namespace AccountService.Domain.ApiModel.Validators
             "5641","5946","6141","6341","6541","6841","7141", "7441","7341"
             };
             int count = 0;
+
             foreach (string item in authorities)
             {
                 if (item == issuedBy) count++;
             }
-            if (count == 1) return true;
-            else return false;
+
+            if (count == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        public static bool IsValidExpDate(BsonDateTime expirationDate)
+        public static bool IsValidExpDate(DateTime expirationDate)
         {
-            BsonDateTime today = DateTime.Today;
+            DateTime today = DateTime.Today;
+
             if (((expirationDate.ToUniversalTime().Year - today.ToUniversalTime().Year) <= 0) &&
                 ((expirationDate.ToUniversalTime().Month - today.ToUniversalTime().Month) <= 0) &&
-                ((expirationDate.ToUniversalTime().Day - today.ToUniversalTime().Day) <= 0)) return false;
-            else return true;
+                ((expirationDate.ToUniversalTime().Day - today.ToUniversalTime().Day) <= 0))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidCategory(List<TransportCategory> UserCategories)
         {
@@ -63,8 +85,15 @@ namespace AccountService.Domain.ApiModel.Validators
             {
                 if (myCheck.Validate(item).IsValid == true) count++;
             }
-            if (count > 0) return true;
-            else return false;
+
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

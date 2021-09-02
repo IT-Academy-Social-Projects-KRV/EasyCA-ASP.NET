@@ -33,19 +33,34 @@ namespace AccountService.Domain.ApiModel.Validators
                 "АРСЕНАЛ СТРАХУВАННЯ", "Ю.БІ.АЙ - КООП", "Експрес Страхування", "ГАРДІАН", "ОБЕРІГ"
             };
             int count = 0;
+
             foreach (string name in validCompanies)
             {
                 if (company == name) count++;
             }
-            if (count > 0) return true;
-            else return false;
+
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidSerial(string serial)
         {
             string pattern = @"[А-ЩЬЮЯЇІЄҐA-Z]{2}[0-9]{7}";
             Regex insuaranceSerial = new Regex(pattern);
-            if (insuaranceSerial.IsMatch(serial)) return true;
-            else return false;
+
+            if (insuaranceSerial.IsMatch(serial))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

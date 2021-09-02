@@ -34,8 +34,15 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
         {
             string pattern = @"^[А-ЩЬЮЯЇІЄҐA-Z][а-щьюяїієґa-z]*$";
             Regex firstNameRegex = new Regex(pattern);
-            if (firstNameRegex.IsMatch(firstName)) return true;
-            else return false;
+
+            if (firstNameRegex.IsMatch(firstName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsEmail(string email)
         {
@@ -54,19 +61,35 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
             string theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
                                    + "@"
                                    + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))\z";
-            if (string.IsNullOrWhiteSpace(email)) return false;
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return false;
+            }
+
             Regex emailValidation = new Regex(theEmailPattern);
-            if (emailValidation.IsMatch(email)) return true;
-            else return false;
+
+            if (emailValidation.IsMatch(email))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsPhoneNumber(string phoneNumber)
         {
             string phoneNumberPattern = @"[0-9]{10}$";
             Regex phoneValidation = new Regex(phoneNumberPattern);
+
             if (phoneNumber == null) return false;
             else 
             {
-                if (phoneValidation.IsMatch(phoneNumber)) return true;
+                if (phoneValidation.IsMatch(phoneNumber))
+                {
+                    return true;
+                }
                 else
                 {
                     Console.WriteLine("Error in PHN");
@@ -79,14 +102,28 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
             // start with a letter, allow letter or number, length between 6 to 12.
             string userNamePattern = @"^[a-zA-Z][a-zA-Z0-9]{6,12}$";
             Regex regex = new Regex(userNamePattern);
-            if (regex.IsMatch(username)) return true;
-            else return false;
+
+            if (regex.IsMatch(username))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidPersData(PersonalData userData)
         {
             PersDataValidator persValidator = new PersDataValidator();
-            if (persValidator.Validate(userData).IsValid) return true;
-            else return false;
+
+            if (persValidator.Validate(userData).IsValid)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

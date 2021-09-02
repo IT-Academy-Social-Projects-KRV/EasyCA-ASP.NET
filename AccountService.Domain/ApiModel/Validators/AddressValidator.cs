@@ -32,37 +32,78 @@ namespace AccountService.Domain.ApiModel.Validators
         public static bool IsValidCountry(string country)
         {
             string countryPattern = @"^[А-ЩЬЮЯЇІЄҐA-Z]{1}[а-щьюяїієґa-z]*$";
-            if (Regex.IsMatch(country, countryPattern)) return true;
-            else return false;
+
+            if (Regex.IsMatch(country, countryPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidRegion(string region)
         {
             string regionPattern = @"(^[А-ЩЬЮЯЇІЄҐA-Z]{1}[а-щьюяїієґa-z]{2,15}$)|(^[А-ЩЬЮЯЇІЄҐA-Z]{1}[а-щьюяїієґa-z]{2,12}[\-]{1}[А-ЩЬЮЯЇІЄҐA-Z]{1}[а-щьюяїієґa-z]{2,15}$)";
-            if (Regex.IsMatch(region, regionPattern)) return true;
-            else return false;
+            
+            if (Regex.IsMatch(region, regionPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidCity(string city)
         {
             string cityPattern = @"(^[А-ЩЬЮЯЇІЄҐA-Z]{1}[а-щьюяїієґa-z]{3,15}$)|(^[А-ЩЬЮЯЇІЄҐA-Z]{1}[а-щьюяїієґa-z]{3,12}[\-]{1}[А-ЩЬЮЯЇІЄҐA-Z]{1}[а-щьюяїієґa-z]{2,15}$)";
-            if (Regex.IsMatch(city, cityPattern)) return true;
-            else return false;
+            
+            if (Regex.IsMatch(city, cityPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidBuilding(string buildNumber)
         {
             string buildPattern = @"([0-9]{1,4}$)|([0-9]{1,4}\/[0-9]{1,2}$)|([0-9]{1,4}\/[а-я]{1,2}$)";
-            if (Regex.IsMatch(buildNumber, buildPattern)) return true;
-            else return false;
+            
+            if (Regex.IsMatch(buildNumber, buildPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidAppNumber(int appNumber)
         {
-            if ((appNumber > 0) && (appNumber < 999)) return true;
-            else return false;
+            if ((appNumber > 0) && (appNumber < 999))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static bool IsValidPostalCode(string postalCode)
         {
             string zipPattern = @"^[0-9]{5}$";
-            if (Regex.IsMatch(postalCode, zipPattern)) return true;
-            else return false;
+
+            if (Regex.IsMatch(postalCode, zipPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
