@@ -11,8 +11,9 @@ namespace AccountService.Domain.Mapping
         {
             AllowNullDestinationValues = true;
             CreateMap<RegisterApiModel, User>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
-            CreateMap<User, UserResponseModel>();
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email)).ReverseMap();
+            CreateMap<User, UserResponseModel>().ReverseMap();
+            CreateMap<User, UserRequestModel>().ReverseMap();
         }
     }
 }
