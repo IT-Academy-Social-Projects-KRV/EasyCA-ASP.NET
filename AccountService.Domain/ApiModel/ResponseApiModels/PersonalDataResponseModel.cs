@@ -12,6 +12,6 @@ namespace AccountService.Domain.ApiModel.ResponseApiModels
         public DateTime BirthDay { get; set; }
         public string JobPosition { get; set; }
         public DriverLicense UserDriverLicense { get; set; }
-        public List<Transport> UserCars { get; set; }
+        public List<string> UserCars { get; set; }
     }
 }
