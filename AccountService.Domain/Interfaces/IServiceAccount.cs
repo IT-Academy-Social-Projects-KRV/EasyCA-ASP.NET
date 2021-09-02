@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Threading.Tasks;
 using AccountService.Domain.ApiModel.RequestApiModels;
 using AccountService.Domain.ApiModel.ResponseApiModels;

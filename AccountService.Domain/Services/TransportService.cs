@@ -8,6 +8,7 @@ using AccountService.Domain.ApiModel.ResponseApiModels;
 using AccountService.Domain.Errors;
 using AccountService.Domain.Interfaces;
 using AccountService.Domain.Properties;
+using AutoMapper;
 using MongoDB.Driver;
 
 namespace AccountService.Domain.Services
@@ -15,10 +16,12 @@ namespace AccountService.Domain.Services
     public class TransportService : ITransportService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public TransportService(ApplicationDbContext context)
+        public TransportService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> AddTransort(AddTransportRequestModel transportModel, string userId)
@@ -30,25 +33,16 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportCategoryNotFound"));
             }
 
-            Transport transport = new Transport
-            {
-                UserId = userId,
-                ProducedBy = transportModel.ProducedBy,
-                Model = transportModel.Model,
-                CarCategory = carCategory,
-                VINCode = transportModel.VINCode,
-                CarPlate = transportModel.CarPlate,
-                Color = transportModel.Color,
-                YearOfProduction = transportModel.YearOfProduction,
-                InsuaranceNumber = transportModel.InsuaranceNumber
-            };
+            var transport = _mapper.Map<Transport>(transportModel);
+            transport.CarCategory = carCategory;
+            transport.UserId = userId;
 
             await _context.Transports.InsertOneAsync(transport);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportAddingSucceeded"));
         }
 
-        public async Task<IEnumerable<Transport>> GetAllTransports(string userId)
+        public async Task<IEnumerable<TransportResponseApiModel>> GetAllTransports(string userId)
         {
             var filter = Builders<Transport>.Filter.Eq(c => c.UserId, userId);
             var transports = await _context.Transports.Find(filter).ToListAsync();
@@ -57,11 +51,10 @@ namespace AccountService.Domain.Services
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportsNotFound"));
             }
-
-            return transports;
+            return _mapper.Map<IEnumerable<TransportResponseApiModel>>(transports);
         }
 
-        public async Task<Transport> GetTransportById(string transportId, string userId)
+        public async Task<TransportResponseApiModel> GetTransportById(string transportId, string userId)
         {
             var filter = Builders<Transport>.Filter.Where(x => x.UserId == userId && x.Id == transportId);
             var transport = await _context.Transports.Find(filter).SingleOrDefaultAsync();
@@ -71,7 +64,7 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportsNotFound"));
             }
 
-            return transport;
+            return _mapper.Map<TransportResponseApiModel>(transport);
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> UpdateTransport(UpdateTransportRequestModel transportModel, string userId)
