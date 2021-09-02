@@ -19,6 +19,6 @@ namespace AccountService.Data.Entities
         public DateTime ExpirationDate { get; set; }
         [BsonElement("OpenedCategories")]
         [JsonProperty("OpenedCategories")]
-        public List<TransportCategory> UserCategories { get; set; }
+        public List<string> UserCategories { get; set; }
     }
 }

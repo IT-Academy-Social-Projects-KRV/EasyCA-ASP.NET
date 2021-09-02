@@ -21,7 +21,7 @@ namespace AccountService.Domain.ApiModel.Validators
                 WithMessage("Expiration date is required").Must(IsValidExpDate).
                 WithMessage("Your driver license is expired");
             RuleFor(n => n.UserCategories).Cascade(CascadeMode).NotEmpty().
-                WithMessage("You must have at least one category").Must(IsValidCategory).
+                WithMessage("You must have at least one category").Must(IsValidCategories).
                 WithMessage("Something went wrong");
         }
         public static bool IsValidDriverLicense(string driverNumber)
@@ -77,13 +77,20 @@ namespace AccountService.Domain.ApiModel.Validators
                 return false;
             }
         }
-        public static bool IsValidCategory(List<TransportCategory> UserCategories)
+        public static bool IsValidCategories(List<string> UserCategories)
         {
-            TransportCategoryValidator myCheck = new TransportCategoryValidator();
+            List<string> categories = new List<string>() { "A1", "A", "B1", "B", "C", "C1", "D", "D1", "BE", "CE", "DE", "C1E", "D1E", "T" };
             int count = 0;
+            
             foreach (var item in UserCategories)
             {
-                if (myCheck.Validate(item).IsValid == true) count++;
+                foreach (string category in categories)
+                {
+                    if (item == category)
+                    {
+                        count++;
+                    }
+                }
             }
 
             if (count > 0)

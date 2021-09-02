@@ -23,7 +23,6 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
                 Must(IsValidAddress).WithMessage("Wrong address object");
             RuleFor(n => n.UserDriverLicense).Cascade(CascadeMode.Stop).NotNull().WithMessage("DL is required").
                 Must(IsValidDriverLicense).WithMessage("DL doesnot meet criteria");
-            RuleFor(n => n.UserCars).Cascade(CascadeMode.Stop).Must(IsValidCarList).WithMessage("It seems you are pedestrian");
         }
         public static bool IsIPN(string taxpayerIPN)
         {
@@ -82,36 +81,6 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
             DriverLicenseValidator passValidator = new DriverLicenseValidator();
 
             if (passValidator.Validate(userPass).IsValid)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public static bool IsValidCarList(List<Transport> cars)
-        {
-            TransportValidator carsValidator = new TransportValidator();
-            int count = 0;
-            int wrongCar = 0;
-
-            if (cars.Count > 0)
-            {
-                foreach (Transport vehicle in cars)
-                {
-                    if (carsValidator.Validate(vehicle).IsValid)
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        wrongCar++;
-                    }
-                }
-            }
-
-            if (count > 0 && wrongCar == 0)
             {
                 return true;
             }
