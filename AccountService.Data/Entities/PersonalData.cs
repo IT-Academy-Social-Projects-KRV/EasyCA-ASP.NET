@@ -28,6 +28,6 @@ namespace AccountService.Data.Entities
         public DriverLicense UserDriverLicense { get; set; }
         [BsonElement("UserCars")]
         [JsonProperty("UserCars")]
-        public List<Transport> UserCars { get; set; }
+        public List<string> UserCars { get; set; }
     }
 }

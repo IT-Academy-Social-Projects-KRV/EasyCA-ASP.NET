@@ -40,6 +40,6 @@ namespace AccountService.Domain.ApiModel.RequestApiModels
         /// User cars
         /// </summary>     
         /// <example>bmw, audi</example>
-        public List<Transport> UserCars { get; set; }
+        public List<string> UserCars { get; set; }
     }
 }

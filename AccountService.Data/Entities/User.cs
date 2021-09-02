@@ -11,6 +11,4 @@ namespace AccountService.Data.Entities
         public PersonalData UserData { get; set; }
         public RefreshToken RefreshToken { get; set; }
     }
-
 }
-

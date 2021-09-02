@@ -30,7 +30,7 @@ namespace AccountService.Domain.Services
 
             if (carCategory == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.TransportCategoryNotFound);
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportCategoryNotFound"));
             }
 
             var transport = _mapper.Map<Transport>(transportModel);
@@ -39,7 +39,7 @@ namespace AccountService.Domain.Services
 
             await _context.Transports.InsertOneAsync(transport);
 
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.TransportAddingSucceeded);
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportAddingSucceeded"));
         }
 
         public async Task<IEnumerable<TransportResponseApiModel>> GetAllTransports(string userId)
@@ -49,7 +49,7 @@ namespace AccountService.Domain.Services
 
             if (transports == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.TransportsNotFound);
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportsNotFound"));
             }
             return _mapper.Map<IEnumerable<TransportResponseApiModel>>(transports);
         }
@@ -61,7 +61,7 @@ namespace AccountService.Domain.Services
 
             if (transport == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.TransportNotFound);
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportsNotFound"));
             }
 
             return _mapper.Map<TransportResponseApiModel>(transport);
@@ -74,7 +74,7 @@ namespace AccountService.Domain.Services
 
             if (carCategory == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.TransportCategoryNotFound);
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportCategoryNotFound"));
             }
 
             var update = Builders<Transport>.Update
@@ -90,7 +90,7 @@ namespace AccountService.Domain.Services
 
             var result = await _context.Transports.UpdateOneAsync(filter, update);
 
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.TransportUpdatingSucceeded);
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportUpdatingSucceeded"));
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> DeleteTransport(string transportId, string userId)
@@ -100,10 +100,10 @@ namespace AccountService.Domain.Services
 
             if (result == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.TransportDeleteFailed);
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportDeleteFailed"));
             }
 
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.TransportDeleteSucceeded);
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("TransportDeleteSucceeded"));
         }
     }
 }

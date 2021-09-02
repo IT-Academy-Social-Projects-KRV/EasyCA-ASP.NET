@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ namespace AccountService.Domain.Services
         private readonly SignInManager<User> _signInManager;
         private readonly IJwtService _jwtService;
         private readonly IMapper _mapper;
-
+        
         public ServiceAccount(UserManager<User> userManager, SignInManager<User> signInManager, IJwtService jwtService, IMapper mapper)
         {
             _userManager = userManager;
@@ -38,7 +37,7 @@ namespace AccountService.Domain.Services
             {
                 await _userManager.AddToRoleAsync(user, "participant");
 
-                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.RegistrationSucceeded);
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
             }
             else
             {
@@ -69,48 +68,45 @@ namespace AccountService.Domain.Services
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest, Resources.LoginWrongCredentials);
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("LoginWrongCredentials"));
             }
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(PersonalDataRequestModel data, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(UserRequestModel data, string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
-            user.UserData = new()
-            {
-                UserAddress = data.UserAddress,
-                BirthDay = data.BirthDay,
-                IPN = data.IPN,
-                ServiceNumber = data.ServiceNumber,
-                JobPosition = data.JobPosition,
-                UserDriverLicense = data.UserDriverLicense,
-                UserCars= data.UserCars
-            };
+
+            user.UserData = data.UserData;
+            user.Email = data.Email;
+            user.FirstName = data.FirstName;
+            user.LastName = data.LastName;
+
             await _userManager.UpdateAsync(user);
             
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "��� ����������� ������ �����!");
-       }
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update personal data is success!");
+        }
        
-       public async Task<PersonalDataResponseModel> GetPersonalData(string userId)
+        public async Task<PersonalDataResponseModel> GetPersonalData(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.UserNotFound);
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
             var personalData = user.UserData;
 
             if (personalData == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.UserPersonalDataNotFound);
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserPersonalDataNotFound"));
             }
             
             var response = _mapper.Map<PersonalDataResponseModel>(personalData);
             
             return response;
         }
+
         public async Task<UserResponseModel> GetUserById(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -123,6 +119,17 @@ namespace AccountService.Domain.Services
             var mappedUser = _mapper.Map<UserResponseModel>(user);
 
             return mappedUser;
+        }
+
+        public async Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestModel data, string userId)
+        {
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+            var persData = _mapper.Map<PersonalData>(data);
+            user.UserData = persData;
+
+            await _userManager.UpdateAsync(user);
+
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating personal data is success!");
         }
     }
 }
