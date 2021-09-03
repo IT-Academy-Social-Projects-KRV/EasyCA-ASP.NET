@@ -43,8 +43,8 @@ namespace AccountService.Domain.Services
             await _context.Transports.InsertOneAsync(transport);
 
             var user = await _userManager.FindByIdAsync(userId);
-
             user.UserData.UserCars.Add(transport.Id);
+
             await _userManager.UpdateAsync(user);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportAddingSucceeded"));
@@ -112,8 +112,8 @@ namespace AccountService.Domain.Services
             }
 
             var user = await _userManager.FindByIdAsync(userId);
-
             user.UserData.UserCars.Remove(transportId);
+
             await _userManager.UpdateAsync(user);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("TransportDeleteSucceeded"));
