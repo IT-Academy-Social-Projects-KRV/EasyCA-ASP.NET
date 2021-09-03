@@ -38,7 +38,7 @@ namespace AccountService.WebApi.Controllers
         public async Task<IActionResult> AddTransport(AddTransportRequestModel model)
         {
             var userId = User.FindFirst("id")?.Value;
-            var response = await _transportService.AddTransort(model, userId);
+            var response = await _transportService.AddTransport(model, userId);
             return Ok(response);
         }
 
