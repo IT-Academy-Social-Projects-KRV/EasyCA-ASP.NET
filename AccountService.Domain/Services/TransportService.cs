@@ -44,11 +44,6 @@ namespace AccountService.Domain.Services
 
             var user = await _userManager.FindByIdAsync(userId);
 
-            if (user == null)
-            {
-               throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
-            }
-
             user.UserData.UserCars.Add(transport.Id);
             await _userManager.UpdateAsync(user);
 
@@ -117,11 +112,6 @@ namespace AccountService.Domain.Services
             }
 
             var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
-            {
-                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
-            }
 
             user.UserData.UserCars.Remove(transportId);
             await _userManager.UpdateAsync(user);
