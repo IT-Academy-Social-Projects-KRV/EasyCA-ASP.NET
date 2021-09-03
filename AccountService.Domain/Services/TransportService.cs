@@ -9,6 +9,7 @@ using AccountService.Domain.Errors;
 using AccountService.Domain.Interfaces;
 using AccountService.Domain.Properties;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 
 namespace AccountService.Domain.Services
@@ -16,15 +17,17 @@ namespace AccountService.Domain.Services
     public class TransportService : ITransportService
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public TransportService(ApplicationDbContext context, IMapper mapper)
+        public TransportService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager)
         {
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> AddTransort(AddTransportRequestModel transportModel, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> AddTransport(AddTransportRequestModel transportModel, string userId)
         {
             var carCategory = await _context.TransportCategories.Find(x => x.CategoryName == transportModel.CategoryName).FirstOrDefaultAsync();
 
@@ -38,6 +41,11 @@ namespace AccountService.Domain.Services
             transport.UserId = userId;
 
             await _context.Transports.InsertOneAsync(transport);
+
+            var user = await _userManager.FindByIdAsync(userId);
+            user.UserData.UserCars.Add(transport.Id);
+
+            await _userManager.UpdateAsync(user);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportAddingSucceeded"));
         }
@@ -102,6 +110,11 @@ namespace AccountService.Domain.Services
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportDeleteFailed"));
             }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            user.UserData.UserCars.Remove(transportId);
+
+            await _userManager.UpdateAsync(user);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("TransportDeleteSucceeded"));
         }
