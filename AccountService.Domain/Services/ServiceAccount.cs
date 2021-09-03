@@ -57,14 +57,14 @@ namespace AccountService.Domain.Services
                 {
                     return null;
                 }
-
+                var roles = await _userManager.GetRolesAsync(user);
                 var token = _jwtService.CreateJwtToken(user);
                 var refreshtoken = _jwtService.CreateRefreshToken();
                 user.RefreshToken = refreshtoken;
                 await _userManager.UpdateAsync(user);
                 await _signInManager.SignInAsync(user, false);
 
-                return new AuthenticateResponseApiModel(user.Email, token, refreshtoken.Token);
+                return new AuthenticateResponseApiModel(user.Email, token, refreshtoken.Token,roles.FirstOrDefault());
             }
             else
             {

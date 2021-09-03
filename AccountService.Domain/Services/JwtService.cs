@@ -20,6 +20,7 @@ namespace AccountService.Domain.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly RoleManager<User> _manager;
 
         public JwtService(UserManager<User> userManager, IConfiguration configuration)
         {
@@ -32,11 +33,14 @@ namespace AccountService.Domain.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Secret"));
 
+            var role = user.Roles.FirstOrDefault();
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("Id",user.Id.ToString())
+                    new Claim("Id",user.Id.ToString()),
+                    new Claim("Role",role)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<double>("TokenExpires")),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -57,6 +61,7 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.BadRequest,"Refresh token is not active");
             }
 
+            var roles = await _userManager.GetRolesAsync(user);
             var newRefreshToken = CreateRefreshToken();
             refreshToken.Revoked = DateTime.UtcNow;
             user.RefreshToken = newRefreshToken;
@@ -65,7 +70,7 @@ namespace AccountService.Domain.Services
 
             var JWTToken = CreateJwtToken(user);
 
-            return new AuthenticateResponseApiModel(user.Email, JWTToken, newRefreshToken.Token);
+            return new AuthenticateResponseApiModel(user.Email, JWTToken, newRefreshToken.Token,roles.FirstOrDefault());
         }
         public RefreshToken CreateRefreshToken()
         {

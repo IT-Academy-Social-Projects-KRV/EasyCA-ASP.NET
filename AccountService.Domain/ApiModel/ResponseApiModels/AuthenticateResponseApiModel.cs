@@ -9,11 +9,12 @@ namespace AccountService.Domain.ApiModel.ResponseApiModels
         /// </summary>
         /// <param name="token">Sets the token.</param>
         /// <param name="refreshToken">Sets the refresh token.</param>
-        public AuthenticateResponseApiModel(string email=null,string token = null, string refreshToken = null)
+        public AuthenticateResponseApiModel(string email=null,string token = null, string refreshToken = null,string role=null)
         {
             Token = token;
             RefreshToken = refreshToken;
             Email = email;
+            Role = role;
         }
         /// <summary>
         /// Gets or sets the token for response result.
@@ -33,5 +34,11 @@ namespace AccountService.Domain.ApiModel.ResponseApiModels
         /// <example>6NSHvj4KkOPaLGOVgaVBgXN4eGUQtxpaI2R8nSBpczY=</example>
         [Required]
         public string RefreshToken { get; set; }
+        /// <summary>
+        /// Gets or sets the role for response result.
+        /// </summary>
+        /// <example>6NSHvj4KkOPaLGOVgaVBgXN4eGUQtxpaI2R8nSBpczY=</example>
+        [Required]
+        public string Role { get; set; }
     }
 }
