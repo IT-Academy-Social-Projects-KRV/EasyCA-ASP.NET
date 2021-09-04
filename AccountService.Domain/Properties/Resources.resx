@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EmailNotConfirmed" xml:space="preserve">
+    <value>Email has not been confirmed</value>
+  </data>
+  <data name="EmailNotSend" xml:space="preserve">
+    <value>Email was not send</value>
+  </data>
+  <data name="EmailSend" xml:space="preserve">
+    <value>Email send successfully</value>
+  </data>
   <data name="LoginSucceeded" xml:space="preserve">
     <value>You have successfully logged into your account</value>
   </data>
