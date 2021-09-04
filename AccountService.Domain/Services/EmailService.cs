@@ -30,6 +30,7 @@ namespace AccountService.Domain.Services
             var htmlContent = message;
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var result= await client.SendEmailAsync(msg);
+
             if(result.IsSuccessStatusCode)
             {
                 return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("EmailSend"));

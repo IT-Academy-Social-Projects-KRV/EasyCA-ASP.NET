@@ -107,6 +107,7 @@ namespace AccountService.WebApi.Controllers
         public async Task<IActionResult> ConfirmEmail(string email,string token)
         {
             var result = await _serviceAccount.ConfirmEmailAsync(email, token);
+
             return Ok(result);
         }
     }

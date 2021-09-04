@@ -53,7 +53,6 @@ namespace AccountService.Domain.Services
                 };
 
                 var callback = QueryHelpers.AddQueryString(userRequest.ClientURI, param);
-
                 var emailResult = await _emailService.SendEmailAsync(user.Email, "EasyCA-Confirm Your Email", callback);
 
                 if (emailResult.Success)
