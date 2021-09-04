@@ -25,7 +25,7 @@ namespace AccountService.Domain.Services
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("OKorniichuk03@gmail.com");
             var subject = emailSubject;
-            var to = new EmailAddress("SashaKorniichuk2@gmail.com");
+            var to = new EmailAddress(userEmail);
             var plainTextContent = message;
             var htmlContent = message;
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
