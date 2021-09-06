@@ -80,7 +80,6 @@ namespace AccountService.Domain.Services
             user.Email = data.Email;
             user.FirstName = data.FirstName;
             user.LastName = data.LastName;
-            user.UserName = data.Email;
 
             await _userManager.UpdateAsync(user);
             
