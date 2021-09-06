@@ -76,12 +76,9 @@ namespace AccountService.Domain.Services
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
 
-            user.UserData = data.UserData;
-            user.Email = data.Email;
-            user.FirstName = data.FirstName;
-            user.LastName = data.LastName;
+            var mapped = _mapper.Map<UserRequestModel, User>(data, user);
 
-            await _userManager.UpdateAsync(user);
+            await _userManager.UpdateAsync(mapped);
             
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update personal data is success!");
         }
