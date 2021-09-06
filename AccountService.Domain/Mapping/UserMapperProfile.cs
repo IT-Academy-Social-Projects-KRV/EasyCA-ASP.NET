@@ -13,8 +13,11 @@ namespace AccountService.Domain.Mapping
             CreateMap<RegisterApiModel, User>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email)).ReverseMap();
             CreateMap<User, UserResponseModel>().ReverseMap();
-            CreateMap<User, UserRequestModel>()
-                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+            CreateMap<UserRequestModel, User>()
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
+                .ForMember(dest => dest.UserData, opt => opt.MapFrom(src => src.UserData))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
         }
     }
 }
