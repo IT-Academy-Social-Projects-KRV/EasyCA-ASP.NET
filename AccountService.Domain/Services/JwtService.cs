@@ -20,7 +20,6 @@ namespace AccountService.Domain.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly RoleManager<User> _manager;
 
         public JwtService(UserManager<User> userManager, IConfiguration configuration)
         {
@@ -58,7 +57,7 @@ namespace AccountService.Domain.Services
 
             if (!refreshToken.IsActive)
             {
-                throw new RestException(HttpStatusCode.BadRequest,"Refresh token is not active");
+                throw new RestException(HttpStatusCode.BadRequest, "Refresh token is not active");
             }
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -70,7 +69,7 @@ namespace AccountService.Domain.Services
 
             var JWTToken = CreateJwtToken(user);
 
-            return new AuthenticateResponseApiModel(user.Email, JWTToken, newRefreshToken.Token,roles.FirstOrDefault());
+            return new AuthenticateResponseApiModel(user.Email, JWTToken, newRefreshToken.Token, roles.FirstOrDefault());
         }
         public RefreshToken CreateRefreshToken()
         {

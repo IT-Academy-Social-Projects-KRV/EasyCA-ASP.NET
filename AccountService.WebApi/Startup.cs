@@ -36,6 +36,8 @@ namespace AccountService.WebApi
             services.AddTransient<IServiceAccount, ServiceAccount>();
             services.AddTransient<ITransportService, TransportService>();
             services.AddTransient<IJwtService, JwtService>();
+            services.AddTransient<IEmailService, EmailService>();
+
 
             services.AddSwaggerGen(c =>
             {
@@ -71,7 +73,7 @@ namespace AccountService.WebApi
             .AddMongoDbStores<User, Role, string>
             (
                 Configuration.GetConnectionString("MongoDb"), Configuration["DbName"]
-            );
+            ).AddDefaultTokenProviders();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.RoleType, builder.Services);
             identityBuilder.AddSignInManager<SignInManager<User>>();
 

@@ -27,5 +27,7 @@
         /// </summary>     
         /// <example>QWerty-1</example>
         public string ConfirmPassword { get; set; }
+
+        public string ClientURI { get; set; }
     }
 }
