@@ -13,6 +13,7 @@ namespace AccountService.Domain.Interfaces
         Task<PersonalDataResponseModel> GetPersonalData(string userId);
         Task<UserResponseModel> GetUserById(string userId);
         Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestModel data, string userId);
-        Task<ResponseApiModel<HttpStatusCode>> ConfirmEmailAsync(string userId, string token); 
+        Task<ResponseApiModel<HttpStatusCode>> ConfirmEmailAsync(string userId, string token);
+        Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password,string oldPassword, string userId);
     }
 }
