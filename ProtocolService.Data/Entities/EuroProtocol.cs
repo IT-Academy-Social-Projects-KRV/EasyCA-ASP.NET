@@ -17,7 +17,7 @@ namespace ProtocolService.Data.Entities
 
         //DTG
 
-        public string Address { get; set; } //уточнити
+        public AddressOfAccident Address { get; set; } //уточнити
 
         [BsonElement("Side A Id")]
         [JsonProperty("Side A Id")]
@@ -30,6 +30,5 @@ namespace ProtocolService.Data.Entities
         [BsonElement("List of Witnesses")]
         [JsonProperty("List of Witnesses")]
         public List<Witness> Witnesses { get; set; }
-
     }
 }
