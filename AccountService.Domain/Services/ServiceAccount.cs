@@ -110,7 +110,7 @@ namespace AccountService.Domain.Services
             var mapped = _mapper.Map<UserRequestModel, User>(data, user);
 
             await _userManager.UpdateAsync(mapped);
-            
+
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update personal data is success!");
         }
 
@@ -184,6 +184,21 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("LoginWrongCredentials"));
             }
 
+        }
+
+        public async Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password, string oldPassword, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, password);
+            
+            if (result.Succeeded)
+            {
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Password was changed successfully");
+            }
+            else
+            {
+                throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
+            }
         }
     }
 }

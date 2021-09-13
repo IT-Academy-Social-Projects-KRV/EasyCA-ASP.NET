@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 
@@ -9,8 +9,9 @@ namespace ProtocolService.Data.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string CircumstanceId { get; set; }
-        [BsonElement("Circumstances Name")]
-        [JsonProperty("Circumstances Name")]
+
+        [BsonElement("CircumstanceName")]
+        [JsonProperty("CircumstanceName")]
         public string CircumstanceName { get; set; }
     }
 }

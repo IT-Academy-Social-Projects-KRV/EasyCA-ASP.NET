@@ -110,5 +110,15 @@ namespace AccountService.WebApi.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordApiModel data)
+        {
+            var userId = User.FindFirst("Id").Value;
+            var responce = await _serviceAccount.ChangePassword(data.Password, data.OldPassword, userId);
+
+            return Ok(responce);
+
+        }
     }
 }
