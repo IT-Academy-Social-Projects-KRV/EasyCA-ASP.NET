@@ -24,9 +24,8 @@ namespace ProtocolService.Data.Entities
         public string LastName { get; set; }
 
         [BsonElement("Witness Address")]
-        [JsonProperty("Witness Address")]
-        //чи просто стрінгою передавати
-        public Address WitnessAddress { get; set; } 
+        [JsonProperty("Witness Address")]        
+        public string WitnessAddress { get; set; } 
 
         [BsonElement("Witness Phone Number")]
         [JsonProperty("Witness Phone Number")]

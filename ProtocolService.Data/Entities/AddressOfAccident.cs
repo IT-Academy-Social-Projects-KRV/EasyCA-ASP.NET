@@ -27,6 +27,10 @@ namespace ProtocolService.Data.Entities
         [JsonProperty("Street")]
         public string Street { get; set; }
 
+        [BsonElement("Cross Street")]
+        [JsonProperty("Cross Street")]
+        public string CrossStreet { get; set; }
+
         [BsonElement("Latityde")]
         [JsonProperty("Latityde")]
         public string CoordinatesOfLatitude { get; set; }
@@ -34,5 +38,13 @@ namespace ProtocolService.Data.Entities
         [BsonElement("Longitude")]
         [JsonProperty("Longitude")]
         public string CoordinatesOfLongitude { get; set; }
+
+        [BsonElement("Is in City")]
+        [JsonProperty("Is in City")]
+        public bool IsInCity { get; set; }
+
+        [BsonElement("Is Intersection")]
+        [JsonProperty("Is Intersection")]
+        public bool IsIntersection { get; set; }
     }
 }
