@@ -34,6 +34,5 @@ namespace ProtocolService.Data.Entities
         [BsonElement("Longitude")]
         [JsonProperty("Longitude")]
         public string CoordinatesOfLongitude { get; set; }
-
     }
 }
