@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace ProtocolService.Data.Entities
 {
-    public class Circumstances
+    public class Circumstance
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string UserId { get; set; }
+        public string CircumstanceId { get; set; }
 
-        [BsonElement("Circumstances Name")]
-        [JsonProperty("Circumstances Name")]
-        public string Circumstance { get; set; }
+        [BsonElement("CircumstanceName")]
+        [JsonProperty("CircumstanceName")]
+        public string CircumstanceName { get; set; }
     }
 }

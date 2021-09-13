@@ -15,24 +15,24 @@ namespace ProtocolService.Data.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonElement("Witness First Name")]
-        [JsonProperty("Witness First Name")]
+        [BsonElement("WitnessFirstName")]
+        [JsonProperty("WitnessFirstName")]
         public string FirstName { get; set; }
 
-        [BsonElement("Witness Last Name")]
-        [JsonProperty("Witness Last Name")]
+        [BsonElement("WitnessLastName")]
+        [JsonProperty("WitnessLastName")]
         public string LastName { get; set; }
 
-        [BsonElement("Witness Address")]
-        [JsonProperty("Witness Address")]        
+        [BsonElement("WitnessAddress")]
+        [JsonProperty("WitnessAddress")]        
         public string WitnessAddress { get; set; } 
 
-        [BsonElement("Witness Phone Number")]
-        [JsonProperty("Witness Phone Number")]
+        [BsonElement("WitnessPhoneNumber")]
+        [JsonProperty("WitnessPhoneNumber")]
         public string PhoneNumber { get; set; }
 
-        [BsonElement("Is Victim")]
-        [JsonProperty("Is Victim")]
+        [BsonElement("IsVictim")]
+        [JsonProperty("IsVictim")]
         public bool IsVictim { get; set; }
     }
 }

@@ -10,11 +10,7 @@ using System.Threading.Tasks;
 namespace ProtocolService.Data.Entities
 {
     public class AddressOfAccident
-    {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string EuroProtocolId { get; set; }
-
+    {        
         [BsonElement("City")]
         [JsonProperty("City")]
         public string City { get; set; }
@@ -27,24 +23,24 @@ namespace ProtocolService.Data.Entities
         [JsonProperty("Street")]
         public string Street { get; set; }
 
-        [BsonElement("Cross Street")]
-        [JsonProperty("Cross Street")]
+        [BsonElement("CrossStreet")]
+        [JsonProperty("CrossStreet")]
         public string CrossStreet { get; set; }
 
-        [BsonElement("Latityde")]
-        [JsonProperty("Latityde")]
+        [BsonElement("Latitude")]
+        [JsonProperty("Latitude")]
         public string CoordinatesOfLatitude { get; set; }
 
         [BsonElement("Longitude")]
         [JsonProperty("Longitude")]
         public string CoordinatesOfLongitude { get; set; }
 
-        [BsonElement("Is in City")]
-        [JsonProperty("Is in City")]
+        [BsonElement("IsInCity")]
+        [JsonProperty("IsInCity")]
         public bool IsInCity { get; set; }
 
-        [BsonElement("Is Intersection")]
-        [JsonProperty("Is Intersection")]
+        [BsonElement("IsIntersection")]
+        [JsonProperty("IsIntersection")]
         public bool IsIntersection { get; set; }
     }
 }

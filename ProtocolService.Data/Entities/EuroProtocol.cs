@@ -15,24 +15,24 @@ namespace ProtocolService.Data.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonElement("Date Time")]
-        [JsonProperty("Date Time")]
-        public DateTime DateTimeGroup { get; set; }
+        [BsonElement("RegistrationDateTime")]
+        [JsonProperty("RegistrationDateTime")]
+        public DateTime RegistrationDateTime { get; set; }
 
-        [BsonElement("Address Of Accident")]
-        [JsonProperty("Address Of Accident")]
-        public AddressOfAccident Address { get; set; } //уточнити
+        [BsonElement("AddressOfAccident")]
+        [JsonProperty("AddressOfAccident")]
+        public AddressOfAccident Address { get; set; } 
 
-        [BsonElement("Side A")]
-        [JsonProperty("Side A")]
-        public string SideAId { get; set; }
+        [BsonElement("SideA")]
+        [JsonProperty("SideA")]
+        public Side SideA { get; set; }
 
-        [BsonElement("Side B")]
-        [JsonProperty("Side B")]
-        public string SideBId { get; set; }
+        [BsonElement("SideB")]
+        [JsonProperty("SideB")]
+        public Side SideB { get; set; }
 
-        [BsonElement("List of Witnesses")]
-        [JsonProperty("List of Witnesses")]
+        [BsonElement("ListOfWitnesses")]
+        [JsonProperty("ListOfWitnesses")]
         public List<Witness> Witnesses { get; set; }
     }
 }

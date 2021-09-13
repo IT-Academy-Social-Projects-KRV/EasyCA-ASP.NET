@@ -15,16 +15,16 @@ namespace ProtocolService.Data.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
 
-        [BsonElement("Transport Id")]
-        [JsonProperty("Transport Id")]
+        [BsonElement("TransportId")]
+        [JsonProperty("TransportId")]
         public string TransportId { get; set; }
 
-        [BsonElement("List of circumstances")]
-        [JsonProperty("List of circumstances")]
-        public List<Circumstances> Circumstances { get; set; }
+        [BsonElement("ListOfCircumstances")]
+        [JsonProperty("ListOfCircumstances")]
+        public List<Circumstance> Circumstances { get; set; }
 
-        [BsonElement("List of evidences")]
-        [JsonProperty("List of evidences")]
+        [BsonElement("ListOfEvidences")]
+        [JsonProperty("ListOfEvidences")]
         public List<Evidence> Evidences { get; set; }
 
         [BsonElement("DriverLicense")]
@@ -35,8 +35,8 @@ namespace ProtocolService.Data.Entities
         [JsonProperty("Damage")]
         public string Damage { get; set; }
 
-        [BsonElement("IsBulty")]
-        [JsonProperty("IsBulty")]
+        [BsonElement("IsGulty")]
+        [JsonProperty("IsGulty")]
         public bool IsGulty { get; set; }
     }
 }

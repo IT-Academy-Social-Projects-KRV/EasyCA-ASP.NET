@@ -19,14 +19,12 @@ namespace ProtocolService.Data.Entities
         [JsonProperty("Explanation")]
         public string Explanation { get; set; }
 
-        [BsonElement("Photo/schema")]
-        [BsonRepresentation(BsonType.Undefined)]
-        [JsonProperty("Photo/schema")]
-        public object PhotoSchema { get; set; }
+        [BsonElement("PhotoSchema")]
+        [JsonProperty("PhotoSchema")]
+        public string PhotoSchema { get; set; }
 
         [BsonElement("Attachments")]
-        [BsonRepresentation(BsonType.Undefined)]
         [JsonProperty("Attachments")]
-        public List<object> Attachments { get; set; }
+        public List<string> Attachments { get; set; }
     }
 }
