@@ -64,10 +64,10 @@ namespace AccountService.WebApi.Controllers
         {
             var userId = User.FindFirst("Id").Value;
             var response = await _serviceAccount.UpdateUserData(data, userId);
-            
+
             return Ok(response);
         }
-        
+
         [HttpGet("GetPersonalData")]
         public async Task<IActionResult> GetPersonalData()
         {
@@ -82,7 +82,7 @@ namespace AccountService.WebApi.Controllers
         {
             var userId = User.FindFirst("Id").Value;
             var response = await _serviceAccount.GetUserById(userId);
-            
+
             return Ok(response);
         }
 
@@ -90,7 +90,7 @@ namespace AccountService.WebApi.Controllers
         public async Task<IActionResult> GetUserById(string id)
         {
             var response = await _serviceAccount.GetUserById(id);
-            
+
             return Ok(response);
         }
 
@@ -104,7 +104,7 @@ namespace AccountService.WebApi.Controllers
         }
 
         [HttpGet("ConfirmEmail/{token}/{email}")]
-        public async Task<IActionResult> ConfirmEmail(string email,string token)
+        public async Task<IActionResult> ConfirmEmail(string email, string token)
         {
             var result = await _serviceAccount.ConfirmEmailAsync(email, token);
 

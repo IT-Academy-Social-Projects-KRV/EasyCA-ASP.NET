@@ -110,7 +110,7 @@ namespace AccountService.Domain.Services
             var mapped = _mapper.Map<UserRequestModel, User>(data, user);
 
             await _userManager.UpdateAsync(mapped);
-            
+
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update personal data is success!");
         }
 
@@ -183,7 +183,6 @@ namespace AccountService.Domain.Services
             {
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("LoginWrongCredentials"));
             }
-
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> ForgotPassword(ForgotPasswordApiModel data)
@@ -201,20 +200,18 @@ namespace AccountService.Domain.Services
             }
 
             var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var encodedToken = Encoding.UTF8.GetBytes(resetPasswordToken);
-            var normalToken = WebEncoders.Base64UrlEncode(encodedToken);
+            var tokenBytes = Encoding.UTF8.GetBytes(resetPasswordToken);
+            var encodedToken = WebEncoders.Base64UrlEncode(tokenBytes);
 
-            var encodedPassword = Encoding.UTF8.GetBytes(data.NewPassword);
-            var normalPassword = WebEncoders.Base64UrlEncode(encodedPassword);
+            var passwordBytes = Encoding.UTF8.GetBytes(data.NewPassword);
+            var encodedPassword = WebEncoders.Base64UrlEncode(passwordBytes);
 
-            
             var param = new Dictionary<string, string>
-                {
-                    { "password", normalPassword },
-                    { "token", normalToken},
-                    { "email", data.Email }
-                };
-
+            {
+                { "password", encodedPassword },
+                { "token", encodedToken },
+                { "email", data.Email }
+            };
 
             var callback = QueryHelpers.AddQueryString(data.PasswordURI, param);
             var emailResult = await _emailService.SendEmailAsync(data.Email, "EasyCA-Restore Your Password", callback);
@@ -238,11 +235,11 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
-            var decodedPassword = WebEncoders.Base64UrlDecode(newPassword);
-            var normalPassword = Encoding.UTF8.GetString(decodedPassword);
+            var decodedPasswordBytes = WebEncoders.Base64UrlDecode(newPassword);
+            var normalPassword = Encoding.UTF8.GetString(decodedPasswordBytes);
 
-            var decodedToken = WebEncoders.Base64UrlDecode(token);
-            var normalToken = Encoding.UTF8.GetString(decodedToken);
+            var decodedTokenBytes = WebEncoders.Base64UrlDecode(token);
+            var normalToken = Encoding.UTF8.GetString(decodedTokenBytes);
 
             var result = await _userManager.ResetPasswordAsync(user, normalToken, normalPassword);
 
