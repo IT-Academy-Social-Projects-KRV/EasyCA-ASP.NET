@@ -106,6 +106,24 @@ namespace AccountService.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your password has been successfully reset.
+        /// </summary>
+        public static string PasswordResetSuccess {
+            get {
+                return ResourceManager.GetString("PasswordResetSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords do not match.
+        /// </summary>
+        public static string PasswordsNotMatching {
+            get {
+                return ResourceManager.GetString("PasswordsNotMatching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Couldn&apos;t register a new account.
         /// </summary>
         public static string RegistrationFailed {
@@ -120,6 +138,24 @@ namespace AccountService.Domain.Properties {
         public static string RegistrationSucceeded {
             get {
                 return ResourceManager.GetString("RegistrationSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t send a password reset link.
+        /// </summary>
+        public static string RestoreLinkNotSent {
+            get {
+                return ResourceManager.GetString("RestoreLinkNotSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A password reset link has been sent to your email.
+        /// </summary>
+        public static string RestoreLinkSent {
+            get {
+                return ResourceManager.GetString("RestoreLinkSent", resourceCulture);
             }
         }
         
