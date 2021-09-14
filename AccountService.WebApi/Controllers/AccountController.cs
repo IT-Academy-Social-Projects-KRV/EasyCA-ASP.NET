@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-using AccountService.Domain.ApiModel.ResponseApiModels;
 
 namespace AccountService.WebApi.Controllers
 {
@@ -118,7 +117,6 @@ namespace AccountService.WebApi.Controllers
             var responce = await _serviceAccount.ChangePassword(data.Password, data.OldPassword, userId);
 
             return Ok(responce);
-
         }
     }
 }

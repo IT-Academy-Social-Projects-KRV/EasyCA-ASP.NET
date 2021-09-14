@@ -1,16 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ApiModel\Validators\" />
-    <Folder Include="ModelDTO\" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ProtocolService.Data\ProtocolService.Data.csproj" />
+    <ProjectReference Include="..\ProtocolService.Domain\ProtocolService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

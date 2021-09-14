@@ -7,8 +7,7 @@ namespace ProtocolService.Data.Entities
     public class Circumstance
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string CircumstanceId { get; set; }
+        public int CircumstanceId { get; set; }
 
         [BsonElement("CircumstanceName")]
         [JsonProperty("CircumstanceName")]
