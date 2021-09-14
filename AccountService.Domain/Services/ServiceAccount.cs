@@ -206,7 +206,7 @@ namespace AccountService.Domain.Services
             }
 
             var result = await _userManager.ChangePasswordAsync(user, oldPassword, password);
-            
+
             if (result.Succeeded)
             {
                 return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Password was changed successfully");

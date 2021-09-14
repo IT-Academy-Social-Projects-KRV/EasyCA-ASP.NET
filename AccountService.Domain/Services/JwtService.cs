@@ -54,8 +54,8 @@ namespace AccountService.Domain.Services
         public async Task<AuthenticateResponseApiModel> RefreshTokenAsync(string token)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.RefreshToken.Token == token);
-            
-            if(user == null)
+
+            if (user == null)
             {
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserRefreshTokenNotFound"));
             }
@@ -78,6 +78,7 @@ namespace AccountService.Domain.Services
 
             return new AuthenticateResponseApiModel(user.Email, JWTToken, newRefreshToken.Token, roles.FirstOrDefault());
         }
+
         public RefreshToken CreateRefreshToken()
         {
             var randomNumber = new byte[64];
@@ -89,11 +90,12 @@ namespace AccountService.Domain.Services
                 return new RefreshToken
                 {
                     Token = Convert.ToBase64String(randomNumber),
-                    Expires = DateTime.UtcNow.Days(_configuration.GetValue<double>("RefreshTokenExpires")),
+                    Expires = DateTime.UtcNow.AddDays(_configuration.GetValue<double>("RefreshTokenExpires")),
                     Created = DateTime.UtcNow
                 };
             }
         }
+
         public bool RevokeToken(string token)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.RefreshToken.Token == token);
