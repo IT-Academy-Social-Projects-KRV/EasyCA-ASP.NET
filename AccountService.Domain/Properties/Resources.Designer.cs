@@ -203,5 +203,23 @@ namespace AccountService.Domain.Properties {
                 return ResourceManager.GetString("UserPersonalDataNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh token is not active.
+        /// </summary>
+        public static string UserRefreshTokenNotActive {
+            get {
+                return ResourceManager.GetString("UserRefreshTokenNotActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User has another Refresh token.
+        /// </summary>
+        public static string UserRefreshTokenNotFound {
+            get {
+                return ResourceManager.GetString("UserRefreshTokenNotFound", resourceCulture);
+            }
+        }
     }
 }

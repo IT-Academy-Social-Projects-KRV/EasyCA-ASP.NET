@@ -10,6 +10,7 @@ using AccountService.Data.Entities;
 using AccountService.Domain.ApiModel.ResponseApiModels;
 using AccountService.Domain.Errors;
 using AccountService.Domain.Interfaces;
+using AccountService.Domain.Properties;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -53,11 +54,17 @@ namespace AccountService.Domain.Services
         public async Task<AuthenticateResponseApiModel> RefreshTokenAsync(string token)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.RefreshToken.Token == token);
+            
+            if(user == null)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserRefreshTokenNotFound"));
+            }
+
             var refreshToken = user.RefreshToken;
 
             if (!refreshToken.IsActive)
             {
-                throw new RestException(HttpStatusCode.BadRequest, "Refresh token is not active");
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserRefreshTokenNotActive"));
             }
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -82,7 +89,7 @@ namespace AccountService.Domain.Services
                 return new RefreshToken
                 {
                     Token = Convert.ToBase64String(randomNumber),
-                    Expires = DateTime.UtcNow.AddDays(_configuration.GetValue<double>("RefreshTokenExpires")),
+                    Expires = DateTime.UtcNow.Days(_configuration.GetValue<double>("RefreshTokenExpires")),
                     Created = DateTime.UtcNow
                 };
             }

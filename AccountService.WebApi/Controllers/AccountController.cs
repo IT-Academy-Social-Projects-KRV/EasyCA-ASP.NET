@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 using AccountService.Domain.ApiModel.ResponseApiModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AccountService.WebApi.Controllers
 {
@@ -23,35 +24,21 @@ namespace AccountService.WebApi.Controllers
             _configuration = configuration;
             _jwtService = jwtService;
         }
-
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginApiModel model)
         {
             var response = await _serviceAccount.LoginUser(model);
-            SetRefreshTokenInCookie(response.RefreshToken);
             return Ok(response);
         }
-
+        [AllowAnonymous]
         [HttpPost("RefreshToken")]
-        public async Task<IActionResult> RefreshToken()
+        public async Task<IActionResult> RefreshToken(RefreshTokenRequestModel data)
         {
-            var refreshToken = Request.Cookies["refreshToken"];
-            var response = await _jwtService.RefreshTokenAsync(refreshToken);
-            if (!string.IsNullOrEmpty(response.RefreshToken))
-                SetRefreshTokenInCookie(response.RefreshToken);
+            var response = await _jwtService.RefreshTokenAsync(data.RefreshToken);
             return Ok(response);
         }
-
-        private void SetRefreshTokenInCookie(string refreshToken)
-        {
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(_configuration.GetValue<double>("RefreshTokenExpires")),
-            };
-            Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
-        }
-
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterApiModel userRegisterRequest)
         {
@@ -62,7 +49,7 @@ namespace AccountService.WebApi.Controllers
         [HttpPut("UpdateData")]
         public async Task<IActionResult> UpdateUserData(UserRequestModel data)
         {
-            var userId = User.FindFirst("Id").Value;
+            var userId = User.FindFirst("Id")?.Value;
             var response = await _serviceAccount.UpdateUserData(data, userId);
             
             return Ok(response);
@@ -71,7 +58,7 @@ namespace AccountService.WebApi.Controllers
         [HttpGet("GetPersonalData")]
         public async Task<IActionResult> GetPersonalData()
         {
-            var userId = User.FindFirst("Id").Value;
+            var userId = User.FindFirst("Id")?.Value;
             var response = await _serviceAccount.GetPersonalData(userId);
 
             return Ok(response);
@@ -80,7 +67,7 @@ namespace AccountService.WebApi.Controllers
         [HttpGet("GetUserById")]
         public async Task<IActionResult> GetUserById()
         {
-            var userId = User.FindFirst("Id").Value;
+            var userId = User.FindFirst("Id")?.Value;
             var response = await _serviceAccount.GetUserById(userId);
             
             return Ok(response);
@@ -97,7 +84,7 @@ namespace AccountService.WebApi.Controllers
         [HttpPost("CreatePersonalData")]
         public async Task<IActionResult> CreatePersonalData(PersonalDataRequestModel data)
         {
-            var userId = User.FindFirst("Id").Value;
+            var userId = User.FindFirst("Id")?.Value;
             var response = await _serviceAccount.CreatePersonalData(data, userId);
 
             return Ok(response);
@@ -114,7 +101,7 @@ namespace AccountService.WebApi.Controllers
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordApiModel data)
         {
-            var userId = User.FindFirst("Id").Value;
+            var userId = User.FindFirst("Id")?.Value;
             var responce = await _serviceAccount.ChangePassword(data.Password, data.OldPassword, userId);
 
             return Ok(responce);
