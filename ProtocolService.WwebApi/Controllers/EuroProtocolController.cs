@@ -25,5 +25,13 @@ namespace ProtocolService.WebApi
             var response = await _serviceProtocol.RegistrationEuroProtocol(euroProtocolRequest);
             return Ok(response);
         }
+
+
+        [HttpPost("RegisterSideBEuroProtocol")]
+        public async Task<IActionResult> RegisterSideBEuroProtocol(SideRequestModel SideRequest)
+        {
+            var response = await _serviceProtocol.RegisterSideBEuroProtocol(SideRequest);
+            return Ok(response);
+        }
     }
 }

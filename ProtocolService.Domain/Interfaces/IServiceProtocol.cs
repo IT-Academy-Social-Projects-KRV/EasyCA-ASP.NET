@@ -8,5 +8,6 @@ namespace ProtocolService.Domain.Interfaces
     public interface IServiceProtocol
     {
         Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestModel data);
+        Task<ResponseApiModel<HttpStatusCode>> RegisterSideBEuroProtocol(SideRequestModel data);
     }
 }

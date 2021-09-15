@@ -28,6 +28,10 @@ namespace ProtocolService.Data.Entities
         [JsonProperty("SideB")]
         public Side SideB { get; set; }
 
+        [BsonElement("IsClosed")]
+        [JsonProperty("IsClosed")]
+        public bool IsClosed { get; set; }
+
         [BsonElement("ListOfWitnesses")]
         [JsonProperty("ListOfWitnesses")]
         public List<Witness> Witnesses { get; set; }

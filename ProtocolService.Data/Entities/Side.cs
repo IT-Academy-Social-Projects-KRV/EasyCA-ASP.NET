@@ -7,8 +7,11 @@ namespace ProtocolService.Data.Entities
 {
     public class Side
     {
-        [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
+
+        [BsonElement("Email")]
+        [JsonProperty("Email")]
+        public string Email { get; set; }
 
         [BsonElement("TransportId")]
         [JsonProperty("TransportId")]
