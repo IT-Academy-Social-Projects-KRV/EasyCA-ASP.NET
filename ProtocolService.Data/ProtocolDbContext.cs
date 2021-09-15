@@ -11,5 +11,6 @@ namespace ProtocolService.Data
             _dbContext = client.GetDatabase(dbName);
         }
         public IMongoCollection<Circumstance> Circumstances => _dbContext.GetCollection<Circumstance>("Circumstances");
+        public IMongoCollection<EuroProtocol> EuroProtocols => _dbContext.GetCollection<EuroProtocol>("EuroProtocols");
     }
 }

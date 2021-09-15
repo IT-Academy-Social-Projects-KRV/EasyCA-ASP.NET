@@ -1,19 +1,15 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProtocolService.Data.Entities
 {
     public class Side
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string UserId { get; set; }
+        [BsonElement("Email")]
+        [JsonProperty("Email")]
+        public string Email { get; set; }
 
         [BsonElement("TransportId")]
         [JsonProperty("TransportId")]
@@ -21,7 +17,7 @@ namespace ProtocolService.Data.Entities
 
         [BsonElement("ListOfCircumstances")]
         [JsonProperty("ListOfCircumstances")]
-        public List<Circumstance> Circumstances { get; set; }
+        public List<int> Circumstances { get; set; }
 
         [BsonElement("ListOfEvidences")]
         [JsonProperty("ListOfEvidences")]

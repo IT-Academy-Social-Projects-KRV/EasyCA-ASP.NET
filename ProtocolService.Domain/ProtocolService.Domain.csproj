@@ -4,4 +4,13 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="ApiModel\Validators\" />
+    <Folder Include="ModelDTO\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProtocolService.Data\ProtocolService.Data.csproj" />
+  </ItemGroup>
+
 </Project>

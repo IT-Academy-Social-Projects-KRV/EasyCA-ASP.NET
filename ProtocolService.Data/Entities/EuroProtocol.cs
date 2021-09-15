@@ -3,9 +3,6 @@ using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProtocolService.Data.Entities
 {
@@ -30,6 +27,10 @@ namespace ProtocolService.Data.Entities
         [BsonElement("SideB")]
         [JsonProperty("SideB")]
         public Side SideB { get; set; }
+
+        [BsonElement("IsClosed")]
+        [JsonProperty("IsClosed")]
+        public bool IsClosed { get; set; }
 
         [BsonElement("ListOfWitnesses")]
         [JsonProperty("ListOfWitnesses")]
