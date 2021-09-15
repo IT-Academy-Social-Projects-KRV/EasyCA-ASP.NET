@@ -193,7 +193,74 @@ namespace AccountService.Domain.Services
             {
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("LoginWrongCredentials"));
             }
+        }
 
+        public async Task<ResponseApiModel<HttpStatusCode>> ForgotPassword(ForgotPasswordApiModel data)
+        {
+            var user = await _userManager.FindByEmailAsync(data.Email);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
+            if (data.NewPassword != data.ConfirmPassword)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("PasswordsNotMatching"));
+            }
+
+            var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var tokenBytes = Encoding.UTF8.GetBytes(resetPasswordToken);
+            var encodedToken = WebEncoders.Base64UrlEncode(tokenBytes);
+
+            var passwordBytes = Encoding.UTF8.GetBytes(data.NewPassword);
+            var encodedPassword = WebEncoders.Base64UrlEncode(passwordBytes);
+
+            var param = new Dictionary<string, string>
+            {
+                { "password", encodedPassword },
+                { "token", encodedToken },
+                { "email", data.Email }
+            };
+
+            var callback = QueryHelpers.AddQueryString(data.PasswordURI, param);
+            var emailResult = await _emailService.SendEmailAsync(data.Email, "EasyCA-Restore Your Password", callback);
+
+            if (emailResult.Success)
+            {
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RestoreLinkSent"));
+            }
+            else
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RestoreLinkNotSent"));
+            }
+        }
+
+        public async Task<ResponseApiModel<HttpStatusCode>> RestorePassword(string newPassword, string token, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
+            var decodedPasswordBytes = WebEncoders.Base64UrlDecode(newPassword);
+            var normalPassword = Encoding.UTF8.GetString(decodedPasswordBytes);
+
+            var decodedTokenBytes = WebEncoders.Base64UrlDecode(token);
+            var normalToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
+            var result = await _userManager.ResetPasswordAsync(user, normalToken, normalPassword);
+
+            if (result.Succeeded)
+            {
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("PasswordResetSuccess"));
+            }
+            else
+            {
+                throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
+            }
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password, string oldPassword, string userId)

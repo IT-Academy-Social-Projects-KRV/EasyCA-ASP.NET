@@ -14,6 +14,8 @@ namespace AccountService.Domain.Interfaces
         Task<UserResponseModel> GetUserById(string userId);
         Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestModel data, string userId);
         Task<ResponseApiModel<HttpStatusCode>> ConfirmEmailAsync(string userId, string token);
-        Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password,string oldPassword, string userId);
+        Task<ResponseApiModel<HttpStatusCode>> ForgotPassword(ForgotPasswordApiModel data);
+        Task<ResponseApiModel<HttpStatusCode>> RestorePassword(string newPassword, string token, string email);
+        Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password, string oldPassword, string userId);
     }
 }

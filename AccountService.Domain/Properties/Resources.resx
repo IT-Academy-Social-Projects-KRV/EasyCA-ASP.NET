@@ -165,6 +165,19 @@
   <data name="UserPersonalDataNotFound" xml:space="preserve">
     <value>The user does not have any personal data</value>
   </data>
+  <data name="PasswordsNotMatching" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
+  <data name="RestoreLinkSent" xml:space="preserve">
+    <value>A password reset link has been sent to your email</value>
+  </data>
+  <data name="RestoreLinkNotSent" xml:space="preserve">
+    <value>Couldn't send a password reset link</value>
+  </data>
+  <data name="PasswordResetSuccess" xml:space="preserve">
+    <value>Your password has been successfully reset</value>
+  </data>
+</root>
   <data name="UserRefreshTokenNotActive" xml:space="preserve">
     <value>Refresh token is not active</value>
   </data>

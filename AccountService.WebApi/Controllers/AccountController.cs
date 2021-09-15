@@ -101,6 +101,22 @@ namespace AccountService.WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordApiModel data)
+        {
+            var response = await _serviceAccount.ForgotPassword(data);
+
+            return Ok(response);
+        }
+
+        [HttpGet("RestorePassword/{password}/{token}/{email}")]
+        public async Task<IActionResult> RestorePassword(string password, string token, string email)
+        {
+            var response = await _serviceAccount.RestorePassword(password, token, email);
+
+            return Ok(response);
+        }
+        
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordApiModel data)
         {
@@ -108,7 +124,6 @@ namespace AccountService.WebApi.Controllers
             var responce = await _serviceAccount.ChangePassword(data.Password, data.OldPassword, userId);
 
             return Ok(responce);
-
         }
     }
 }
