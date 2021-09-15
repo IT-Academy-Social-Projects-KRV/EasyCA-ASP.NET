@@ -5,7 +5,6 @@ namespace ProtocolService.Domain.ApiModel.RequestApiModels
 {
     public class SideRequestModel
     {
-        public string UserId { get; set; }
         public string Email { get; set; }
         public string TransportId { get; set; }
         public List<int> Circumstances { get; set; }

@@ -32,7 +32,8 @@ namespace ProtocolService.Domain.Services
         {
             var filter = Builders<EuroProtocol>.Filter.Eq(c => c.SideB.Email, data.Email);
             var side = _mapper.Map<Side>(data);
-            var update = Builders<EuroProtocol>.Update      
+            var update = Builders<EuroProtocol>.Update
+                .Set(c => c.IsClosed, true)
                 .Set(c => c.SideB, side);
             await _context.EuroProtocols.UpdateOneAsync(filter, update);
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating EuroProtocol is success!");

@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using ProtocolService.Data;
 using ProtocolService.Domain.Interfaces;
 using ProtocolService.Domain.Services;
+using ProtocolService.WebApi.Middleware;
 using System;
 
 namespace ProtocolService.WebApi
@@ -23,8 +24,6 @@ namespace ProtocolService.WebApi
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ProtocolDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
 
@@ -33,32 +32,7 @@ namespace ProtocolService.WebApi
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProtocolService.WebApi", Version = "v1" });
-
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT"
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] { }
-                    }
-                });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProtocolService.WebApi", Version = "v1" });  
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -75,15 +49,7 @@ namespace ProtocolService.WebApi
             }
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseCors(x => x
-              .AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader());
-
-            //app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+            app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
