@@ -60,11 +60,14 @@ namespace AccountService.Domain.Services
                     return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
                 }
 
-                throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RegistrationFailed"));
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
+                List<IdentityError> identityErrors = result.Errors.ToList();
+                var errors = string.Join(" ", identityErrors.Select(x => x.Description));
+
+                throw new RestException(HttpStatusCode.BadRequest, errors);
             }
         }
 
@@ -280,7 +283,10 @@ namespace AccountService.Domain.Services
             }
             else
             {
-                throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
+                List<IdentityError> identityErrors = result.Errors.ToList();
+                var errors = string.Join(" ", identityErrors.Select(x => x.Description));
+
+                throw new RestException(HttpStatusCode.BadRequest, errors);
             }
         }
     }
