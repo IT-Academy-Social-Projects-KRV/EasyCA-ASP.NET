@@ -9,6 +9,7 @@ namespace ProtocolService.Domain.ApiModel.RequestApiModels
         public EuroProtocolRequestModel()
         {
             RegistrationDateTime = DateTime.Now;
+            IsClosed = false;
         }
 
         public DateTime RegistrationDateTime { get; set; }

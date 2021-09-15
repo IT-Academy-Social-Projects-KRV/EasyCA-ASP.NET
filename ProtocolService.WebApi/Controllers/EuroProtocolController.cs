@@ -4,16 +4,16 @@ using ProtocolService.Domain.Interfaces;
 using System.Threading.Tasks;
 using ProtocolService.Domain.ApiModel.RequestApiModels;
 
-namespace ProtocolService.WwebApi
+namespace ProtocolService.WebApi
 {
     [Route("api/[controller]")]
     [ApiController]
     public class EuroProtocolController : ControllerBase
     {
-        private readonly IProtocolService _serviceProtocol;
+        private readonly IServiceProtocol _serviceProtocol;
         private readonly IConfiguration _configuration;
 
-        public EuroProtocolController(IProtocolService serviceProtocol, IConfiguration configuration)
+        public EuroProtocolController(IServiceProtocol serviceProtocol, IConfiguration configuration)
         {
             _serviceProtocol = serviceProtocol;
             _configuration = configuration;
@@ -23,6 +23,14 @@ namespace ProtocolService.WwebApi
         public async Task<IActionResult> RegisterEuroProtocol (EuroProtocolRequestModel euroProtocolRequest)
         {
             var response = await _serviceProtocol.RegistrationEuroProtocol(euroProtocolRequest);
+            return Ok(response);
+        }
+
+
+        [HttpPost("RegisterSideBEuroProtocol")]
+        public async Task<IActionResult> RegisterSideBEuroProtocol(SideRequestModel SideRequest)
+        {
+            var response = await _serviceProtocol.RegisterSideBEuroProtocol(SideRequest);
             return Ok(response);
         }
     }

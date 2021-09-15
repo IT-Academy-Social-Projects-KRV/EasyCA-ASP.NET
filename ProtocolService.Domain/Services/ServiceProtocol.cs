@@ -21,13 +21,13 @@ namespace ProtocolService.Domain.Services
             _mapper = mapper;
         }
 
-
         public async Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestModel data)
         {
             var euroProtocol = _mapper.Map<EuroProtocol> (data);
             await _context.EuroProtocols.InsertOneAsync(euroProtocol);            
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating EuroProtocol is success!");
         }      
+
         public async Task<ResponseApiModel<HttpStatusCode>> RegisterSideBEuroProtocol(SideRequestModel data)
         {
             var filter = Builders<EuroProtocol>.Filter.Eq(c => c.SideB.Email, data.Email);

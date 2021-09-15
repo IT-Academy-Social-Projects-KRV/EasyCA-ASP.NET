@@ -19,7 +19,7 @@ namespace ProtocolService.Data.Entities
 
         [BsonElement("ListOfCircumstances")]
         [JsonProperty("ListOfCircumstances")]
-        public List<string> Circumstances { get; set; }
+        public List<int> Circumstances { get; set; }
 
         [BsonElement("ListOfEvidences")]
         [JsonProperty("ListOfEvidences")]
