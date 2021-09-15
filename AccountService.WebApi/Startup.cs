@@ -107,18 +107,21 @@ namespace AccountService.WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AccountService.WebApi v1"));
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AccountService.WebApi v1"));
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors(x => x
-              .AllowAnyOrigin()
+              .SetIsOriginAllowed(origin => true)
               .AllowAnyMethod()
-              .AllowAnyHeader());
+              .AllowAnyHeader()
+              .AllowCredentials());
 
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
