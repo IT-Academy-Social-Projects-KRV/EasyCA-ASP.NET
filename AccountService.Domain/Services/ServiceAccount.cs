@@ -107,6 +107,11 @@ namespace AccountService.Domain.Services
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
 
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
             var mapped = _mapper.Map<UserRequestModel, User>(data, user);
 
             await _userManager.UpdateAsync(mapped);
@@ -120,7 +125,7 @@ namespace AccountService.Domain.Services
 
             if (user == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
             var personalData = user.UserData;
@@ -141,7 +146,7 @@ namespace AccountService.Domain.Services
 
             if (user == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
             var mappedUser = _mapper.Map<UserResponseModel>(user);
@@ -152,6 +157,12 @@ namespace AccountService.Domain.Services
         public async Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestModel data, string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
             var persData = _mapper.Map<PersonalData>(data);
             user.UserData = persData;
 
@@ -166,8 +177,7 @@ namespace AccountService.Domain.Services
 
             if (user == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
-
+                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
             var decodedToken = WebEncoders.Base64UrlDecode(token);
@@ -189,8 +199,14 @@ namespace AccountService.Domain.Services
         public async Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password, string oldPassword, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
             var result = await _userManager.ChangePasswordAsync(user, oldPassword, password);
-            
+
             if (result.Succeeded)
             {
                 return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Password was changed successfully");

@@ -165,4 +165,10 @@
   <data name="UserPersonalDataNotFound" xml:space="preserve">
     <value>The user does not have any personal data</value>
   </data>
+  <data name="UserRefreshTokenNotActive" xml:space="preserve">
+    <value>Refresh token is not active</value>
+  </data>
+  <data name="UserRefreshTokenNotFound" xml:space="preserve">
+    <value>User has another Refresh token</value>
+  </data>
 </root>
