@@ -177,7 +177,6 @@
   <data name="PasswordResetSuccess" xml:space="preserve">
     <value>Your password has been successfully reset</value>
   </data>
-</root>
   <data name="UserRefreshTokenNotActive" xml:space="preserve">
     <value>Refresh token is not active</value>
   </data>
