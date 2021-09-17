@@ -8,7 +8,7 @@ namespace AccountService.Data.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public PersonalData UserData { get; set; }
+        public string PersonalDataId { get; set; }
         public RefreshToken RefreshToken { get; set; }
     }
 }

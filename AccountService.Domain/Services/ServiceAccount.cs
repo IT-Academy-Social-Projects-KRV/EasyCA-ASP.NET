@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AccountService.Data;
 using AccountService.Data.Entities;
 using AccountService.Domain.ApiModel.RequestApiModels;
 using AccountService.Domain.ApiModel.ResponseApiModels;
@@ -12,6 +13,8 @@ using AccountService.Domain.Properties;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace AccountService.Domain.Services
 {
@@ -22,14 +25,16 @@ namespace AccountService.Domain.Services
         private readonly IJwtService _jwtService;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
+        private readonly ApplicationDbContext _context;
 
-        public ServiceAccount(UserManager<User> userManager, SignInManager<User> signInManager, IJwtService jwtService, IMapper mapper, IEmailService emailService)
+        public ServiceAccount(UserManager<User> userManager, SignInManager<User> signInManager, IJwtService jwtService, IMapper mapper, IEmailService emailService, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtService = jwtService;
             _mapper = mapper;
             _emailService = emailService;
+            _context = context;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> RegisterUser(RegisterApiModel userRequest)
@@ -106,7 +111,7 @@ namespace AccountService.Domain.Services
             }
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> UpdateUserData(UserRequestModel data, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdatePersonalData(PersonalDataRequestModel data, string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
 
@@ -115,9 +120,15 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
-            var mapped = _mapper.Map<UserRequestModel, User>(data, user);
+            var personalData = data;
+            var mappedPersonalData = _mapper.Map<PersonalData>(personalData);
 
-            await _userManager.UpdateAsync(mapped);
+            mappedPersonalData.Id = ObjectId.GenerateNewId().ToString();
+            _context.PersonalDatas.InsertOne(mappedPersonalData);
+
+            user.PersonalDataId = mappedPersonalData.Id;
+
+            await _userManager.UpdateAsync(user);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update personal data is success!");
         }
@@ -131,13 +142,14 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
-            var personalData = user.UserData;
+            var personalDataId = user.PersonalDataId;
 
-            if (personalData == null)
+            if (personalDataId == null)
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserPersonalDataNotFound"));
             }
 
+            var personalData = _context.PersonalDatas.AsQueryable().FirstOrDefault(x => x.Id == personalDataId);
             var response = _mapper.Map<PersonalDataResponseModel>(personalData);
 
             return response;
@@ -152,26 +164,12 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
+            var persData = _context.PersonalDatas.Find(x => x.Id == user.PersonalDataId).FirstOrDefault();
+            var mapedPersData = _mapper.Map<PersonalDataResponseModel>(persData);
             var mappedUser = _mapper.Map<UserResponseModel>(user);
+            mappedUser.PersonalData = mapedPersData;
 
             return mappedUser;
-        }
-
-        public async Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestModel data, string userId)
-        {
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
-
-            if (user == null)
-            {
-                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
-            }
-
-            var persData = _mapper.Map<PersonalData>(data);
-            user.UserData = persData;
-
-            await _userManager.UpdateAsync(user);
-
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating personal data is success!");
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> ConfirmEmailAsync(string email, string token)
