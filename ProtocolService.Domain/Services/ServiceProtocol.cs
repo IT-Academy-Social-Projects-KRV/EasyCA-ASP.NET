@@ -41,9 +41,22 @@ namespace ProtocolService.Domain.Services
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating EuroProtocol is success!");
         }
 
-        public async Task<List<EuroProtocolResponseModel>> FindProtocolWithEmail(string email)
+        public async Task<List<EuroProtocolResponseModel>> FindProtocolWithEmailSideA(string email)
         {
             var filter = Builders<EuroProtocol>.Filter.Eq(c => c.SideA.Email, email);
+            var euroProtocols = await _context.EuroProtocols.Find(filter).ToListAsync();
+
+            if (euroProtocols == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, "EuroProtocolNotFound");
+            }
+
+            return _mapper.Map<List<EuroProtocolResponseModel>>(euroProtocols);
+        }
+
+        public async Task<List<EuroProtocolResponseModel>> FindProtocolWithEmailSideB(string email)
+        {
+            var filter = Builders<EuroProtocol>.Filter.Eq(c => c.SideB.Email, email);
             var euroProtocols = await _context.EuroProtocols.Find(filter).ToListAsync();
 
             if (euroProtocols == null)

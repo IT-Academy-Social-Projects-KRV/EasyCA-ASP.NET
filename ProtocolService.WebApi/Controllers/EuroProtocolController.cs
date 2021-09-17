@@ -33,10 +33,16 @@ namespace ProtocolService.WebApi
             return Ok(response);
         }
 
-        [HttpGet("SearchEuroProtocolByEmail")]
-        public async Task<IActionResult> FindProtocolWithEmail(string email)
+        [HttpGet("SearchEuroProtocolByEmailSideA/{email}")]
+        public async Task<IActionResult> FindProtocolWithEmailSideA(string email)
         {
-            var response = await _serviceProtocol.FindProtocolWithEmail(email);
+            var response = await _serviceProtocol.FindProtocolWithEmailSideA(email);
+            return Ok(response);
+        }
+        [HttpGet("SearchEuroProtocolByEmailSideB/{email}")]
+        public async Task<IActionResult> FindProtocolWithEmailSideB(string email)
+        {
+            var response = await _serviceProtocol.FindProtocolWithEmailSideB(email);
             return Ok(response);
         }
     }

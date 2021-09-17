@@ -10,6 +10,8 @@ namespace ProtocolService.Domain.Interfaces
     {
         Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestModel data);
         Task<ResponseApiModel<HttpStatusCode>> RegisterSideBEuroProtocol(SideRequestModel data);
-        Task<List<EuroProtocolResponseModel>> FindProtocolWithEmail(string email);
+        Task<List<EuroProtocolResponseModel>> FindProtocolWithEmailSideA(string email);
+        Task<List<EuroProtocolResponseModel>> FindProtocolWithEmailSideB(string email);
+
     }
 }
