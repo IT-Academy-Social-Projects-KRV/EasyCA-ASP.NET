@@ -27,8 +27,6 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
                 .Must(IsPhoneNumber).WithMessage("Phone number format is not valid - try 0*********");
             RuleFor(n => n.UserName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage("User nickName is required").
                 Length(6, 12).WithMessage("Invalid length of nickname").Must(IsUsername).WithMessage("Invalid characters in nickname");
-            RuleFor(n => n.UserData).Cascade(CascadeMode.Stop).NotEmpty().WithMessage("Input your personal data").
-                NotNull().WithMessage("Persdata cannot be null").Must(IsValidPersData).WithMessage("You missed some data");
         }
         public static bool IsMatching(string firstName)
         {

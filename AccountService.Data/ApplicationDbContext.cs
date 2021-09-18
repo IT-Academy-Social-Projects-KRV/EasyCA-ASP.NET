@@ -14,5 +14,6 @@ namespace AccountService.Data
 
         public IMongoCollection<Transport> Transports => _dbContext.GetCollection<Transport>("Transports");
         public IMongoCollection<TransportCategory> TransportCategories => _dbContext.GetCollection<TransportCategory>("TransportCategories");
+        public IMongoCollection<PersonalData> PersonalDatas => _dbContext.GetCollection<PersonalData>("PersonalDatas");
     }
 }

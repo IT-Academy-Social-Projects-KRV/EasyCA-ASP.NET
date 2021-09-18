@@ -1,11 +1,8 @@
 using AccountService.Domain.Interfaces;
 using AccountService.Domain.ApiModel.RequestApiModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Threading.Tasks;
-using AccountService.Domain.ApiModel.ResponseApiModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AccountService.WebApi.Controllers
@@ -50,10 +47,10 @@ namespace AccountService.WebApi.Controllers
         }
 
         [HttpPut("UpdateData")]
-        public async Task<IActionResult> UpdateUserData(UserRequestModel data)
+        public async Task<IActionResult> UpdatePersonalData(PersonalDataRequestModel data)
         {
             var userId = User.FindFirst("Id")?.Value;
-            var response = await _serviceAccount.UpdateUserData(data, userId);
+            var response = await _serviceAccount.UpdatePersonalData(data, userId);
 
             return Ok(response);
         }
@@ -80,15 +77,6 @@ namespace AccountService.WebApi.Controllers
         public async Task<IActionResult> GetUserById(string id)
         {
             var response = await _serviceAccount.GetUserById(id);
-
-            return Ok(response);
-        }
-
-        [HttpPost("CreatePersonalData")]
-        public async Task<IActionResult> CreatePersonalData(PersonalDataRequestModel data)
-        {
-            var userId = User.FindFirst("Id")?.Value;
-            var response = await _serviceAccount.CreatePersonalData(data, userId);
 
             return Ok(response);
         }
