@@ -11,7 +11,10 @@ namespace AccountService.Data
         {
             _dbContext = client.GetDatabase(dbName);
         }
-
+        public IMongoCollection<T> GetCollection<T>(string name)
+        {
+            return _dbContext.GetCollection<T>(name);
+        }
         public IMongoCollection<Transport> Transports => _dbContext.GetCollection<Transport>("Transports");
         public IMongoCollection<TransportCategory> TransportCategories => _dbContext.GetCollection<TransportCategory>("TransportCategories");
     }

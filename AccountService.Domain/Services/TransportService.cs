@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using AccountService.Data;
 using AccountService.Data.Entities;
+using AccountService.Data.Interfaces;
 using AccountService.Domain.ApiModel.RequestApiModels;
 using AccountService.Domain.ApiModel.ResponseApiModels;
 using AccountService.Domain.Errors;
@@ -16,20 +16,24 @@ namespace AccountService.Domain.Services
 {
     public class TransportService : ITransportService
     {
-        private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IGenericRepository<Transport> _transports;
+        private readonly IGenericRepository<TransportCategory> _transportsCategories;
 
-        public TransportService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager)
+
+        public TransportService(IMapper mapper, UserManager<User> userManager, IGenericRepository<Transport> transports, IGenericRepository<TransportCategory> transportsCategories)
         {
-            _context = context;
             _mapper = mapper;
             _userManager = userManager;
+            _transports = transports;
+            _transportsCategories = transportsCategories;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> AddTransport(AddTransportRequestModel transportModel, string userId)
         {
-            var carCategory = await _context.TransportCategories.Find(x => x.CategoryName == transportModel.CategoryName).FirstOrDefaultAsync();
+            var filter = Builders<TransportCategory>.Filter.Where(x => x.CategoryName == transportModel.CategoryName);
+            var carCategory = await _transportsCategories.GetByFilterAsync(filter);
 
             if (carCategory == null)
             {
@@ -40,7 +44,7 @@ namespace AccountService.Domain.Services
             transport.CarCategory = carCategory;
             transport.UserId = userId;
 
-            await _context.Transports.InsertOneAsync(transport);
+            await _transports.CreateAsync(transport);
 
             var user = await _userManager.FindByIdAsync(userId);
             user.UserData.UserCars.Add(transport.Id);
@@ -53,7 +57,7 @@ namespace AccountService.Domain.Services
         public async Task<IEnumerable<TransportResponseApiModel>> GetAllTransports(string userId)
         {
             var filter = Builders<Transport>.Filter.Eq(c => c.UserId, userId);
-            var transports = await _context.Transports.Find(filter).ToListAsync();
+            var transports = await _transports.GetAllAsyncByFilter(filter);
 
             if (transports == null)
             {
@@ -65,7 +69,7 @@ namespace AccountService.Domain.Services
         public async Task<TransportResponseApiModel> GetTransportById(string transportId, string userId)
         {
             var filter = Builders<Transport>.Filter.Where(x => x.UserId == userId && x.Id == transportId);
-            var transport = await _context.Transports.Find(filter).SingleOrDefaultAsync();
+            var transport = await _transports.GetByFilterAsync(filter);
 
             if (transport == null)
             {
@@ -78,7 +82,9 @@ namespace AccountService.Domain.Services
         public async Task<ResponseApiModel<HttpStatusCode>> UpdateTransport(UpdateTransportRequestModel transportModel, string userId)
         {
             var filter = Builders<Transport>.Filter.Eq(c => c.Id, transportModel.Id);
-            var carCategory = await _context.TransportCategories.Find(x => x.CategoryName == transportModel.CategoryName).FirstOrDefaultAsync();
+            var categoryFilter = Builders<TransportCategory>.Filter.Where(x => x.CategoryName == transportModel.CategoryName);
+
+            var carCategory = await _transportsCategories.GetByFilterAsync(categoryFilter);
 
             if (carCategory == null)
             {
@@ -96,7 +102,7 @@ namespace AccountService.Domain.Services
                    .Set(c => c.YearOfProduction, transportModel.YearOfProduction)
                    .Set(c => c.InsuaranceNumber, transportModel.InsuaranceNumber);
 
-            var result = await _context.Transports.UpdateOneAsync(filter, update);
+            var result = _transports.UpdateAsync(filter, update);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportUpdatingSucceeded"));
         }
@@ -104,7 +110,7 @@ namespace AccountService.Domain.Services
         public async Task<ResponseApiModel<HttpStatusCode>> DeleteTransport(string transportId, string userId)
         {
             var filter = Builders<Transport>.Filter.Where(x => x.UserId == userId && x.Id == transportId);
-            var result = await _context.Transports.DeleteOneAsync(filter);
+            var result = _transports.DeleteAsync(filter);
 
             if (result == null)
             {
