@@ -3,9 +3,11 @@ using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using MongoDbGenericRepository.Attributes;
 
 namespace ProtocolService.Data.Entities
 {
+    [CollectionName("EuroProtocols")]
     public class EuroProtocol
     {
         [BsonId]

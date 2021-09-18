@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
-using AccountService.Data.Interfaces;
 using MongoDB.Driver;
+using ProtocolService.Data.Interfaces;
 
-namespace AccountService.Data
+namespace ProtocolService.Data
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ProtocolDbContext _dbContext;
         private readonly IMongoCollection<TEntity> _dbCollection;
 
-        public GenericRepository(ApplicationDbContext dbContext)
+        public GenericRepository(ProtocolDbContext dbContext)
         {
             _dbContext = dbContext;
             var collectionName = typeof(TEntity).CustomAttributes.FirstOrDefault().ConstructorArguments.FirstOrDefault().Value.ToString();
@@ -38,7 +39,6 @@ namespace AccountService.Data
         {
             return await _dbCollection.ReplaceOneAsync(predicate, entity);
         }
-
         public async Task<DeleteResult> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbCollection.DeleteOneAsync(predicate);
@@ -47,7 +47,8 @@ namespace AccountService.Data
         public async Task<TEntity> GetByFilterAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var result = await _dbCollection.FindAsync(predicate);
-            return result.FirstOrDefault();
+            var a = result;
+            return a.FirstOrDefault();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -59,7 +60,5 @@ namespace AccountService.Data
         {
             return await _dbCollection.Find(predicate).ToListAsync();
         }
-
-
     }
 }

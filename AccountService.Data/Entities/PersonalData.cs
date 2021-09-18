@@ -3,9 +3,11 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using MongoDbGenericRepository.Attributes;
 
 namespace AccountService.Data.Entities
 {
+    [CollectionName("PersonalDatas")]
     public class PersonalData
     {
         [BsonId]

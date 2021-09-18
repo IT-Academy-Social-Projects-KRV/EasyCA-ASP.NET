@@ -81,6 +81,15 @@ namespace AccountService.WebApi.Controllers
             return Ok(response);
         }
 
+        [HttpPost("CreatePersonalData")]
+        public async Task<IActionResult> CreatePersonalData(PersonalDataRequestModel data)
+        {
+            var userId = User.FindFirst("Id")?.Value;
+            var response = await _serviceAccount.CreatePersonalData(data, userId);
+
+            return Ok(response);
+        }
+
         [HttpGet("ConfirmEmail/{token}/{email}")]
         public async Task<IActionResult> ConfirmEmail(string email, string token)
         {

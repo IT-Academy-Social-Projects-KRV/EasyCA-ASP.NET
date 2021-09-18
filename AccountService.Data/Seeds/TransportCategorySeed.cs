@@ -16,11 +16,11 @@ namespace AccountService.Data.Seeds
                 {
                     new TransportCategory
                     {
-                        CategoryName = "А1",
+                        CategoryName = "A1",
                     },
                     new TransportCategory
                     {
-                        CategoryName = "А",
+                        CategoryName = "A",
                     },
                     new TransportCategory
                     {

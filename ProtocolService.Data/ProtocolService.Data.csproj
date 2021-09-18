@@ -7,11 +7,11 @@
   <ItemGroup>
     <PackageReference Include="MongoDB.Bson" Version="2.13.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.13.1" />
+    <PackageReference Include="MongoDbGenericRepository" Version="1.4.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AccountService.Data\AccountService.Data.csproj" />
     <Folder Include="Seeds\" />
   </ItemGroup>
 

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 
-namespace AccountService.Data.Interfaces
+namespace ProtocolService.Data.Interfaces
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
