@@ -18,15 +18,56 @@ namespace AccountService.Data.Seeds
                     {
                         FirstName = "Test",
                         LastName = "Test",
-                        UserData = null,
+                        PersonalDataId = null,
                         UserName = "Test@gmail.com",
                         Email="Test@gmail.com",
-                        RefreshToken = null
+                        RefreshToken = null,
+                        EmailConfirmed = true
+                    },
+                    new User
+                    {
+                        FirstName = "Dmytro",
+                        LastName = "Pinkevych",
+                        PersonalDataId = null,
+                        UserName = "pinkevych@gmail.com",
+                        Email="pinkevych@gmail.com",
+                        RefreshToken = null,
+                        EmailConfirmed = true
+                    },
+                    new User
+                    {
+                        FirstName = "Ivan",
+                        LastName = "Kosmin",
+                        PersonalDataId = null,
+                        UserName = "kosminfeed@gmail.com",
+                        Email="kosminfeed@gmail.com",
+                        RefreshToken = null,
+                        EmailConfirmed = true
+                    },
+                    new User
+                    {
+                        FirstName = "Sasha",
+                        LastName = "Korniichuk",
+                        PersonalDataId = null,
+                        UserName = "okorniichuk03@gmail.com",
+                        Email="okorniichuk03@gmail.com",
+                        RefreshToken = null,
+                        EmailConfirmed = true
+                    },
+                    new User
+                    {
+                        FirstName = "Liza",
+                        LastName = "Shemetovska",
+                        PersonalDataId = null,
+                        UserName = "Shemetovska@gmail.com",
+                        Email="Shemetovska@gmail.com",
+                        RefreshToken = null,
+                        EmailConfirmed = true
                     }
                 };
                 foreach (var user in users)
                 {
-                    await manager.CreateAsync(user,"Qwerty211@");
+                    await manager.CreateAsync(user, "Qwerty211@");
                     await manager.AddToRoleAsync(user, "admin");
                 }
             }

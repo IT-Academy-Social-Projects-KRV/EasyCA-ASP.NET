@@ -16,7 +16,6 @@ namespace AccountService.Domain.Mapping
             CreateMap<UserRequestModel, User>()
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
-                .ForMember(dest => dest.UserData, opt => opt.MapFrom(src => src.UserData))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
         }
     }

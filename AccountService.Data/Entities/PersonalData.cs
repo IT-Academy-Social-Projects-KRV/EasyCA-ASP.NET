@@ -8,6 +8,9 @@ namespace AccountService.Data.Entities
 {
     public class PersonalData
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
         [BsonElement("UserAddress")]
         [JsonProperty("UserAddress")]
         public Address UserAddress { get; set; }

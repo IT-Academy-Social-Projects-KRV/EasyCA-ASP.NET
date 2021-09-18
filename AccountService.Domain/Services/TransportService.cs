@@ -47,7 +47,9 @@ namespace AccountService.Domain.Services
             await _transports.CreateAsync(transport);
 
             var user = await _userManager.FindByIdAsync(userId);
-            user.UserData.UserCars.Add(transport.Id);
+            var personalData = _context.PersonalDatas.Find(x => x.Id == user.PersonalDataId);
+
+            personalData.First().UserCars.Add(transport.Id);
 
             await _userManager.UpdateAsync(user);
 
@@ -118,7 +120,9 @@ namespace AccountService.Domain.Services
             }
 
             var user = await _userManager.FindByIdAsync(userId);
-            user.UserData.UserCars.Remove(transportId);
+            var personalData = _context.PersonalDatas.Find(x => x.Id == user.PersonalDataId);
+            
+            personalData.First().UserCars.Remove(transportId);
 
             await _userManager.UpdateAsync(user);
 
