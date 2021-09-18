@@ -59,7 +59,5 @@ namespace AccountService.Data
         {
             return await _dbCollection.Find(predicate).ToListAsync();
         }
-
-
     }
 }
