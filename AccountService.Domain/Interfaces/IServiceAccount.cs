@@ -9,6 +9,7 @@ namespace AccountService.Domain.Interfaces
     {
         Task<ResponseApiModel<HttpStatusCode>> RegisterUser(RegisterApiModel user);
         Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest);
+        Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestModel data, string userId);
         Task<ResponseApiModel<HttpStatusCode>> UpdatePersonalData(PersonalDataRequestModel data, string userId);
         Task<PersonalDataResponseModel> GetPersonalData(string userId);
         Task<UserResponseModel> GetUserById(string userId);

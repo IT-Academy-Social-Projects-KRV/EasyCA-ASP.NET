@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using AccountService.Data;
 using AccountService.Data.Entities;
+using AccountService.Data.Interfaces;
 using AccountService.Domain.ApiModel.RequestApiModels;
 using AccountService.Domain.ApiModel.ResponseApiModels;
 using AccountService.Domain.Errors;
@@ -16,21 +16,27 @@ namespace AccountService.Domain.Services
 {
     public class TransportService : ITransportService
     {
-        private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IGenericRepository<Transport> _transports;
+        private readonly IGenericRepository<TransportCategory> _transportsCategories;
+        private readonly IGenericRepository<PersonalData> _personalData;
 
-        public TransportService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager)
+
+        public TransportService(IMapper mapper, UserManager<User> userManager, IGenericRepository<Transport> transports, IGenericRepository<TransportCategory> transportsCategories,
+            IGenericRepository<PersonalData> personalData)
         {
-            _context = context;
             _mapper = mapper;
             _userManager = userManager;
+            _transports = transports;
+            _transportsCategories = transportsCategories;
+            _personalData = personalData;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> AddTransport(AddTransportRequestModel transportModel, string userId)
         {
-            var carCategory = await _context.TransportCategories.Find(x => x.CategoryName == transportModel.CategoryName).FirstOrDefaultAsync();
-
+            var carCategory = await _transportsCategories.GetByFilterAsync(x => x.CategoryName == transportModel.CategoryName);
+            
             if (carCategory == null)
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportCategoryNotFound"));
@@ -40,34 +46,35 @@ namespace AccountService.Domain.Services
             transport.CarCategory = carCategory;
             transport.UserId = userId;
 
-            await _context.Transports.InsertOneAsync(transport);
+            await _transports.CreateAsync(transport);
 
             var user = await _userManager.FindByIdAsync(userId);
-            var personalData = _context.PersonalDatas.Find(x => x.Id == user.PersonalDataId);
+            var personalData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
+            personalData.UserCars.Add(transport.Id);
 
-            personalData.First().UserCars.Add(transport.Id);
+            var update = Builders<PersonalData>.Update
+                .Set(c => c.UserCars, personalData.UserCars);
 
-            await _userManager.UpdateAsync(user);
+            await _personalData.UpdateAsync(x=>x.Id==personalData.Id, update);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportAddingSucceeded"));
         }
 
         public async Task<IEnumerable<TransportResponseApiModel>> GetAllTransports(string userId)
         {
-            var filter = Builders<Transport>.Filter.Eq(c => c.UserId, userId);
-            var transports = await _context.Transports.Find(filter).ToListAsync();
+            var transports = await _transports.GetAllByFilterAsync(c => c.UserId==userId);
 
             if (transports == null)
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportsNotFound"));
             }
+
             return _mapper.Map<IEnumerable<TransportResponseApiModel>>(transports);
         }
 
         public async Task<TransportResponseApiModel> GetTransportById(string transportId, string userId)
         {
-            var filter = Builders<Transport>.Filter.Where(x => x.UserId == userId && x.Id == transportId);
-            var transport = await _context.Transports.Find(filter).SingleOrDefaultAsync();
+            var transport = await _transports.GetByFilterAsync(x => x.UserId == userId && x.Id == transportId);
 
             if (transport == null)
             {
@@ -79,8 +86,7 @@ namespace AccountService.Domain.Services
 
         public async Task<ResponseApiModel<HttpStatusCode>> UpdateTransport(UpdateTransportRequestModel transportModel, string userId)
         {
-            var filter = Builders<Transport>.Filter.Eq(c => c.Id, transportModel.Id);
-            var carCategory = await _context.TransportCategories.Find(x => x.CategoryName == transportModel.CategoryName).FirstOrDefaultAsync();
+            var carCategory = await _transportsCategories.GetByFilterAsync(x => x.CategoryName == transportModel.CategoryName);
 
             if (carCategory == null)
             {
@@ -98,15 +104,14 @@ namespace AccountService.Domain.Services
                    .Set(c => c.YearOfProduction, transportModel.YearOfProduction)
                    .Set(c => c.InsuaranceNumber, transportModel.InsuaranceNumber);
 
-            var result = await _context.Transports.UpdateOneAsync(filter, update);
+            var result = _transports.UpdateAsync(c => c.Id==transportModel.Id, update);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportUpdatingSucceeded"));
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> DeleteTransport(string transportId, string userId)
         {
-            var filter = Builders<Transport>.Filter.Where(x => x.UserId == userId && x.Id == transportId);
-            var result = await _context.Transports.DeleteOneAsync(filter);
+            var result = _transports.DeleteAsync(x => x.UserId == userId && x.Id == transportId);
 
             if (result == null)
             {
@@ -114,11 +119,14 @@ namespace AccountService.Domain.Services
             }
 
             var user = await _userManager.FindByIdAsync(userId);
-            var personalData = _context.PersonalDatas.Find(x => x.Id == user.PersonalDataId);
-            
-            personalData.First().UserCars.Remove(transportId);
+            var personalData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
 
-            await _userManager.UpdateAsync(user);
+            personalData.UserCars.Remove(transportId);
+
+            var update = Builders<PersonalData>.Update
+                 .Set(c => c.UserCars, personalData.UserCars);
+
+            await _personalData.UpdateAsync(x => x.Id == personalData.Id, update);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("TransportDeleteSucceeded"));
         }

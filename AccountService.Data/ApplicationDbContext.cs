@@ -7,9 +7,14 @@ namespace AccountService.Data
     {
         private readonly IMongoDatabase _dbContext;
 
-        public ApplicationDbContext (IMongoClient client, string dbName)
+        public ApplicationDbContext(IMongoClient client, string dbName)
         {
             _dbContext = client.GetDatabase(dbName);
+        }
+
+        public IMongoCollection<T> GetCollection<T>(string name)
+        {
+            return _dbContext.GetCollection<T>(name);
         }
 
         public IMongoCollection<Transport> Transports => _dbContext.GetCollection<Transport>("Transports");

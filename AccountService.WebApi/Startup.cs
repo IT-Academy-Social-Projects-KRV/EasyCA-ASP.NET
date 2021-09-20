@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using AccountService.Data;
 using AccountService.Data.Entities;
+using AccountService.Data.Interfaces;
 using AccountService.Domain.Interfaces;
 using AccountService.Domain.Services;
 using AccountService.WebApi.Middleware;
@@ -32,12 +33,12 @@ namespace AccountService.WebApi
 
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ApplicationDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddTransient<IServiceAccount, ServiceAccount>();
             services.AddTransient<ITransportService, TransportService>();
             services.AddTransient<IJwtService, JwtService>();
             services.AddTransient<IEmailService, EmailService>();
-
 
             services.AddSwaggerGen(c =>
             {

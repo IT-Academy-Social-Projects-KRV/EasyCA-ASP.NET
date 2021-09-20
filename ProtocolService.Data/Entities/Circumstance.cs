@@ -1,9 +1,11 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDbGenericRepository.Attributes;
 using Newtonsoft.Json;
 
 namespace ProtocolService.Data.Entities
 {
+    [CollectionName("Circumstances")]
     public class Circumstance
     {
         [BsonId]

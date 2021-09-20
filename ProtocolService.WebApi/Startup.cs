@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,10 +7,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using ProtocolService.Data;
+using ProtocolService.Data.Interfaces;
 using ProtocolService.Domain.Interfaces;
 using ProtocolService.Domain.Services;
 using ProtocolService.WebApi.Middleware;
-using System;
 
 namespace ProtocolService.WebApi
 {
@@ -21,18 +22,18 @@ namespace ProtocolService.WebApi
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ProtocolDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddTransient<IServiceProtocol, ServiceProtocol>();
 
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProtocolService.WebApi", Version = "v1" });  
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProtocolService.WebApi", Version = "v1" });
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
