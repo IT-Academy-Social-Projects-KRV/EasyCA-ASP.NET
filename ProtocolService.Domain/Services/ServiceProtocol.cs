@@ -53,8 +53,7 @@ namespace ProtocolService.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, "EuroProtocolNotFound");
             }
 
-            var mappedList =  _mapper.Map<IEnumerable<EuroProtocol>, IEnumerable<EuroProtocolResponseModel>>(euroProtocols);
-            return mappedList;
+            return _mapper.Map<IEnumerable<EuroProtocol>, IEnumerable<EuroProtocolResponseModel>>(euroProtocols);
         }
     }
 }

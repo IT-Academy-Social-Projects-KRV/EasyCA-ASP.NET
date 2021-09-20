@@ -10,7 +10,7 @@ namespace ProtocolService.Domain.Mapping
         public EvidenceMapperProfile()
         {
             CreateMap<Evidence, EvidenceRequestModel>().ReverseMap();
-            CreateMap<EuroProtocol, EvidenceResponseModel>().ReverseMap();
+            CreateMap<Evidence, EvidenceResponseModel>().ReverseMap();
         }
     }
 }
