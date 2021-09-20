@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="ApiModel\Validators\" />
-    <Folder Include="ModelDTO\" />
   </ItemGroup>
 
   <ItemGroup>

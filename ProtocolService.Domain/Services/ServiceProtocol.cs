@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using MongoDB.Driver;
@@ -6,6 +7,7 @@ using ProtocolService.Data.Entities;
 using ProtocolService.Data.Interfaces;
 using ProtocolService.Domain.ApiModel.RequestApiModels;
 using ProtocolService.Domain.ApiModel.ResponceApiModels;
+using ProtocolService.Domain.Errors;
 using ProtocolService.Domain.Interfaces;
 
 namespace ProtocolService.Domain.Services
@@ -40,6 +42,19 @@ namespace ProtocolService.Domain.Services
             await _euroProtocols.UpdateAsync(c => c.SideB.Email == data.Email, update);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating EuroProtocol is success!");
+        }
+
+        public async Task<IEnumerable<EuroProtocolResponseModel>> FindAllProtocolWithEmail(string email)
+        {
+            var euroProtocols = await _euroProtocols.GetAllByFilterAsync(x => x.SideA.Email == email || x.SideB.Email == email);
+
+            if (euroProtocols == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, "EuroProtocolNotFound");
+            }
+
+            var mappedList =  _mapper.Map<IEnumerable<EuroProtocol>, IEnumerable<EuroProtocolResponseModel>>(euroProtocols);
+            return mappedList;
         }
     }
 }

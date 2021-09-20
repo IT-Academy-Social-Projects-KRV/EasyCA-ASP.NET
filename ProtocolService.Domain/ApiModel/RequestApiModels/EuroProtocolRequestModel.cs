@@ -13,9 +13,9 @@ namespace ProtocolService.Domain.ApiModel.RequestApiModels
         }
 
         public DateTime RegistrationDateTime { get; set; }
-        public AddressOfAccident Address { get; set; }
-        public Side SideA { get; set; }
-        public Side SideB { get; set; }
+        public AddressOfAccidentRequestModel Address { get; set; }
+        public SideRequestModel SideA { get; set; }
+        public SideRequestModel SideB { get; set; }
         public bool IsClosed { get; set; }
         public List<Witness> Witnesses { get; set; }       
     }

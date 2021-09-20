@@ -5,12 +5,12 @@ using ProtocolService.Domain.ApiModel.ResponceApiModels;
 
 namespace ProtocolService.Domain.Mapping
 {
-    public class ProtocolMapperProfile: Profile
+    class WitnessMapperProfile:Profile
     {
-        public ProtocolMapperProfile()
+        public WitnessMapperProfile()
         {
-            CreateMap<EuroProtocol, EuroProtocolRequestModel>().ReverseMap();
-            CreateMap<EuroProtocol, EuroProtocolResponseModel>().ReverseMap();
+            CreateMap<Witness, WitnessRequestModel>().ReverseMap();
+            CreateMap<Witness, WitnessResponseModel>().ReverseMap();
         }
     }
-}
+}   
