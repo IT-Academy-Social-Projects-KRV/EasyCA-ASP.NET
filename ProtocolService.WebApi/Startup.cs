@@ -25,6 +25,8 @@ namespace ProtocolService.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddScoped(s => new ProtocolDbContext(s.GetRequiredService<IMongoClient>(), Configuration["DbName"]));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -50,12 +52,19 @@ namespace ProtocolService.WebApi
             }
             app.UseRouting();
 
+            app.UseCors(x => x
+              .SetIsOriginAllowed(origin => true)
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }

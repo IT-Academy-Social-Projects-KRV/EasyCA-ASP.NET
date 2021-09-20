@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using MongoDB.Driver;
@@ -40,6 +41,17 @@ namespace ProtocolService.Domain.Services
             await _euroProtocols.UpdateAsync(c => c.SideB.Email == data.Email, update);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating EuroProtocol is success!");
+        }
+
+        public async Task<IEnumerable<EuroProtocolResponseModel>> GetAllEuroProtocolsByEmail(string email)
+        {
+            var protocols = await _euroProtocols.GetAllByFilterAsync(x => x.SideA.Email == email || x.SideB.Email == email);
+
+            
+
+            var mappedProtocols = _mapper.Map<IEnumerable<EuroProtocol>, IEnumerable<EuroProtocolResponseModel>>(protocols);
+
+            return mappedProtocols;
         }
     }
 }

@@ -33,5 +33,12 @@ namespace ProtocolService.WebApi
             var response = await _serviceProtocol.RegisterSideBEuroProtocol(SideRequest);
             return Ok(response);
         }
+
+        [HttpGet("GetAllEuroProtocolsByEmail")]
+        public async Task<IActionResult> GetAllEuroProtocolsByEmail(string email)
+        {
+            var response = await _serviceProtocol.GetAllEuroProtocolsByEmail(email);
+            return Ok(response);
+        }
     }
 }

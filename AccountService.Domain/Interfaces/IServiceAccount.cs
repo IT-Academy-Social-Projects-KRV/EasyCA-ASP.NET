@@ -17,5 +17,6 @@ namespace AccountService.Domain.Interfaces
         Task<ResponseApiModel<HttpStatusCode>> ForgotPassword(ForgotPasswordApiModel data);
         Task<ResponseApiModel<HttpStatusCode>> RestorePassword(string newPassword, string token, string email);
         Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password, string oldPassword, string userId);
+        Task<UserResponseModel> GetUserByEmail(string email);
     }
 }

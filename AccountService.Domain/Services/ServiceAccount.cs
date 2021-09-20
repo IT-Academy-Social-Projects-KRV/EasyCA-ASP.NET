@@ -300,5 +300,22 @@ namespace AccountService.Domain.Services
                 throw new RestException(HttpStatusCode.BadRequest, errors);
             }
         }
+
+        public async Task<UserResponseModel> GetUserByEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
+            var persData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
+            var mapedPersData = _mapper.Map<PersonalDataResponseModel>(persData);
+            var mappedUser = _mapper.Map<UserResponseModel>(user);
+            mappedUser.PersonalData = mapedPersData;
+
+            return mappedUser;
+        }
     }
 }

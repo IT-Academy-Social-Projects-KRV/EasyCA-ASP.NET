@@ -81,6 +81,14 @@ namespace AccountService.WebApi.Controllers
             return Ok(response);
         }
 
+        [HttpGet("GetUserByEmail/{email}")]
+        public async Task<IActionResult> GetUserByEmail(string email)
+        {
+            var response = await _serviceAccount.GetUserByEmail(email);
+
+            return Ok(response);
+        }
+
         [HttpPost("CreatePersonalData")]
         public async Task<IActionResult> CreatePersonalData(PersonalDataRequestModel data)
         {
