@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>5907270d-286f-41c3-83c7-52774d4869f5</UserSecretsId>
+    <UserSecretsId>#87 Create fluent validators for Euro Protocol</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

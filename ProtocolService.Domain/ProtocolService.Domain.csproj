@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ApiModel\Validators\" />
     <Folder Include="ModelDTO\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="FluentValidation" Version="10.3.3" />
   </ItemGroup>
 
   <ItemGroup>
