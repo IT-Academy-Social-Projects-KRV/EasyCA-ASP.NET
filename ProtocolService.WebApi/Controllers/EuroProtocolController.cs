@@ -26,17 +26,11 @@ namespace ProtocolService.WebApi
             return Ok(response);
         }
 
+
         [HttpPost("RegisterSideBEuroProtocol")]
         public async Task<IActionResult> RegisterSideBEuroProtocol(SideRequestModel SideRequest)
         {
             var response = await _serviceProtocol.RegisterSideBEuroProtocol(SideRequest);
-            return Ok(response);
-        }
-
-        [HttpPut("UpdateEuroProtocol")]
-        public async Task<IActionResult> UpdateEuroProtocol(EuroProtocolRequestModel data)
-        {
-            var response = await _serviceProtocol.UpdateEuroProtocol(data);
             return Ok(response);
         }
     }
