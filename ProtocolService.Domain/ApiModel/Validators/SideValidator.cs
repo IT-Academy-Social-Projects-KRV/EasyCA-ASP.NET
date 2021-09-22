@@ -18,6 +18,24 @@ namespace ProtocolService.Domain.ApiModel.Validators
                 .Must(IsValidDriverLicenseSerial).WithMessage("Driver license serial format is not valid");
         }
 
+        public static bool IsValidEmail(string email)
+        {
+            string emailPattern = @"^.+@.+\..+$";
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return false;
+            }
+
+            if (Regex.IsMatch(email, emailPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public static bool IsValidDriverLicenseSerial(string driverLicenseSerial)
         {
             string driverLicenseSerialPattern = @"[А-ЩЬЮЯЇІЄҐA-Z]{3}[0-9]{6}$";
