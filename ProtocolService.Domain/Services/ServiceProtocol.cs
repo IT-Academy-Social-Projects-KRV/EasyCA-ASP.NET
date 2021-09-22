@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -54,6 +54,21 @@ namespace ProtocolService.Domain.Services
             }
 
             return _mapper.Map<IEnumerable<EuroProtocol>, IEnumerable<EuroProtocolResponseModel>>(euroProtocols);
+        }
+        
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdateEuroProtocol(EuroProtocolRequestModel data)
+        {
+            var update = Builders<EuroProtocol>.Update
+                .Set(c => c.RegistrationDateTime, data.RegistrationDateTime)
+                .Set(c => c.Address, data.Address)
+                .Set(c => c.SideA, data.SideA)
+                .Set(c => c.SideB, data.SideB)
+                .Set(c => c.IsClosed, data.IsClosed)
+                .Set(c => c.Witnesses, data.Witnesses);
+            
+            await _euroProtocols.UpdateAsync(x => x.SerialNumber == data.SerialNumber, update);
+            
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update EuroProtocol is success!");
         }
     }
 }

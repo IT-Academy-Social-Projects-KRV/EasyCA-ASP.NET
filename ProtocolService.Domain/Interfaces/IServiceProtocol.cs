@@ -1,4 +1,4 @@
-﻿using ProtocolService.Domain.ApiModel.RequestApiModels;
+using ProtocolService.Domain.ApiModel.RequestApiModels;
 using ProtocolService.Domain.ApiModel.ResponceApiModels;
 using System.Collections.Generic;
 using System.Net;
@@ -11,5 +11,6 @@ namespace ProtocolService.Domain.Interfaces
         Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestModel data);
         Task<ResponseApiModel<HttpStatusCode>> RegisterSideBEuroProtocol(SideRequestModel data);
         Task<IEnumerable<EuroProtocolResponseModel>> FindAllProtocolWithEmail(string email);
+        Task<ResponseApiModel<HttpStatusCode>> UpdateEuroProtocol(EuroProtocolRequestModel data);
     }
 }

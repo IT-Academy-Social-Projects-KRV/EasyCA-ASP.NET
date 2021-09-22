@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using ProtocolService.Domain.Interfaces;
 using System.Threading.Tasks;
@@ -26,7 +26,6 @@ namespace ProtocolService.WebApi
             return Ok(response);
         }
 
-
         [HttpPost("RegisterSideBEuroProtocol")]
         public async Task<IActionResult> RegisterSideBEuroProtocol(SideRequestModel SideRequest)
         {
@@ -38,6 +37,13 @@ namespace ProtocolService.WebApi
         public async Task<IActionResult> FindAllProtocolWithEmail(string email)
         {
             var response = await _serviceProtocol.FindAllProtocolWithEmail(email);
+            return Ok(response);
+        }
+        
+        [HttpPut("UpdateEuroProtocol")]
+        public async Task<IActionResult> UpdateEuroProtocol(EuroProtocolRequestModel data)
+        {
+            var response = await _serviceProtocol.UpdateEuroProtocol(data);
             return Ok(response);
         }
     }
