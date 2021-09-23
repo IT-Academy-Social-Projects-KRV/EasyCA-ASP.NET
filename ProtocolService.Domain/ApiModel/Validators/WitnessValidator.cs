@@ -15,11 +15,11 @@ namespace ProtocolService.Domain.ApiModel.Validators
         {
             RuleFor(n => n.FirstName).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("First Name is Empty").
-                Length(2, 20).WithMessage("Length ({TotalLength}) of First Name is Invalid")
+                Length(2, 20).WithMessage("First Name is Invalid")
                 .Must(IsValidFirstName).WithMessage("FirstName contains invalid characters");
             RuleFor(n => n.LastName).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Last Name is Empty").
-                Length(2, 20).WithMessage("Length ({TotalLength}) of Last Name is Invalid")
+                Length(2, 20).WithMessage("Last Name is Invalid")
                 .Must(IsValidFirstName).WithMessage("Last Name contains invalid characters");
             RuleFor(n => n.PhoneNumber).Cascade(CascadeMode.Stop).
                 NotEmpty().WithMessage("Phone number is required").Length(10).WithMessage("Length of phone number is invalid")

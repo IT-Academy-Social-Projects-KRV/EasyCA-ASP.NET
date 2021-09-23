@@ -16,7 +16,7 @@ namespace ProtocolService.Data.Entities
 
         [BsonElement("SerialNumber")]
         [JsonProperty("SerialNumber")]
-        public string SerialNumber { get; set; }
+        public string SerialNumber { get; set; } // 8 numbers
 
         [BsonElement("RegistrationDateTime")]
         [JsonProperty("RegistrationDateTime")]
@@ -40,7 +40,7 @@ namespace ProtocolService.Data.Entities
 
         [BsonElement("ListOfWitnesses")]
         [JsonProperty("ListOfWitnesses")]
-        public List<Witness> Witnesses { get; set; }
+        public List<Witness> Witnesses { get; set; } 
         public EuroProtocol()
         {
             SerialNumber = ObjectId.GenerateNewId().ToString();

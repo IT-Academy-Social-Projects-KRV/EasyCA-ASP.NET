@@ -17,7 +17,7 @@ namespace ProtocolService.Data.Entities
 
         [BsonElement("ListOfCircumstances")]
         [JsonProperty("ListOfCircumstances")]
-        public List<int> Circumstances { get; set; }
+        public List<int> Circumstances { get; set; } // not empty
 
         [BsonElement("ListOfEvidences")]
         [JsonProperty("ListOfEvidences")]
@@ -29,7 +29,7 @@ namespace ProtocolService.Data.Entities
 
         [BsonElement("Damage")]
         [JsonProperty("Damage")]
-        public string Damage { get; set; }
+        public string Damage { get; set; } // not empty
 
         [BsonElement("IsGulty")]
         [JsonProperty("IsGulty")]

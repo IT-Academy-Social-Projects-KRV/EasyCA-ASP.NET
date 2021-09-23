@@ -48,7 +48,7 @@ namespace ProtocolService.Domain.ApiModel.Validators
 
         public static bool IsValidCoordinate(string coord)
         {
-            string coordPattern = @"^[0-9]{2}[\.]{1}[0-9]{6}$";
+            string coordPattern = @"^[0-9]{2}\.[0-9]{6}$";
             if (Regex.IsMatch(coord, coordPattern))
             {
                 return true;
