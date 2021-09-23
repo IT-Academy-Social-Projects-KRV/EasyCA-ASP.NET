@@ -1,0 +1,67 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Auth/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Auth/{everything}",
+      "UpstreamHttpMethod": [ "POST", "GET", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Account/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Account/{everything}",
+      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE", "OPTIONS" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Transport/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Transport/{everything}",
+      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE", "OPTIONS" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/EuroProtocol/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/EuroProtocol/{everything}",
+      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE", "OPTIONS" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5500"
+  }
+}
