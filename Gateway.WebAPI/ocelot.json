@@ -10,7 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Auth/{everything}",
-      "UpstreamHttpMethod": [ "POST", "GET" ]
+      "UpstreamHttpMethod": [ "POST", "GET", "OPTIONS" ]
     },
     {
       "DownstreamPathTemplate": "/api/Account/{everything}",
@@ -22,7 +22,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Account/{everything}",
-      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE", "OPTIONS" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
@@ -38,7 +38,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Transport/{everything}",
-      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE", "OPTIONS" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
@@ -54,7 +54,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/EuroProtocol/{everything}",
-      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE", "OPTIONS" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []

@@ -34,10 +34,6 @@ namespace Gateway.WebAPI
 
             services.AddOcelot();
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gateway.WebAPI", Version = "v1" });
-            });
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Secret"]));
             services.AddAuthentication(options =>
@@ -66,8 +62,6 @@ namespace Gateway.WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gateway.WebAPI v1"));
             }
 
             await app.UseOcelot();
