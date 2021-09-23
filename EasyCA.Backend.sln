@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudMicroservice.Data", "Cr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudMicroservice.Domain", "CrudMicroservice.Domain\CrudMicroservice.Domain.csproj", "{01AB612F-CAD9-44E8-BEDB-FBB6F37C3899}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestApp.Tests", "UnitTestApp.Tests\UnitTestApp.Tests.csproj", "{4E1F0181-4A07-4306-98E3-8B03AC46FF5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{01AB612F-CAD9-44E8-BEDB-FBB6F37C3899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01AB612F-CAD9-44E8-BEDB-FBB6F37C3899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01AB612F-CAD9-44E8-BEDB-FBB6F37C3899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1F0181-4A07-4306-98E3-8B03AC46FF5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1F0181-4A07-4306-98E3-8B03AC46FF5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1F0181-4A07-4306-98E3-8B03AC46FF5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1F0181-4A07-4306-98E3-8B03AC46FF5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
