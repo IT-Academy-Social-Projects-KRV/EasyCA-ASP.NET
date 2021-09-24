@@ -20,7 +20,7 @@ namespace CrudMicroservice.Data.Seeds
                         IPN = "3862124565",
                         JobPosition = "Programmer",
                         ServiceNumber = "0",
-                        UserAddress = new Address()
+                        Address = new Address()
                         {
                             Country = "UA",
                             City = "Rivne",

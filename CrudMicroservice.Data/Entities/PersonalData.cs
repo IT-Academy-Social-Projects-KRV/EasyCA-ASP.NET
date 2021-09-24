@@ -15,7 +15,7 @@ namespace CrudMicroservice.Data.Entities
         public string Id { get; set; }
         [BsonElement("UserAddress")]
         [JsonProperty("UserAddress")]
-        public Address UserAddress { get; set; }
+        public Address Address { get; set; }
         [BsonElement("UserIpn")]
         [JsonProperty("UserIpn")]
         public string IPN { get; set; }
