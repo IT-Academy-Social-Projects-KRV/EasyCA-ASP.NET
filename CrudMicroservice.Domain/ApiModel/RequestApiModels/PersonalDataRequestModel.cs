@@ -10,7 +10,7 @@ namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
         /// User Address
         /// </summary>     
         /// <example>Rivne</example>
-        public Address UserAddress { get; set; }
+        public Address Address { get; set; }
         /// <summary>
         /// User ipn
         /// </summary>     

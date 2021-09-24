@@ -124,6 +124,15 @@ namespace CrudMicroservice.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personal information didn&apos;t change.
+        /// </summary>
+        public static string PersonalDataNotUpdate {
+            get {
+                return ResourceManager.GetString("PersonalDataNotUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Couldn&apos;t register a new account.
         /// </summary>
         public static string RegistrationFailed {
@@ -219,6 +228,15 @@ namespace CrudMicroservice.Domain.Properties {
         public static string TransportUpdatingSucceeded {
             get {
                 return ResourceManager.GetString("TransportUpdatingSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User information didn&apos;t change.
+        /// </summary>
+        public static string UserDataNotUpdate {
+            get {
+                return ResourceManager.GetString("UserDataNotUpdate", resourceCulture);
             }
         }
         

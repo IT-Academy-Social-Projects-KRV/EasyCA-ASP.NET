@@ -183,4 +183,10 @@
   <data name="UserRefreshTokenNotFound" xml:space="preserve">
     <value>User has another Refresh token</value>
   </data>
+  <data name="UserDataNotUpdate" xml:space="preserve">
+    <value>User information didn't change</value>
+  </data>
+  <data name="PersonalDataNotUpdate" xml:space="preserve">
+    <value>Personal information didn't change</value>
+  </data>
 </root>

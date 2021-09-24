@@ -38,7 +38,7 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
-            if(!string.IsNullOrEmpty(user.PersonalDataId))
+            if (!string.IsNullOrEmpty(user.PersonalDataId))
             {
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserDataExists"));
             }
@@ -54,7 +54,7 @@ namespace CrudMicroservice.Domain.Services
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating personal data is success!");
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> UpdatePersonalData(PersonalDataRequestModel data, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdatePersonalData(UserRequestModel data, string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
 
@@ -63,16 +63,50 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
-            if(string.IsNullOrEmpty(user.PersonalDataId))
+            if (string.IsNullOrEmpty(user.PersonalDataId))
             {
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserDataNotExist"));
             }
 
-            var personalData = _mapper.Map<PersonalDataRequestModel, PersonalData>(data);
+            var personalData = _mapper.Map<PersonalDataRequestModel, PersonalData>(data.PersonalData);
             personalData.Id = user.PersonalDataId;
             var result = await _personalData.ReplaceAsync(x => x.Id == user.PersonalDataId, personalData);
 
+            if (!result.IsAcknowledged)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("PersonalDataNotUpdate"));
+            }     
+            
+            user.Email = data.Email;
+            user.FirstName = data.FirstName;
+            user.LastName = data.LastName;
+            user.UserName = data.Email;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (!updateResult.Succeeded)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserDataNotUpdate"));
+            }
+
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update personal data is success!");
+        }
+
+        public async Task<UserResponseModel> GetUserById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
+            var persData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
+            var mapedPersData = _mapper.Map<PersonalDataResponseModel>(persData);
+            var mappedUser = _mapper.Map<UserResponseModel>(user);
+            mappedUser.PersonalData = mapedPersData;
+
+            return mappedUser;
         }
 
         public async Task<PersonalDataResponseModel> GetPersonalData(string userId)
@@ -95,23 +129,6 @@ namespace CrudMicroservice.Domain.Services
             var response = _mapper.Map<PersonalDataResponseModel>(personalData);
 
             return response;
-        }
-
-        public async Task<UserResponseModel> GetUserById(string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
-            {
-                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
-            }
-
-            var persData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
-            var mapedPersData = _mapper.Map<PersonalDataResponseModel>(persData);
-            var mappedUser = _mapper.Map<UserResponseModel>(user);
-            mappedUser.PersonalData = mapedPersData;
-
-            return mappedUser;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password, string oldPassword, string userId)
