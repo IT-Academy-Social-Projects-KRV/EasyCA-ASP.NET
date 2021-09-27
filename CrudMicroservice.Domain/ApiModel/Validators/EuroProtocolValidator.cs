@@ -42,7 +42,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
 
         public static bool IsValidWitnesses(List<Witness> Witnesses)
         {
-            if (Witnesses.Count() > 0)
+            if (Witnesses.Count() >= 0)
             {
                 return true;
             }

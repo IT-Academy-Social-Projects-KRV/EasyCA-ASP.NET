@@ -45,7 +45,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
             {
                 return false;
             }
-        }
+        }       
 
         public static bool IsValidDriverLicenseSerial(string driverLicenseSerial)
         {
@@ -59,8 +59,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
                 return true;
             }
             else
-            {
-                Console.WriteLine("Error in PHN");
+            {                
                 return false;
             }
         }

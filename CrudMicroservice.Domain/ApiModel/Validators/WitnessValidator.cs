@@ -61,8 +61,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
                 return true;
             }
             else
-            {
-                Console.WriteLine("Error in PHN");
+            {                
                 return false;
             }
         }
@@ -79,8 +78,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
                 return true;
             }
             else
-            {
-                Console.WriteLine("Error in PHN");
+            {               
                 return false;
             }
         }

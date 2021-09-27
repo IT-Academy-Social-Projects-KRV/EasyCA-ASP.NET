@@ -2,6 +2,7 @@
 using CrudMicroservice.Data.Entities;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -20,9 +21,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
 
         public static bool IsValidCircumstanceName(string circumstanceName)
         {
-            string circumstanceNamePattern = @"^[А-ЩЬЮЯЇІЄҐA-Z]{1}[а-щьюяїієґa-z]{70}$"; //уточнити чи 70 символів досить
-
-            if (Regex.IsMatch(circumstanceName, circumstanceNamePattern))
+            if (circumstanceName !=null)
             {
                 return true;
             }
