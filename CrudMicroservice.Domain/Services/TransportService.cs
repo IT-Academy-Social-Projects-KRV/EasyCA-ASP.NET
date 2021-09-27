@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 using System.Linq;
 using MongoDB.Bson;
+using System;
 
 namespace CrudMicroservice.Domain.Services
 {
@@ -136,7 +137,7 @@ namespace CrudMicroservice.Domain.Services
 
         public async Task<TransportResponseApiModel> GetTransportByCarPlate(string carPlate)
         {
-            var transport = await _transports.GetByFilterAsync(x => x.CarPlate == carPlate);
+            var transport = await _transports.GetByFilterAsync(x => x.CarPlate == carPlate.ToUpper());
 
             if (transport == null)
             {
