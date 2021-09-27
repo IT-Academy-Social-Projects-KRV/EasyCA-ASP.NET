@@ -12,5 +12,6 @@ namespace CrudMicroservice.Domain.Interfaces
         Task<ResponseApiModel<HttpStatusCode>> RegisterSideBEuroProtocol(SideRequestModel data);
         Task<IEnumerable<EuroProtocolResponseModel>> FindAllEuroProtocolsByEmail(string email);
         Task<ResponseApiModel<HttpStatusCode>> UpdateEuroProtocol(EuroProtocolRequestModel data);
+        Task<IEnumerable<CircumstanceResponseModel>> GetAllCircumstances();
     }
 }

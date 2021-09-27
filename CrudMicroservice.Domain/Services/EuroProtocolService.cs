@@ -16,11 +16,13 @@ namespace CrudMicroservice.Domain.Services
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<EuroProtocol> _euroProtocols;
+        private readonly IGenericRepository<Circumstance> _circumstances;
 
-        public EuroProtocolService(IMapper mapper, IGenericRepository<EuroProtocol> euroProtocol)
+        public EuroProtocolService(IMapper mapper, IGenericRepository<EuroProtocol> euroProtocol, IGenericRepository<Circumstance> circumstances)
         {
             _mapper = mapper;
             _euroProtocols = euroProtocol;
+            _circumstances = circumstances;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestModel data)
@@ -76,6 +78,18 @@ namespace CrudMicroservice.Domain.Services
             await _euroProtocols.UpdateAsync(x => x.SerialNumber == data.SerialNumber, update);
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update EuroProtocol is success!");
+        }
+
+        public async Task<IEnumerable<CircumstanceResponseModel>> GetAllCircumstances()
+        {
+            var circumstances = await _circumstances.GetAllAsync();
+
+            if (circumstances == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, "CircumstanceslNotFound");
+            }
+
+            return _mapper.Map<IEnumerable<Circumstance>, IEnumerable<CircumstanceResponseModel>>(circumstances);
         }
     }
 }
