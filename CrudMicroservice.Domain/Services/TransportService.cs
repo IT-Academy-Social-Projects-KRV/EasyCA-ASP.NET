@@ -24,7 +24,6 @@ namespace CrudMicroservice.Domain.Services
         private readonly IGenericRepository<TransportCategory> _transportsCategories;
         private readonly IGenericRepository<PersonalData> _personalData;
 
-
         public TransportService(IMapper mapper, UserManager<User> userManager, IGenericRepository<Transport> transports, IGenericRepository<TransportCategory> transportsCategories,
             IGenericRepository<PersonalData> personalData)
         {
@@ -134,5 +133,18 @@ namespace CrudMicroservice.Domain.Services
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("TransportDeleteSucceeded"));
         }
+
+        public async Task<TransportResponseApiModel> GetTransportByCarPlate(string carPlate)
+        {
+            var transport = await _transports.GetByFilterAsync(x => x.CarPlate == carPlate);
+
+            if (transport == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportsNotFound"));
+            }
+
+            return _mapper.Map<TransportResponseApiModel>(transport);
+        }
+
     }
 }
