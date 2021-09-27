@@ -66,13 +66,13 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
 
         public static bool IsValidDamage(string damage)
         {
-            if (damage != null)
+            if (string.IsNullOrWhiteSpace(damage))
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
 

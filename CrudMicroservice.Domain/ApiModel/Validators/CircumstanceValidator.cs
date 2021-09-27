@@ -21,13 +21,13 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
 
         public static bool IsValidCircumstanceName(string circumstanceName)
         {
-            if (circumstanceName !=null)
+            if (string.IsNullOrWhiteSpace(circumstanceName))
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
     }
