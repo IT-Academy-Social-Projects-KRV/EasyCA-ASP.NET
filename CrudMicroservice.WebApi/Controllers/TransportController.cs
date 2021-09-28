@@ -57,5 +57,12 @@ namespace CrudMicroservice.WebApi.Controllers
             var response = await _transportService.DeleteTransport(transportId, userId);
             return Ok(response);
         }
+
+        [HttpGet("GetTransportByCarPlate")]
+        public async Task<IActionResult> GetTransportByCarPlate(string carPlate)
+        {
+            var response = await _transportService.GetTransportByCarPlate(carPlate);
+            return Ok(response);
+        }
     }
 }
