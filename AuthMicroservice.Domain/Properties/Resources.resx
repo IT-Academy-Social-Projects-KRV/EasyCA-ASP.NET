@@ -183,4 +183,13 @@
   <data name="UserRefreshTokenNotFound" xml:space="preserve">
     <value>User has another Refresh token</value>
   </data>
+  <data name="EmailAlreadyConfirmed" xml:space="preserve">
+    <value>This email address has already been confirmed</value>
+  </data>
+  <data name="ConfirmationLinkSent" xml:space="preserve">
+    <value>The confirmation link has been sent to your email</value>
+  </data>
+  <data name="ConfirmationLinkNotSent" xml:space="preserve">
+    <value>Couldn't send the confirmation link</value>
+  </data>
 </root>
