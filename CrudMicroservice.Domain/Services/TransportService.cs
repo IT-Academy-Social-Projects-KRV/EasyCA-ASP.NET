@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using CrudMicroservice.Data.Entities;
 using CrudMicroservice.Data.Interfaces;
 using CrudMicroservice.Domain.ApiModel.RequestApiModels;
@@ -8,12 +11,9 @@ using CrudMicroservice.Domain.ApiModel.ResponseApiModels;
 using CrudMicroservice.Domain.Errors;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Properties;
-using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using MongoDB.Driver;
-using System.Linq;
 using MongoDB.Bson;
-using System;
+using MongoDB.Driver;
 
 namespace CrudMicroservice.Domain.Services
 {
@@ -38,7 +38,7 @@ namespace CrudMicroservice.Domain.Services
         public async Task<ResponseApiModel<HttpStatusCode>> AddTransport(AddTransportRequestModel transportModel, string userId)
         {
             var carCategory = await _transportsCategories.GetByFilterAsync(x => x.CategoryName == transportModel.CategoryName);
-            
+
             if (carCategory == null)
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportCategoryNotFound"));
@@ -51,22 +51,39 @@ namespace CrudMicroservice.Domain.Services
             await _transports.CreateAsync(transport);
 
             var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
             var personalData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
+
+            if (personalData == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("PersonalDataNotFound"));
+            }
+
             personalData.UserCars.Add(transport.Id);
 
             var update = Builders<PersonalData>.Update
                 .Set(c => c.UserCars, personalData.UserCars);
 
-            await _personalData.UpdateAsync(x=>x.Id==personalData.Id, update);
+            var result = await _personalData.UpdateAsync(x => x.Id == personalData.Id, update);
+
+            if (!result.IsAcknowledged)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("PersonalDataWrongUpdated"));//resources
+            }
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportAddingSucceeded"));
         }
 
         public async Task<IEnumerable<TransportResponseApiModel>> GetAllTransports(string userId)
         {
-            var transports = await _transports.GetAllByFilterAsync(c => c.UserId==userId);
+            var transports = await _transports.GetAllByFilterAsync(c => c.UserId == userId);
 
-            if (transports == null || !transports.Any() )
+            if (transports == null || !transports.Any())
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportsNotFound"));
             }
@@ -108,16 +125,21 @@ namespace CrudMicroservice.Domain.Services
                    .Set(c => c.YearOfProduction, transportModel.YearOfProduction)
                    .Set(c => c.InsuaranceNumber, transportModel.InsuaranceNumber);
 
-            var result = _transports.UpdateAsync(c => c.Id==transportModel.Id, update);
+            var result = await _transports.UpdateAsync(c => c.Id == transportModel.Id, update);
+
+            if (!result.IsAcknowledged)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("PersonalDataWrongUpdated"));//resources
+            }
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportUpdatingSucceeded"));
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> DeleteTransport(string transportId, string userId)
         {
-            var result = _transports.DeleteAsync(x => x.UserId == userId && x.Id == transportId);
+            var result =await _transports.DeleteAsync(x => x.UserId == userId && x.Id == transportId);
 
-            if (result == null)
+            if (!result.IsAcknowledged)
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportDeleteFailed"));
             }
