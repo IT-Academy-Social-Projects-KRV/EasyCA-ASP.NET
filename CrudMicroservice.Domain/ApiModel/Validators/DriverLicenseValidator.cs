@@ -23,6 +23,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
             RuleFor(n => n.UserCategories).Cascade(CascadeMode).NotEmpty().
                 WithMessage("You must have at least one category").Must(IsValidCategories).
                 WithMessage("Something went wrong");
+
         }
         public static bool IsValidDriverLicense(string driverNumber)
         {
