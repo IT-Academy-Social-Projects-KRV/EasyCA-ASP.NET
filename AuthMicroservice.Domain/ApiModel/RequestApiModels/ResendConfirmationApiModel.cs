@@ -9,7 +9,6 @@ namespace AuthMicroservice.Domain.ApiModel.RequestApiModels
     public class ResendConfirmationApiModel
     {
         public string Email { get; set; }
-
         public string ResendConfirmationURI { get; set; }
     }
 }
