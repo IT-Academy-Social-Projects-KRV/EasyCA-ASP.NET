@@ -9,6 +9,7 @@ using CrudMicroservice.Domain.ApiModel.RequestApiModels;
 using CrudMicroservice.Domain.ApiModel.ResponseApiModels;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Errors;
+using CrudMicroservice.Domain.Properties;
 
 namespace CrudMicroservice.Domain.Services
 {
@@ -29,19 +30,22 @@ namespace CrudMicroservice.Domain.Services
 
             await _euroProtocols.CreateAsync(euroProtocol);
 
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating EuroProtocol is success!");
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("SuccessfulCreatingOfEuroProtocol"));
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> RegisterSideBEuroProtocol(SideRequestModel data)
         {
             var side = _mapper.Map<Side>(data);
             var update = Builders<EuroProtocol>.Update
-                .Set(c => c.IsClosed, true)
+                .Set(c => c.IsClosed, false)
                 .Set(c => c.SideB, side);
 
-            await _euroProtocols.UpdateAsync(c => c.SideB.Email == data.Email, update);
-
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating EuroProtocol is success!");
+            var result = await _euroProtocols.UpdateAsync(c => c.SerialNumber == data.ProtocolSerial, update);
+            if (!result.IsAcknowledged)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("SideBIsNotRegistered"));
+            }
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("SideBRegistrationSuccess"));
         }
 
         public async Task<IEnumerable<EuroProtocolResponseModel>> FindAllEuroProtocolsByEmail(string email)
@@ -50,7 +54,7 @@ namespace CrudMicroservice.Domain.Services
 
             if (euroProtocols == null)
             {
-                throw new RestException(HttpStatusCode.NotFound, "EuroProtocolNotFound");
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("EuroProtocolNotFound"));
             }
 
             var mappedProtocols = _mapper.Map<IEnumerable<EuroProtocol>, IEnumerable<EuroProtocolResponseModel>>(euroProtocols);
@@ -60,22 +64,28 @@ namespace CrudMicroservice.Domain.Services
 
         public async Task<ResponseApiModel<HttpStatusCode>> UpdateEuroProtocol(EuroProtocolRequestModel data)
         {
-            if(data.IsClosed)
+            if (data.IsClosed)
             {
-                throw new RestException(HttpStatusCode.BadRequest, "Euro Protocol is closed, you can`t change any information!");
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("EuroProtocolIsClosed"));
             }
 
-            var mapped = _mapper.Map<EuroProtocolRequestModel, EuroProtocol>(data);
-
+            var mapped = _mapper.Map<EuroProtocol>(data);
+           
             var update = Builders<EuroProtocol>.Update
                 .Set(c => c.Address, mapped.Address)
                 .Set(c => c.SideA, mapped.SideA)
                 .Set(c => c.SideB, mapped.SideB)
-                .Set(c => c.Witnesses, mapped.Witnesses);
+                .Set(c => c.Witnesses, mapped.Witnesses)
+                .Set(c => c.RegistrationDateTime, data.RegistrationDateTime)
+                .Set(c => c.IsClosed, data.IsClosed);
 
-            await _euroProtocols.UpdateAsync(x => x.SerialNumber == data.SerialNumber, update);
+            var result = await _euroProtocols.UpdateAsync(x => x.SerialNumber == data.SerialNumber, update);
+            if (!result.IsAcknowledged)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("ProtocolIsNotUpdated!"));
+            }
 
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update EuroProtocol is success!");
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("EuroProtocolUpdated"));
         }
     }
 }
