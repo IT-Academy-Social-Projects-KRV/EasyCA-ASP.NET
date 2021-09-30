@@ -18,7 +18,7 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
                 NotNull().Must(IsValidDate).WithMessage("Invalid date");
             RuleFor(n => n.JobPosition).Cascade(CascadeMode.Stop).Must(IsValidJob).
                 WithMessage("Put position, organization and organization name");
-            RuleFor(n => n.UserAddress).Cascade(CascadeMode.Stop).NotNull().WithMessage("Address is required").
+            RuleFor(n => n.Address).Cascade(CascadeMode.Stop).NotNull().WithMessage("Address is required").
                 Must(IsValidAddress).WithMessage("Wrong address object");
             RuleFor(n => n.UserDriverLicense).Cascade(CascadeMode.Stop).NotNull().WithMessage("DL is required").
                 Must(IsValidDriverLicense).WithMessage("DL doesnot meet criteria");

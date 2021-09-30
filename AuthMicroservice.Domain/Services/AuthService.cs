@@ -198,5 +198,40 @@ namespace AuthMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.BadRequest, string.Join("\n", result.Errors));
             }
         }
+
+        public async Task<ResponseApiModel<HttpStatusCode>> ResendConfirmation(ResendConfirmationApiModel data)
+        {
+            var user = await _userManager.FindByEmailAsync(data.Email);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
+            if (await _userManager.IsEmailConfirmedAsync(user))
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("EmailAlreadyConfirmed"));
+            }
+
+            var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
+            var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
+
+            var param = new Dictionary<string, string>
+            {
+                { "token", validEmailToken },
+                { "email", user.Email }
+            };
+
+            var callback = QueryHelpers.AddQueryString(data.ResendConfirmationURI, param);
+            var emailResult = await _emailService.SendEmailAsync(user.Email, "EasyCA-Confirm Your Email", callback);
+
+            if (emailResult.Success)
+            {
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("ConfirmationLinkSent"));
+            }
+
+            throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("ConfirmationLinkNotSent"));
+        }
     }
 }

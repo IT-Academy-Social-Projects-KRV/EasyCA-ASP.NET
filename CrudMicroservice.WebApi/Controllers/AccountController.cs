@@ -19,11 +19,10 @@ namespace CrudMicroservice.WebApi.Controllers
         }
 
         [HttpPut("UpdateData")]
-        public async Task<IActionResult> UpdatePersonalData(PersonalDataRequestModel data)
+        public async Task<IActionResult> UpdatePersonalData(UserRequestModel data)
         {
             var userId = User.FindFirst("Id")?.Value;
             var response = await _accountService.UpdatePersonalData(data, userId);
-
             return Ok(response);
         }
 

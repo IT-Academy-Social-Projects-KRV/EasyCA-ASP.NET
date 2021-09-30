@@ -13,5 +13,6 @@ namespace CrudMicroservice.Domain.Interfaces
         Task<IEnumerable<TransportResponseApiModel>> GetAllTransports(string userId);
         Task<TransportResponseApiModel> GetTransportById(string transportId, string userId);
         Task<ResponseApiModel<HttpStatusCode>> DeleteTransport(string transportId, string userId);
+        Task<TransportResponseApiModel> GetTransportByCarPlate(string carPlate);
     }
 }

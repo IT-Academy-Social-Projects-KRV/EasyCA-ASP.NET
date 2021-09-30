@@ -203,5 +203,10 @@
   </data>
   <data name="SuccessfulCreatingOfEuroProtocol" xml:space="preserve">
     <value>Creating EuroProtocol is success!</value>
+  <data name="UserDataNotUpdate" xml:space="preserve">
+    <value>User information didn't change</value>
+  </data>
+  <data name="PersonalDataNotUpdate" xml:space="preserve">
+    <value>Personal information didn't change</value>
   </data>
 </root>

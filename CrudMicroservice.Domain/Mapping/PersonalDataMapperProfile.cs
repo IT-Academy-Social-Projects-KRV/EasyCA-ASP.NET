@@ -11,8 +11,7 @@ namespace CrudMicroservice.Domain.Mapping
         {
             AllowNullCollections = true;
 
-            CreateMap<PersonalData, PersonalDataResponseModel>()
-                .ForMember(dest=>dest.Address, x=>x.MapFrom(opt=>opt.UserAddress)).ReverseMap(); 
+            CreateMap<PersonalData, PersonalDataResponseModel>().ReverseMap(); 
 
             CreateMap<PersonalData, PersonalDataRequestModel>().ReverseMap();
 
