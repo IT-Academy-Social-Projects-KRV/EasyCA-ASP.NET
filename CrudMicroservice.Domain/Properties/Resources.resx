@@ -183,6 +183,26 @@
   <data name="UserRefreshTokenNotFound" xml:space="preserve">
     <value>User has another Refresh token</value>
   </data>
+  <data name="EuroProtocolIsClosed" xml:space="preserve">
+    <value>Euro Protocol is closed, you can`t change any information!</value>
+  </data>
+  <data name="EuroProtocolNotFound" xml:space="preserve">
+    <value>Requested EuroProtocol is not found</value>
+  </data>
+  <data name="EuroProtocolUpdated" xml:space="preserve">
+    <value>Update EuroProtocol is success!</value>
+  </data>
+  <data name="ProtocolIsNotUpdated" xml:space="preserve">
+    <value>Protocol was not updated</value>
+  </data>
+  <data name="SideBIsNotRegistered" xml:space="preserve">
+    <value>Side B is not registered</value>
+  </data>
+  <data name="SideBRegistrationSuccess" xml:space="preserve">
+    <value>Side B registered successfully!</value>
+  </data>
+  <data name="SuccessfulCreatingOfEuroProtocol" xml:space="preserve">
+    <value>Creating EuroProtocol is success!</value>
   <data name="UserDataNotUpdate" xml:space="preserve">
     <value>User information didn't change</value>
   </data>
