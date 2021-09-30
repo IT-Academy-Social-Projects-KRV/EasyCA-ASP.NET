@@ -39,7 +39,7 @@ namespace CrudMicroservice.Domain.Services
         {
             var side = _mapper.Map<Side>(data);
             var update = Builders<EuroProtocol>.Update
-                .Set(c => c.IsClosed, false)
+                .Set(c => c.IsClosed, true)
                 .Set(c => c.SideB, side);
 
             var result = await _euroProtocols.UpdateAsync(c => c.SerialNumber == data.ProtocolSerial, update);
