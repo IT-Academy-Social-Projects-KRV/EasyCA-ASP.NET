@@ -26,7 +26,6 @@ namespace CrudMicroservice.Domain.Services
             _userManager = userManager;
             _mapper = mapper;
             _personalData = personalData;
-
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestModel data, string userId)
@@ -126,9 +125,8 @@ namespace CrudMicroservice.Domain.Services
             }
 
             var personalData = await _personalData.GetByFilterAsync(x => x.Id == personalDataId);
-            var response = _mapper.Map<PersonalDataResponseModel>(personalData);
-
-            return response;
+            
+            return _mapper.Map<PersonalDataResponseModel>(personalData);
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password, string oldPassword, string userId)

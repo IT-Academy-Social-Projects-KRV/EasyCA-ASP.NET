@@ -11,7 +11,6 @@ using CrudMicroservice.Domain.ApiModel.RequestApiModels;
 using CrudMicroservice.Domain.ApiModel.ResponseApiModels;
 using CrudMicroservice.Domain.Errors;
 using CrudMicroservice.Domain.Services;
-using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 using Moq;
 using Xunit;

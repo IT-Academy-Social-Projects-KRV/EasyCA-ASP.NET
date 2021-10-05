@@ -107,6 +107,15 @@ namespace AuthMicroservice.Domain.Services
             }
         }
 
+        public async Task<ResponseApiModel<HttpStatusCode>> AddInspector(RegisterApiModel data)
+        {
+            var mappedUser = _mapper.Map<User>(data);
+            await _userManager.CreateAsync(mappedUser, data.Password);
+            await _userManager.AddToRoleAsync(mappedUser, "inspector");
+
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating inspector is success!");
+        }
+
         public async Task<ResponseApiModel<HttpStatusCode>> ConfirmEmailAsync(string email, string token)
         {
             var user = await _userManager.FindByEmailAsync(email);

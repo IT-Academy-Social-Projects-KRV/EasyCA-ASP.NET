@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,7 +11,6 @@ using CrudMicroservice.Domain.Errors;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Properties;
 using Microsoft.AspNetCore.Identity;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CrudMicroservice.Domain.Services
@@ -93,8 +91,6 @@ namespace CrudMicroservice.Domain.Services
 
         public async Task<TransportResponseApiModel> GetTransportById(string transportId, string userId)
         {
-            var isValid = ObjectId.TryParse(transportId, out var validated);
-
             var transport = await _transports.GetByFilterAsync(x => x.UserId == userId && x.Id == transportId);
 
             if (transport == null)
@@ -168,6 +164,5 @@ namespace CrudMicroservice.Domain.Services
 
             return _mapper.Map<TransportResponseApiModel>(transport);
         }
-
     }
 }
