@@ -72,6 +72,45 @@ namespace AuthMicroservice.Domain.Services
             }
         }
 
+        public async Task<ResponseApiModel<HttpStatusCode>> RegisterInspector(RegisterApiModel inspectorRequest)
+        {
+            User inspector = _mapper.Map<User>(inspectorRequest);
+
+            var result = await _userManager.CreateAsync(inspector, inspectorRequest.Password);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(inspector, "inspector");
+
+                var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(inspector);
+                var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
+                var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
+
+                var param = new Dictionary<string, string>
+                {
+                    {"token",validEmailToken },
+                    {"email",inspector.Email }
+                };
+
+                var callback = QueryHelpers.AddQueryString(inspectorRequest.ClientURI, param);
+                var emailResult = await _emailService.SendEmailAsync(inspector.Email, "EasyCA-Confirm Your Email", callback);
+
+                if (emailResult.Success)
+                {
+                    return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
+                }
+
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RegistrationFailed"));
+            }
+            else
+            {
+                List<IdentityError> identityErrors = result.Errors.ToList();
+                var errors = string.Join(" ", identityErrors.Select(x => x.Description));
+
+                throw new RestException(HttpStatusCode.BadRequest, errors);
+            }
+        }
+
         public async Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest)
         {
             var result = await _signInManager.PasswordSignInAsync(userRequest.Email, userRequest.Password, false, false);
