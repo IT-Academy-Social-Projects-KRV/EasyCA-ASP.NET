@@ -71,5 +71,13 @@ namespace AuthMicroservice.WebApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("ResendConfirmation")]
+        public async Task<IActionResult> ResendConfirmation(ResendConfirmationApiModel data)
+        {
+            var response = await _serviceAccount.ResendConfirmation(data);
+
+            return Ok(response);
+        }
     }
 }

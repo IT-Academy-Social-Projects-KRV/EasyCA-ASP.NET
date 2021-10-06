@@ -88,6 +88,33 @@ namespace CrudMicroservice.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Euro Protocol is closed, you can`t change any information!.
+        /// </summary>
+        public static string EuroProtocolIsClosed {
+            get {
+                return ResourceManager.GetString("EuroProtocolIsClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requested EuroProtocol is not found.
+        /// </summary>
+        public static string EuroProtocolNotFound {
+            get {
+                return ResourceManager.GetString("EuroProtocolNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update EuroProtocol is success!.
+        /// </summary>
+        public static string EuroProtocolUpdated {
+            get {
+                return ResourceManager.GetString("EuroProtocolUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have successfully logged into your account.
         /// </summary>
         public static string LoginSucceeded {
@@ -133,6 +160,15 @@ namespace CrudMicroservice.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Protocol was not updated.
+        /// </summary>
+        public static string ProtocolIsNotUpdated {
+            get {
+                return ResourceManager.GetString("ProtocolIsNotUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Couldn&apos;t register a new account.
         /// </summary>
         public static string RegistrationFailed {
@@ -165,6 +201,33 @@ namespace CrudMicroservice.Domain.Properties {
         public static string RestoreLinkSent {
             get {
                 return ResourceManager.GetString("RestoreLinkSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Side B is not registered.
+        /// </summary>
+        public static string SideBIsNotRegistered {
+            get {
+                return ResourceManager.GetString("SideBIsNotRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Side B registered successfully!.
+        /// </summary>
+        public static string SideBRegistrationSuccess {
+            get {
+                return ResourceManager.GetString("SideBRegistrationSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating EuroProtocol is success!.
+        /// </summary>
+        public static string SuccessfulCreatingOfEuroProtocol {
+            get {
+                return ResourceManager.GetString("SuccessfulCreatingOfEuroProtocol", resourceCulture);
             }
         }
         

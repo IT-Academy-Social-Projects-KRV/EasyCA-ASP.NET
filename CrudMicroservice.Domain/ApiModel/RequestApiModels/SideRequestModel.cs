@@ -12,5 +12,6 @@ namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
         public string DriverLicenseSerial { get; set; }
         public string Damage { get; set; }
         public bool IsGulty { get; set; }
+        public string ProtocolSerial { get; set; }
     }
 }

@@ -16,16 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AccountService.Domain\AccountService.Domain.csproj" />
-    <ProjectReference Include="..\AccountService.WebApi\AccountService.WebApi.csproj" />
     <ProjectReference Include="..\AuthMicroservice.Domain\AuthMicroservice.Domain.csproj" />
     <ProjectReference Include="..\CrudMicroservice.Domain\CrudMicroservice.Domain.csproj" />
-    <ProjectReference Include="..\ProtocolService.Domain\ProtocolService.Domain.csproj" />
+    <ProjectReference Include="..\CrudMicroservice.WebApi\CrudMicroservice.WebApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Integration\" />
-    <Folder Include="Unit\Domain\Services\" />
     <Folder Include="Unit\Data\" />
     <Folder Include="Unit\WebApi\Controllers\" />
   </ItemGroup>
