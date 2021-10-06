@@ -78,37 +78,14 @@ namespace AuthMicroservice.Domain.Services
 
             var result = await _userManager.CreateAsync(inspector, inspectorRequest.Password);
 
+            await _userManager.AddToRoleAsync(inspector, "inspector");
+
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(inspector, "inspector");
-
-                var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(inspector);
-                var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
-                var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
-
-                var param = new Dictionary<string, string>
-                {
-                    {"token",validEmailToken },
-                    {"email",inspector.Email }
-                };
-
-                var callback = QueryHelpers.AddQueryString(inspectorRequest.ClientURI, param);
-                var emailResult = await _emailService.SendEmailAsync(inspector.Email, "EasyCA-Confirm Your Email", callback);
-
-                if (emailResult.Success)
-                {
-                    return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
-                }
-
-                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RegistrationFailed"));
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
             }
-            else
-            {
-                List<IdentityError> identityErrors = result.Errors.ToList();
-                var errors = string.Join(" ", identityErrors.Select(x => x.Description));
 
-                throw new RestException(HttpStatusCode.BadRequest, errors);
-            }
+            throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RegistrationFailed"));
         }
 
         public async Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest)
