@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 namespace CrudMicroservice.WebApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class AdminController : Controller
     {
