@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CrudMicroservice.Domain\CrudMicroservice.Domain.csproj" />
+    <ProjectReference Include="..\RabbitMQConfig\RabbitMQConfig.csproj" />
   </ItemGroup>
 
 </Project>

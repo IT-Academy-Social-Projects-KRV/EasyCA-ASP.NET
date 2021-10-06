@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using RabbitMQConfig;
 
 namespace CrudMicroservice.WebApi
 {
@@ -99,6 +100,14 @@ namespace CrudMicroservice.WebApi
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            ConfigureServicesMassTransit.ConfigureServices(services, Configuration, new ConfigurationMassTransit
+            {
+                Configurator = bus =>
+                {
+                    
+                }
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
