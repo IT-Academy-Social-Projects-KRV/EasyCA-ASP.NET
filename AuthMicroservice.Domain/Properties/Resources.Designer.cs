@@ -61,6 +61,33 @@ namespace AuthMicroservice.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t send the confirmation link.
+        /// </summary>
+        public static string ConfirmationLinkNotSent {
+            get {
+                return ResourceManager.GetString("ConfirmationLinkNotSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The confirmation link has been sent to your email.
+        /// </summary>
+        public static string ConfirmationLinkSent {
+            get {
+                return ResourceManager.GetString("ConfirmationLinkSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This email address has already been confirmed.
+        /// </summary>
+        public static string EmailAlreadyConfirmed {
+            get {
+                return ResourceManager.GetString("EmailAlreadyConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email has not been confirmed.
         /// </summary>
         public static string EmailNotConfirmed {

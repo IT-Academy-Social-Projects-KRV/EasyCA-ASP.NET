@@ -48,5 +48,12 @@ namespace CrudMicroservice.WebApi
             var response = await _euroProtocolService.UpdateEuroProtocol(data);
             return Ok(response);
         }
+
+        [HttpGet("GetAllCircumstances")]
+        public async Task<IActionResult> GetAllCircumstances()
+        {
+            var response = await _euroProtocolService.GetAllCircumstances();
+            return Ok(response);
+        }
     }
 }

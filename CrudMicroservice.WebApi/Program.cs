@@ -27,6 +27,7 @@ namespace CrudMicroservice.WebApi
                     AppRoleSeed.SeedRoleData(roleManager).Wait();
                     AppUserSeed.SeedUserData(userManager).Wait();
                     TransportCategorySeed.SeedTransportCategoryData(context).Wait();
+                    CircumstanceAppSeed.SeedCircumstances(context).Wait();
                 }
                 catch (Exception ex)
                 {

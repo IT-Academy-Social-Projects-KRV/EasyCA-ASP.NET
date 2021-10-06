@@ -13,5 +13,6 @@ namespace AuthMicroservice.Domain.Interfaces
         Task<ResponseApiModel<HttpStatusCode>> ForgotPassword(ForgotPasswordApiModel data);
         Task<ResponseApiModel<HttpStatusCode>> RestorePassword(string newPassword, string token, string email);
         Task<ResponseApiModel<HttpStatusCode>> RegisterInspector(RegisterApiModel inspectorRequest);
+        Task<ResponseApiModel<HttpStatusCode>> ResendConfirmation(ResendConfirmationApiModel data);
     }
 }
