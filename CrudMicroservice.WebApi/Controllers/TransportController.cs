@@ -29,8 +29,7 @@ namespace CrudMicroservice.WebApi.Controllers
         [HttpGet("GetTransport")]
         public async Task<IActionResult> GetTransportById(string transportId)
         {
-            var userId = User.FindFirst("id")?.Value;
-            var response = await _transportService.GetTransportById(transportId, userId);
+            var response = await _transportService.GetTransportById(transportId);
             return Ok(response);
         }
 

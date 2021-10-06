@@ -91,11 +91,9 @@ namespace CrudMicroservice.Domain.Services
             return _mapper.Map<IEnumerable<TransportResponseApiModel>>(transports);
         }
 
-        public async Task<TransportResponseApiModel> GetTransportById(string transportId, string userId)
+        public async Task<TransportResponseApiModel> GetTransportById(string transportId)
         {
-            var isValid = ObjectId.TryParse(transportId, out var validated);
-
-            var transport = await _transports.GetByFilterAsync(x => x.UserId == userId && x.Id == transportId);
+            var transport = await _transports.GetByFilterAsync(x => x.Id == transportId);
 
             if (transport == null)
             {
