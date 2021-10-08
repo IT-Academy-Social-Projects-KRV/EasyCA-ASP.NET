@@ -20,7 +20,7 @@ namespace RabbitMQConfig
             var rabbitMQSection = configuration.GetSection("RabbitMQServer");
 
             if (rabbitMQSection == null)
-            {
+            {   
                 throw new Exception("Section is empty");
             }
 
@@ -41,8 +41,8 @@ namespace RabbitMQConfig
                     {
                         cfg.Host($"rabbitmq://{url}/{host}", configurator =>
                         {
-                            configurator.Username(rabbitMQSection.GetValue<string>("UserName"));
-                            configurator.Password(rabbitMQSection.GetValue<string>("Password"));
+                            configurator.Username("easy_ca_user");
+                            configurator.Password("Qwerty211@");
                         });                      
                         cfg.ConfigureEndpoints(busFactory, SnakeCaseEndpointNameFormatter.Instance);
                     });

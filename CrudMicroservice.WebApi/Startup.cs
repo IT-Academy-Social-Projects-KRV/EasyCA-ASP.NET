@@ -3,6 +3,7 @@ using System.Text;
 using CrudMicroservice.Data;
 using CrudMicroservice.Data.Entities;
 using CrudMicroservice.Data.Interfaces;
+using CrudMicroservice.Domain.Consumers;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Services;
 using CrudMicroservice.WebApi.Middleware;
@@ -103,9 +104,10 @@ namespace CrudMicroservice.WebApi
 
             ConfigureServicesMassTransit.ConfigureServices(services, Configuration, new ConfigurationMassTransit
             {
+                ServiceName = "CrudMicroservice",
                 Configurator = bus =>
                 {
-                    
+                    bus.AddConsumer<TransportConsumer>();
                 }
             });
         }
