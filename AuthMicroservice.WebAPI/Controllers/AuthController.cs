@@ -79,5 +79,12 @@ namespace AuthMicroservice.WebApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("AddInspectors")]
+        public async Task<IActionResult> AddInspectors(RegisterApiModel data)
+        {
+            var response = await _serviceAccount.AddInspector(data);
+            return Ok(response);
+        }
     }
 }

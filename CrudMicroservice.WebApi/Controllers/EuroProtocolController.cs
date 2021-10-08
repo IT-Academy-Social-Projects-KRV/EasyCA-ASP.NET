@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using CrudMicroservice.Domain.Interfaces;
 using System.Threading.Tasks;
 using CrudMicroservice.Domain.ApiModel.RequestApiModels;
@@ -13,12 +12,10 @@ namespace CrudMicroservice.WebApi
     public class EuroProtocolController : ControllerBase
     {
         private readonly IEuroProtocolService _euroProtocolService;
-        private readonly IConfiguration _configuration;
 
-        public EuroProtocolController(IEuroProtocolService euroProtocolService, IConfiguration configuration)
+        public EuroProtocolController(IEuroProtocolService euroProtocolService)
         {
             _euroProtocolService = euroProtocolService;
-            _configuration = configuration;
         }
 
         [HttpPost("CreateEuroProtocol")]

@@ -106,11 +106,29 @@ namespace CrudMicroservice.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Euro protocols not found.
+        /// </summary>
+        public static string EuroProtocolsNotFound {
+            get {
+                return ResourceManager.GetString("EuroProtocolsNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update EuroProtocol is success!.
         /// </summary>
         public static string EuroProtocolUpdated {
             get {
                 return ResourceManager.GetString("EuroProtocolUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspector not found.
+        /// </summary>
+        public static string InspectorsNotFound {
+            get {
+                return ResourceManager.GetString("InspectorsNotFound", resourceCulture);
             }
         }
         
