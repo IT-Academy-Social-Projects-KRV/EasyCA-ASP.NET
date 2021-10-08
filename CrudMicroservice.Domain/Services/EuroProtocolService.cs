@@ -10,6 +10,7 @@ using CrudMicroservice.Domain.ApiModel.ResponseApiModels;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Errors;
 using CrudMicroservice.Domain.Properties;
+using Microsoft.AspNetCore.Identity;
 
 namespace CrudMicroservice.Domain.Services
 {
@@ -18,12 +19,19 @@ namespace CrudMicroservice.Domain.Services
         private readonly IMapper _mapper;
         private readonly IGenericRepository<EuroProtocol> _euroProtocols;
         private readonly IGenericRepository<Circumstance> _circumstances;
+        private readonly IGenericRepository<Transport> _transports;
+        private readonly IGenericRepository<PersonalData> _personalDatas;
+        private readonly UserManager<User> _userManager;
 
-        public EuroProtocolService(IMapper mapper, IGenericRepository<EuroProtocol> euroProtocol, IGenericRepository<Circumstance> circumstances)
+        public EuroProtocolService(IMapper mapper, IGenericRepository<EuroProtocol> euroProtocol, IGenericRepository<Circumstance> circumstances,
+            IGenericRepository<Transport> transports, IGenericRepository<PersonalData> personalDatas, UserManager<User> userManager)
         {
             _mapper = mapper;
             _euroProtocols = euroProtocol;
             _circumstances = circumstances;
+            _transports = transports;
+            _personalDatas = personalDatas;
+            _userManager = userManager;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestModel data)
@@ -50,7 +58,7 @@ namespace CrudMicroservice.Domain.Services
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("SideBRegistrationSuccess"));
         }
 
-        public async Task<IEnumerable<EuroProtocolResponseModel>> FindAllEuroProtocolsByEmail(string email)
+        public async Task<IEnumerable<EuroProtocolSimpleResponseModel>> FindAllEuroProtocolsByEmail(string email)
         {
             var euroProtocols = await _euroProtocols.GetAllByFilterAsync(x => x.SideA.Email == email || x.SideB.Email == email);
 
@@ -59,7 +67,7 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("EuroProtocolNotFound"));
             }
 
-            var mappedProtocols = _mapper.Map<IEnumerable<EuroProtocol>, IEnumerable<EuroProtocolResponseModel>>(euroProtocols);
+            var mappedProtocols = _mapper.Map<IEnumerable<EuroProtocol>, IEnumerable<EuroProtocolSimpleResponseModel>>(euroProtocols);
 
             return mappedProtocols;
         }
@@ -72,7 +80,7 @@ namespace CrudMicroservice.Domain.Services
             }
 
             var mapped = _mapper.Map<EuroProtocol>(data);
-           
+
             var update = Builders<EuroProtocol>.Update
                 .Set(c => c.Address, mapped.Address)
                 .Set(c => c.SideA, mapped.SideA)
@@ -100,6 +108,58 @@ namespace CrudMicroservice.Domain.Services
             }
 
             return _mapper.Map<IEnumerable<Circumstance>, IEnumerable<CircumstanceResponseModel>>(circumstances);
+        }
+
+        public async Task<EuroProtocolFullResponseModel> GetEuroProtocolBySerialNumber(string serialNumber)
+        {
+            var euroProtocol = await _euroProtocols.GetByFilterAsync(x => x.SerialNumber == serialNumber);
+
+            if (euroProtocol == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("EuroProtocolNotFound"));
+            }
+
+            var mappedEuroProtocolSimpleResponseModel = _mapper.Map<EuroProtocolSimpleResponseModel>(euroProtocol);
+
+            var userSideA = await _userManager.FindByEmailAsync(euroProtocol.SideA.Email);
+            var userSideB = await _userManager.FindByEmailAsync(euroProtocol.SideB.Email);
+
+            if (userSideA == null || userSideB == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
+            var mappedUserResponseModelA = _mapper.Map<UserResponseModel>(userSideA);
+            var mappedUserResponseModelB = _mapper.Map<UserResponseModel>(userSideB);
+
+            var personalDataUserA = await _personalDatas.GetByFilterAsync(p => p.Id == userSideA.PersonalDataId);
+            var personalDataUserB = await _personalDatas.GetByFilterAsync(p => p.Id == userSideB.PersonalDataId);
+
+            mappedUserResponseModelA.PersonalData = _mapper.Map<PersonalDataResponseModel>(personalDataUserA);
+            mappedUserResponseModelB.PersonalData = _mapper.Map<PersonalDataResponseModel>(personalDataUserB);
+
+            var transportSideA = await _transports.GetByFilterAsync(t => t.Id == euroProtocol.SideA.TransportId);
+            var transportSideB = await _transports.GetByFilterAsync(t => t.Id == euroProtocol.SideB.TransportId);
+
+            if (transportSideA == null || transportSideB == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportNotFound"));
+            }
+
+            var mappedTransportResponseModelA = _mapper.Map<TransportResponseApiModel>(transportSideA);
+            var mappedTransportResponseModelB = _mapper.Map<TransportResponseApiModel>(transportSideB);
+
+            var response = new EuroProtocolFullResponseModel
+            {
+                EuroProtocolSimple = mappedEuroProtocolSimpleResponseModel,
+                UserDataSideA = mappedUserResponseModelA,
+                UserDataSideB = mappedUserResponseModelB,
+                TransportSideA = mappedTransportResponseModelA,
+                TransportSideB = mappedTransportResponseModelB,
+                Witnesses = euroProtocol.Witnesses
+            };
+
+            return response;
         }
     }
 }

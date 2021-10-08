@@ -10,8 +10,9 @@ namespace CrudMicroservice.Domain.Interfaces
     {
         Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestModel data);
         Task<ResponseApiModel<HttpStatusCode>> RegisterSideBEuroProtocol(SideRequestModel data);
-        Task<IEnumerable<EuroProtocolResponseModel>> FindAllEuroProtocolsByEmail(string email);
+        Task<IEnumerable<EuroProtocolSimpleResponseModel>> FindAllEuroProtocolsByEmail(string email);
         Task<ResponseApiModel<HttpStatusCode>> UpdateEuroProtocol(EuroProtocolRequestModel data);
         Task<IEnumerable<CircumstanceResponseModel>> GetAllCircumstances();
+        Task<EuroProtocolFullResponseModel> GetEuroProtocolBySerialNumber(string serialNumber);
     }
 }

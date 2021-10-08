@@ -11,6 +11,9 @@ namespace CrudMicroservice.Domain.Mapping
         {
             CreateMap<EuroProtocol, EuroProtocolRequestModel>().ReverseMap();
             CreateMap<EuroProtocol, EuroProtocolResponseModel>().ReverseMap();
+            CreateMap<EuroProtocol, EuroProtocolSimpleResponseModel>()
+                .ForMember(x => x.Address, opt => opt.MapFrom(src => src.Address))
+                .ReverseMap();
             CreateMap<Circumstance, CircumstanceResponseModel>().ReverseMap();
         }
     }
