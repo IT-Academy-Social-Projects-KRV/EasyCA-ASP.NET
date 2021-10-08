@@ -41,6 +41,13 @@ namespace AuthMicroservice.WebApi.Controllers
             return Ok(response);
         }
 
+        [HttpPost("RegisterInspector")]
+        public async Task<IActionResult> RegisterInspector(RegisterApiModel inspectorRegisterRequest)
+        {
+            var response = await _serviceAccount.RegisterInspector(inspectorRegisterRequest);
+            return Ok(response);
+        }
+
         [HttpGet("ConfirmEmail/{token}/{email}")]
         public async Task<IActionResult> ConfirmEmail(string email, string token)
         {

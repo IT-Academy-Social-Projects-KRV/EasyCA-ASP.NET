@@ -19,11 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudMicroservice.Domain", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestApp.Tests", "UnitTestApp.Tests\UnitTestApp.Tests.csproj", "{4E1F0181-4A07-4306-98E3-8B03AC46FF5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchMicroservice.Data", "SearchMicroservice.Data\SearchMicroservice.Data.csproj", "{4F50744C-EE75-40C3-B1B5-5FAE4A5ADD2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchMicroservice.Data", "SearchMicroservice.Data\SearchMicroservice.Data.csproj", "{4F50744C-EE75-40C3-B1B5-5FAE4A5ADD2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchMicroservice.Domain", "SearchMicroservice.Domain\SearchMicroservice.Domain.csproj", "{4693EE6B-31CD-49AA-8F91-AE8ACAA5F9CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchMicroservice.Domain", "SearchMicroservice.Domain\SearchMicroservice.Domain.csproj", "{4693EE6B-31CD-49AA-8F91-AE8ACAA5F9CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchMicroservice.WebAPI", "SearchMicroservice.WebAPI\SearchMicroservice.WebAPI.csproj", "{2E03BC39-705E-4AA5-B5F7-84883DD8E450}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchMicroservice.WebAPI", "SearchMicroservice.WebAPI\SearchMicroservice.WebAPI.csproj", "{2E03BC39-705E-4AA5-B5F7-84883DD8E450}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQConfig", "RabbitMQConfig\RabbitMQConfig.csproj", "{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{2E03BC39-705E-4AA5-B5F7-84883DD8E450}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E03BC39-705E-4AA5-B5F7-84883DD8E450}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E03BC39-705E-4AA5-B5F7-84883DD8E450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
