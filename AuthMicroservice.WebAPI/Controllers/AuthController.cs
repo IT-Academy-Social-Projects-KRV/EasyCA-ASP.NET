@@ -40,10 +40,10 @@ namespace AuthMicroservice.WebApi.Controllers
             var response = await _serviceAccount.RegisterUser(userRegisterRequest);
             return Ok(response);
         }
-
+        
         [HttpPost("RegisterInspector")]
         public async Task<IActionResult> RegisterInspector(RegisterApiModel inspectorRegisterRequest)
-        {
+        {           
             var response = await _serviceAccount.RegisterInspector(inspectorRegisterRequest);
             return Ok(response);
         }

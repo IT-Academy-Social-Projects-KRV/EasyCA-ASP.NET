@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CrudMicroservice.WebApi.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class TransportController : ControllerBase
