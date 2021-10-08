@@ -72,6 +72,22 @@ namespace AuthMicroservice.Domain.Services
             }
         }
 
+        public async Task<ResponseApiModel<HttpStatusCode>> RegisterInspector(RegisterApiModel inspectorRequest)
+        {
+            User inspector = _mapper.Map<User>(inspectorRequest);
+
+            var result = await _userManager.CreateAsync(inspector, inspectorRequest.Password);
+
+            await _userManager.AddToRoleAsync(inspector, "inspector");
+
+            if (result.Succeeded)
+            {
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
+            }
+
+            throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RegistrationFailed"));
+        }
+
         public async Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest)
         {
             var result = await _signInManager.PasswordSignInAsync(userRequest.Email, userRequest.Password, false, false);
