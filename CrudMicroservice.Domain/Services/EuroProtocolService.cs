@@ -119,7 +119,8 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("EuroProtocolNotFound"));
             }
 
-            var mappedEuroProtocolSimpleResponseModel = _mapper.Map<EuroProtocolSimpleResponseModel>(euroProtocol);
+            var mappedEuroProtocolResponseModel = _mapper.Map<EuroProtocolResponseModel>(euroProtocol);
+            mappedEuroProtocolResponseModel.Witnesses = _mapper.Map<IEnumerable<Witness>, IEnumerable<WitnessResponseModel>>(euroProtocol.Witnesses);
 
             var userSideA = await _userManager.FindByEmailAsync(euroProtocol.SideA.Email);
             var userSideB = await _userManager.FindByEmailAsync(euroProtocol.SideB.Email);
@@ -151,12 +152,11 @@ namespace CrudMicroservice.Domain.Services
 
             var response = new EuroProtocolFullResponseModel
             {
-                EuroProtocolSimple = mappedEuroProtocolSimpleResponseModel,
+                EuroProtocol = mappedEuroProtocolResponseModel,
                 UserDataSideA = mappedUserResponseModelA,
                 UserDataSideB = mappedUserResponseModelB,
                 TransportSideA = mappedTransportResponseModelA,
-                TransportSideB = mappedTransportResponseModelB,
-                Witnesses = euroProtocol.Witnesses
+                TransportSideB = mappedTransportResponseModelB
             };
 
             return response;
