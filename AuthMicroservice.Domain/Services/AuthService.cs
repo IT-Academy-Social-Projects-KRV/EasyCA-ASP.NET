@@ -72,6 +72,22 @@ namespace AuthMicroservice.Domain.Services
             }
         }
 
+        public async Task<ResponseApiModel<HttpStatusCode>> RegisterInspector(RegisterApiModel inspectorRequest)
+        {
+            User inspector = _mapper.Map<User>(inspectorRequest);
+
+            var result = await _userManager.CreateAsync(inspector, inspectorRequest.Password);
+
+            await _userManager.AddToRoleAsync(inspector, "inspector");
+
+            if (result.Succeeded)
+            {
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
+            }
+
+            throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RegistrationFailed"));
+        }
+
         public async Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest)
         {
             var result = await _signInManager.PasswordSignInAsync(userRequest.Email, userRequest.Password, false, false);
@@ -91,7 +107,7 @@ namespace AuthMicroservice.Domain.Services
                 }
 
                 var roles = await _userManager.GetRolesAsync(user);
-                var token = _jwtService.CreateJwtToken(user);
+                var token = await _jwtService.CreateJwtToken(user);
                 var refreshtoken = _jwtService.CreateRefreshToken();
 
                 user.RefreshToken = refreshtoken;
@@ -105,6 +121,15 @@ namespace AuthMicroservice.Domain.Services
             {
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("LoginWrongCredentials"));
             }
+        }
+
+        public async Task<ResponseApiModel<HttpStatusCode>> AddInspector(RegisterApiModel data)
+        {
+            var mappedUser = _mapper.Map<User>(data);
+            await _userManager.CreateAsync(mappedUser, data.Password);
+            await _userManager.AddToRoleAsync(mappedUser, "inspector");
+
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating inspector is success!");
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> ConfirmEmailAsync(string email, string token)

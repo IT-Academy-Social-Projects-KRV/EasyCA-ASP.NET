@@ -42,6 +42,7 @@ namespace CrudMicroservice.WebApi
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ITransportService, TransportService>();
             services.AddTransient<IEuroProtocolService, EuroProtocolService>();
+            services.AddTransient<IAdminService, AdminService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

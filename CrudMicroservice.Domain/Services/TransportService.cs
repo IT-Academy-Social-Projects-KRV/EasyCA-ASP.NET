@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,7 +11,6 @@ using CrudMicroservice.Domain.Errors;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Properties;
 using Microsoft.AspNetCore.Identity;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CrudMicroservice.Domain.Services
@@ -166,6 +164,5 @@ namespace CrudMicroservice.Domain.Services
 
             return _mapper.Map<TransportResponseApiModel>(transport);
         }
-
     }
 }
