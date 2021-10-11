@@ -1,6 +1,6 @@
 ﻿namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class WitnessRequestModel
+    public class WitnessRequestApiModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

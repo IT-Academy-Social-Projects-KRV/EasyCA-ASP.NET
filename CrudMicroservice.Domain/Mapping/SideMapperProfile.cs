@@ -9,8 +9,8 @@ namespace CrudMicroservice.Domain.Mapping
     {
         public SideMapperProfile()
         {
-            CreateMap<Side, SideRequestModel>().ReverseMap();
-            CreateMap<Side, SideResponseModel>().ReverseMap();
+            CreateMap<Side, SideRequestApiModel>().ReverseMap();
+            CreateMap<Side, SideResponseApiModel>().ReverseMap();
         }
     }
 }

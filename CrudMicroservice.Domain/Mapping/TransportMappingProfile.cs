@@ -11,7 +11,7 @@ namespace CrudMicroservice.Domain.Mapping
         {
             CreateMap<Transport, TransportResponseApiModel>()
                 .ForMember(x => x.CategoryName, opt => opt.MapFrom(src => src.CarCategory.CategoryName)).ReverseMap();
-            CreateMap<Transport, AddTransportRequestModel>().ReverseMap();
+            CreateMap<Transport, AddTransportRequestApiModel>().ReverseMap();
         }
     }
 }

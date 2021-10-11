@@ -61,6 +61,24 @@ namespace CrudMicroservice.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Circumstances not found.
+        /// </summary>
+        public static string CircumstancesNotFound {
+            get {
+                return ResourceManager.GetString("CircumstancesNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating personal data is success!.
+        /// </summary>
+        public static string CreatePersonalDataSuccess {
+            get {
+                return ResourceManager.GetString("CreatePersonalDataSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email has not been confirmed.
         /// </summary>
         public static string EmailNotConfirmed {
@@ -151,6 +169,15 @@ namespace CrudMicroservice.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password was changed successfully.
+        /// </summary>
+        public static string PasswordChangeSuccess {
+            get {
+                return ResourceManager.GetString("PasswordChangeSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your password has been successfully reset.
         /// </summary>
         public static string PasswordResetSuccess {
@@ -174,6 +201,15 @@ namespace CrudMicroservice.Domain.Properties {
         public static string PersonalDataNotUpdate {
             get {
                 return ResourceManager.GetString("PersonalDataNotUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update personal data is success!.
+        /// </summary>
+        public static string PersonalDataUpdateSuccess {
+            get {
+                return ResourceManager.GetString("PersonalDataUpdateSuccess", resourceCulture);
             }
         }
         
@@ -309,6 +345,24 @@ namespace CrudMicroservice.Domain.Properties {
         public static string TransportUpdatingSucceeded {
             get {
                 return ResourceManager.GetString("TransportUpdatingSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal Data already exist.
+        /// </summary>
+        public static string UserDataExists {
+            get {
+                return ResourceManager.GetString("UserDataExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal Data is empty.
+        /// </summary>
+        public static string UserDataNotExists {
+            get {
+                return ResourceManager.GetString("UserDataNotExists", resourceCulture);
             }
         }
         

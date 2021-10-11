@@ -29,13 +29,13 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             _euroProtocolService = new EuroProtocolService(_mapper.Object, _euroProtocols.Object);
         }
 
-        private EuroProtocolRequestModel EuroModel()
+        private EuroProtocolRequestApiModel EuroModel()
         {
-            EuroProtocolRequestModel euroModel = new EuroProtocolRequestModel()
+            EuroProtocolRequestApiModel euroModel = new EuroProtocolRequestApiModel()
             {
                 RegistrationDateTime = DateTime.Now,
                 SerialNumber = "0012345",
-                Address = new AddressOfAccidentRequestModel()
+                Address = new AddressOfAccidentRequestApiModel()
                 {
                     City = "Rivne",
                     District = "Rivnenskiy",
@@ -46,7 +46,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     IsInCity = true,
                     IsIntersection = true
                 },
-                SideA = new SideRequestModel()
+                SideA = new SideRequestApiModel()
                 {
                     Email = "stets@gmail.com",
                     TransportId = "614b081a3d312f200439de85",
@@ -68,7 +68,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     IsGulty = true,
                     ProtocolSerial = "0012345"
                 },
-                SideB = new SideRequestModel()
+                SideB = new SideRequestApiModel()
                 {
                     Email = "kosmin@gmail.com",
                     TransportId = "612900355b12fb0159889153",
@@ -91,9 +91,9 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     ProtocolSerial = "0012345"
                 },
                 IsClosed = false,
-                Witnesses = new List<WitnessRequestModel>()
+                Witnesses = new List<WitnessRequestApiModel>()
                 {
-                    new WitnessRequestModel()
+                    new WitnessRequestApiModel()
                     {
                         FirstName = "Dmytro",
                         LastName = "Pinkevich",
@@ -106,9 +106,9 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             return euroModel;
         }
         
-        private SideRequestModel SideB()
+        private SideRequestApiModel SideB()
         {
-            SideRequestModel sideB = new SideRequestModel()
+            SideRequestApiModel sideB = new SideRequestApiModel()
             {
                 Email = "kosmin@gmail.com",
                 TransportId = "612900355b12fb0159889153",
@@ -138,10 +138,10 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         public async Task RegistrationEuroProtocol_Success()
         {
             //Arrange
-            _mapper.Setup(repo => repo.Map<EuroProtocol>(It.IsAny<EuroProtocolRequestModel>())).Returns(new EuroProtocol());
+            _mapper.Setup(repo => repo.Map<EuroProtocol>(It.IsAny<EuroProtocolRequestApiModel>())).Returns(new EuroProtocol());
 
             //Act
-            var result = await _euroProtocolService.RegistrationEuroProtocol(It.IsAny<EuroProtocolRequestModel>());
+            var result = await _euroProtocolService.RegistrationEuroProtocol(It.IsAny<EuroProtocolRequestApiModel>());
 
             //Assert
             Assert.NotNull(result);
@@ -153,13 +153,13 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         public async Task RegisterSideBEuroProtocol_SideBDoesntExists_ReturnsNotFound()
         {
             //Arrange
-            _mapper.Setup(repo => repo.Map<Side>(It.IsAny<Expression<Func<SideRequestModel, bool>>>())).Returns(new Side() { IsGulty = false });
+            _mapper.Setup(repo => repo.Map<Side>(It.IsAny<Expression<Func<SideRequestApiModel, bool>>>())).Returns(new Side() { IsGulty = false });
             var mockResult = new Mock<UpdateResult>();
             mockResult.Setup(c => c.IsAcknowledged).Returns(false);
             _euroProtocols.Setup(repo => repo.UpdateAsync(It.IsAny<Expression<Func<EuroProtocol, bool>>>(), It.IsAny<UpdateDefinition<EuroProtocol>>())).ReturnsAsync(mockResult.Object);
             
             //Act
-            Func<Task> act = () => _euroProtocolService.RegisterSideBEuroProtocol(It.IsAny<SideRequestModel>());
+            Func<Task> act = () => _euroProtocolService.RegisterSideBEuroProtocol(It.IsAny<SideRequestApiModel>());
 
             //Assert
             await Assert.ThrowsAsync<RestException>(act);
@@ -171,7 +171,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             //Arrange
             var mockResult = new Mock<UpdateResult>();
             mockResult.Setup(c => c.IsAcknowledged).Returns(true);
-            _mapper.Setup(repo => repo.Map<Side>(It.IsAny<Expression<Func<SideRequestModel, bool>>>())).Returns(new Side() { IsGulty = false });
+            _mapper.Setup(repo => repo.Map<Side>(It.IsAny<Expression<Func<SideRequestApiModel, bool>>>())).Returns(new Side() { IsGulty = false });
             _euroProtocols.Setup(repo => repo.UpdateAsync(It.IsAny<Expression<Func<EuroProtocol, bool>>>(), It.IsAny<UpdateDefinition<EuroProtocol>>())).ReturnsAsync(mockResult.Object);
             
             //Act
@@ -206,12 +206,12 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                 SideA = new Side() { Email = "kosmin@gmail.com" }
             };
             _euroProtocols.Setup(repo => repo.GetAllByFilterAsync(It.IsAny<Expression<Func<EuroProtocol, bool>>>())).ReturnsAsync(new List<EuroProtocol>());
-            _mapper.Setup(s => s.Map<List<EuroProtocolResponseModel>>(protocol)).Returns(new List<EuroProtocolResponseModel>()
+            _mapper.Setup(s => s.Map<List<EuroProtocolResponseApiModel>>(protocol)).Returns(new List<EuroProtocolResponseApiModel>()
             {
-                new EuroProtocolResponseModel ()
+                new EuroProtocolResponseApiModel ()
                 {
                     SerialNumber = protocol.SerialNumber,
-                    SideA = new SideResponseModel() {Email = protocol.SideA.Email}
+                    SideA = new SideResponseApiModel() {Email = protocol.SideA.Email}
                 }
             });
 
@@ -219,7 +219,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             var result = await _euroProtocolService.FindAllEuroProtocolsByEmail(_euroProtocolSuccess.SideA.Email);
 
             //Assert
-            Assert.IsType<List<EuroProtocolResponseModel>>(result.ToList());
+            Assert.IsType<List<EuroProtocolResponseApiModel>>(result.ToList());
             Assert.NotNull(result);
         }
 
@@ -227,7 +227,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         public async Task UpdateEuroProtocol_UpdateReturnBadRequest()
         {
             //Arrange
-            _mapper.Setup(repo => repo.Map<EuroProtocol>(It.IsAny<EuroProtocolRequestModel>())).Returns(new EuroProtocol()
+            _mapper.Setup(repo => repo.Map<EuroProtocol>(It.IsAny<EuroProtocolRequestApiModel>())).Returns(new EuroProtocol()
             {
                 IsClosed = false,
                 SideA = new Side() { IsGulty = true, Circumstances = new List<int>(), Evidences = new List<Evidence>() },
@@ -253,7 +253,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         public async Task UpdateEuroProtocol_ReturnsSuccess()
         {
             //Arrange
-            _mapper.Setup(repo => repo.Map<EuroProtocol>(It.IsAny<EuroProtocolRequestModel>()))
+            _mapper.Setup(repo => repo.Map<EuroProtocol>(It.IsAny<EuroProtocolRequestApiModel>()))
                         .Returns(new EuroProtocol()
                         {
                             IsClosed = false,

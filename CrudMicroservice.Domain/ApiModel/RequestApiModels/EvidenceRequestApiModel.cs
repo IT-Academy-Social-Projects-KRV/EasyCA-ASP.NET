@@ -2,7 +2,7 @@
 
 namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class EvidenceRequestModel
+    public class EvidenceRequestApiModel
     {
         public string Explanation { get; set; }
         public string PhotoSchema { get; set; }

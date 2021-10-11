@@ -2,7 +2,7 @@
 
 namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class AddTransportRequestModel
+    public class AddTransportRequestApiModel
     {
         public string ProducedBy { get; set; }
         public string Model { get; set; }

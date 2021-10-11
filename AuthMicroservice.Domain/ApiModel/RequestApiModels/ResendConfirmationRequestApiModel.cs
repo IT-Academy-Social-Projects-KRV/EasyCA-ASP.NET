@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuthMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class ResendConfirmationApiModel
+    public class ResendConfirmationRequestApiModel
     {
         public string Email { get; set; }
         public string ResendConfirmationURI { get; set; }

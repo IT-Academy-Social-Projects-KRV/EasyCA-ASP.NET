@@ -98,27 +98,5 @@ namespace AuthMicroservice.Domain.Services
                 };
             }
         }
-
-        public bool RevokeToken(string token)
-        {
-            var user = _userManager.Users.FirstOrDefault(x => x.RefreshToken.Token == token);
-
-            if (user == null)
-            {
-                return false;
-            }
-
-            var refreshToken = user.RefreshToken;
-
-            if (!refreshToken.IsActive)
-            {
-                return false;
-            }
-
-            refreshToken.Revoked = DateTime.UtcNow;
-            _userManager.UpdateAsync(user);
-
-            return true;
-        }
     }
 }

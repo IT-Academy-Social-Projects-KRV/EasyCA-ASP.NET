@@ -3,7 +3,7 @@ using CrudMicroservice.Data.Entities;
 
 namespace CrudMicroservice.Domain.ApiModel.ResponseApiModels
 {
-    public class EuroProtocolSimpleResponseModel
+    public class EuroProtocolSimpleResponseApiModel
     {
         public string SerialNumber { get; set; }
         public DateTime RegistrationDateTime { get; set; }

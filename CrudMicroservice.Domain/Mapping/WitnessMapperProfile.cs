@@ -9,8 +9,8 @@ namespace CrudMicroservice.Domain.Mapping
     {
         public WitnessMapperProfile()
         {
-            CreateMap<Witness, WitnessRequestModel>().ReverseMap();
-            CreateMap<Witness, WitnessResponseModel>().ReverseMap();
+            CreateMap<Witness, WitnessRequestApiModel>().ReverseMap();
+            CreateMap<Witness, WitnessResponseApiModel>().ReverseMap();
         }
     }
 }

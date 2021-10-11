@@ -9,8 +9,8 @@ namespace CrudMicroservice.Domain.Mapping
     {
         public EvidenceMapperProfile()
         {
-            CreateMap<Evidence, EvidenceRequestModel>().ReverseMap();
-            CreateMap<Evidence, EvidenceResponseModel>().ReverseMap();
+            CreateMap<Evidence, EvidenceRequestApiModel>().ReverseMap();
+            CreateMap<Evidence, EvidenceResponseApiModel>().ReverseMap();
         }
     }
 }

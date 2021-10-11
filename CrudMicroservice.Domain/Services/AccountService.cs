@@ -28,7 +28,7 @@ namespace CrudMicroservice.Domain.Services
             _personalData = personalData;
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestModel data, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestApiModel data, string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
 
@@ -50,10 +50,10 @@ namespace CrudMicroservice.Domain.Services
 
             await _userManager.UpdateAsync(user);
 
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating personal data is success!");
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("CreatePersonalDataSuccess"));
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> UpdatePersonalData(UserRequestModel data, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdatePersonalData(UserRequestApiModel data, string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
 
@@ -67,15 +67,15 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserDataNotExist"));
             }
 
-            var personalData = _mapper.Map<PersonalDataRequestModel, PersonalData>(data.PersonalData);
+            var personalData = _mapper.Map<PersonalDataRequestApiModel, PersonalData>(data.PersonalData);
             personalData.Id = user.PersonalDataId;
             var result = await _personalData.ReplaceAsync(x => x.Id == user.PersonalDataId, personalData);
 
             if (!result.IsAcknowledged)
             {
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("PersonalDataNotUpdate"));
-            }     
-            
+            }
+
             user.Email = data.Email;
             user.FirstName = data.FirstName;
             user.LastName = data.LastName;
@@ -88,10 +88,10 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserDataNotUpdate"));
             }
 
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Update personal data is success!");
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("PersonalDataUpdateSuccess"));
         }
 
-        public async Task<UserResponseModel> GetUserById(string userId)
+        public async Task<UserResponseApiModel> GetUserById(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -101,14 +101,14 @@ namespace CrudMicroservice.Domain.Services
             }
 
             var persData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
-            var mapedPersData = _mapper.Map<PersonalDataResponseModel>(persData);
-            var mappedUser = _mapper.Map<UserResponseModel>(user);
+            var mapedPersData = _mapper.Map<PersonalDataResponseApiModel>(persData);
+            var mappedUser = _mapper.Map<UserResponseApiModel>(user);
             mappedUser.PersonalData = mapedPersData;
 
             return mappedUser;
         }
 
-        public async Task<PersonalDataResponseModel> GetPersonalData(string userId)
+        public async Task<PersonalDataResponseApiModel> GetPersonalData(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -119,14 +119,14 @@ namespace CrudMicroservice.Domain.Services
 
             var personalDataId = user.PersonalDataId;
 
-            if (personalDataId == null)
+            if (string.IsNullOrEmpty(personalDataId))
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserPersonalDataNotFound"));
             }
 
             var personalData = await _personalData.GetByFilterAsync(x => x.Id == personalDataId);
-            
-            return _mapper.Map<PersonalDataResponseModel>(personalData);
+
+            return _mapper.Map<PersonalDataResponseApiModel>(personalData);
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> ChangePassword(string password, string oldPassword, string userId)
@@ -142,7 +142,7 @@ namespace CrudMicroservice.Domain.Services
 
             if (result.Succeeded)
             {
-                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Password was changed successfully");
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("PasswordChangeSuccess"));
             }
             else
             {
@@ -153,7 +153,7 @@ namespace CrudMicroservice.Domain.Services
             }
         }
 
-        public async Task<UserResponseModel> GetUserByEmail(string email)
+        public async Task<UserResponseApiModel> GetUserByEmail(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 
@@ -163,8 +163,8 @@ namespace CrudMicroservice.Domain.Services
             }
 
             var persData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
-            var mapedPersData = _mapper.Map<PersonalDataResponseModel>(persData);
-            var mappedUser = _mapper.Map<UserResponseModel>(user);
+            var mapedPersData = _mapper.Map<PersonalDataResponseApiModel>(persData);
+            var mappedUser = _mapper.Map<UserResponseApiModel>(user);
             mappedUser.PersonalData = mapedPersData;
 
             return mappedUser;

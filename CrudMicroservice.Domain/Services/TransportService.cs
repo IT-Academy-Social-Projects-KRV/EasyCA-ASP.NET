@@ -33,7 +33,7 @@ namespace CrudMicroservice.Domain.Services
             _personalData = personalData;
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> AddTransport(AddTransportRequestModel transportModel, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> AddTransport(AddTransportRequestApiModel transportModel, string userId)
         {
             var carCategory = await _transportsCategories.GetByFilterAsync(x => x.CategoryName == transportModel.CategoryName);
 
@@ -71,7 +71,7 @@ namespace CrudMicroservice.Domain.Services
 
             if (!result.IsAcknowledged)
             {
-                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("PersonalDataWrongUpdated"));//resources
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("PersonalDataNotUpdate"));
             }
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportAddingSucceeded"));
@@ -101,7 +101,7 @@ namespace CrudMicroservice.Domain.Services
             return _mapper.Map<TransportResponseApiModel>(transport);
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> UpdateTransport(UpdateTransportRequestModel transportModel, string userId)
+        public async Task<ResponseApiModel<HttpStatusCode>> UpdateTransport(UpdateTransportRequestApiModel transportModel, string userId)
         {
             var carCategory = await _transportsCategories.GetByFilterAsync(x => x.CategoryName == transportModel.CategoryName);
 
@@ -125,7 +125,7 @@ namespace CrudMicroservice.Domain.Services
 
             if (!result.IsAcknowledged)
             {
-                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("PersonalDataWrongUpdated"));//resources
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("PersonalDataWrongUpdated"));
             }
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.Created, true, Resources.ResourceManager.GetString("TransportUpdatingSucceeded"));

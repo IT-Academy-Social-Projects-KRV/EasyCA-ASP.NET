@@ -2,11 +2,11 @@
 
 namespace CrudMicroservice.Domain.ApiModel.ResponseApiModels
 {
-    public class EuroProtocolFullResponseModel
+    public class EuroProtocolFullResponseApiModel
     {
-        public EuroProtocolResponseModel EuroProtocol { get; set; }
-        public UserResponseModel UserDataSideA { get; set; }
-        public UserResponseModel UserDataSideB { get; set; }
+        public EuroProtocolResponseApiModel EuroProtocol { get; set; }
+        public UserResponseApiModel UserDataSideA { get; set; }
+        public UserResponseApiModel UserDataSideB { get; set; }
         public TransportResponseApiModel TransportSideA { get; set; }
         public TransportResponseApiModel TransportSideB { get; set; }
     }

@@ -34,7 +34,7 @@ namespace CrudMicroservice.WebApi.Controllers
         }
 
         [HttpPost("AddTransport")]
-        public async Task<IActionResult> AddTransport(AddTransportRequestModel model)
+        public async Task<IActionResult> AddTransport(AddTransportRequestApiModel model)
         {
             var userId = User.FindFirst("id")?.Value;
             var response = await _transportService.AddTransport(model, userId);
@@ -42,7 +42,7 @@ namespace CrudMicroservice.WebApi.Controllers
         }
 
         [HttpPut("UpdateTransport")]
-        public async Task<IActionResult> UpdateTransort(UpdateTransportRequestModel model)
+        public async Task<IActionResult> UpdateTransort(UpdateTransportRequestApiModel model)
         {
             var userId = User.FindFirst("id")?.Value;
             var response = await _transportService.UpdateTransport(model, userId);

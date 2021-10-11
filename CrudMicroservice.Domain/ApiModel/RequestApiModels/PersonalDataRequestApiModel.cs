@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class PersonalDataRequestModel
+    public class PersonalDataRequestApiModel
     {
         /// <summary>
         /// User Address

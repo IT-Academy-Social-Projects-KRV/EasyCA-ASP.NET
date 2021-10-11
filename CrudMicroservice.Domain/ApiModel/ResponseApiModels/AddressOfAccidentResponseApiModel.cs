@@ -1,6 +1,6 @@
-﻿namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
+﻿namespace CrudMicroservice.Domain.ApiModel.ResponseApiModels
 {
-    public class AddressOfAccidentRequestModel
+    public class AddressOfAccidentResponseApiModel
     {
         public string City { get; set; }
         public string District { get; set; }

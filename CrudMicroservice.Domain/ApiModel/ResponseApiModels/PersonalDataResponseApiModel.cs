@@ -4,7 +4,7 @@ using CrudMicroservice.Data.Entities;
 
 namespace CrudMicroservice.Domain.ApiModel.ResponseApiModels
 {
-    public class PersonalDataResponseModel
+    public class PersonalDataResponseApiModel
     {
         public Address Address { get; set; }
         public string IPN { get; set; }

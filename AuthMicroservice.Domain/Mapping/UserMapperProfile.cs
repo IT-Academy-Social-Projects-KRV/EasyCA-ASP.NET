@@ -9,8 +9,7 @@ namespace AuthMicroservice.Domain.Mapping
     {
         public UserMapperProfile()
         {
-            AllowNullDestinationValues = true;
-            CreateMap<RegisterApiModel, User>()
+            CreateMap<RegisterRequestApiModel, User>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))

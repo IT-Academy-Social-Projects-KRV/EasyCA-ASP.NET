@@ -9,7 +9,6 @@ namespace AuthMicroservice.Domain.Interfaces
         Task<string> CreateJwtToken(User user);
         Task<AuthenticateResponseApiModel> RefreshTokenAsync(string token);
         RefreshToken CreateRefreshToken();
-        bool RevokeToken(string token);
     }
 }
 

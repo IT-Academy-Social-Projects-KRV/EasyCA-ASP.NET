@@ -32,9 +32,9 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             _userManager = GetMockUserManager();
             _service = new TransportService(_mapper.Object, _userManager.Object, _transports.Object, _transportCategories.Object, _personalData.Object);
         }
-        private UpdateTransportRequestModel Model()
+        private UpdateTransportRequestApiModel Model()
         {
-            UpdateTransportRequestModel model = new UpdateTransportRequestModel()
+            UpdateTransportRequestApiModel model = new UpdateTransportRequestApiModel()
             {
                 Id = "324324",
                 ProducedBy = "BMW",
@@ -66,7 +66,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             _transportCategories.Setup(repo => repo.GetByFilterAsync(It.IsAny<Expression<Func<TransportCategory, bool>>>())).ReturnsAsync((TransportCategory)null);
 
             //Act
-            Func<Task> act = () => _service.AddTransport(It.IsAny<AddTransportRequestModel>(), It.IsAny<string>());
+            Func<Task> act = () => _service.AddTransport(It.IsAny<AddTransportRequestApiModel>(), It.IsAny<string>());
 
             //Assert
             await Assert.ThrowsAsync<RestException>(act);
@@ -98,7 +98,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                 CategoryName = "A"
             });
 
-            _mapper.Setup(repo => repo.Map<Transport>(It.IsAny<AddTransportRequestModel>())).Returns(new Transport()
+            _mapper.Setup(repo => repo.Map<Transport>(It.IsAny<AddTransportRequestApiModel>())).Returns(new Transport()
             {
                 CarCategory = new TransportCategory()
                 {
@@ -110,7 +110,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             _userManager.Setup(repo => repo.FindByIdAsync(It.IsAny<string>())).ReturnsAsync((User)null);
 
             //Act
-            Func<Task> act = () => _service.AddTransport(It.IsAny<AddTransportRequestModel>(), It.IsAny<string>());
+            Func<Task> act = () => _service.AddTransport(It.IsAny<AddTransportRequestApiModel>(), It.IsAny<string>());
 
             //Assert
             await Assert.ThrowsAsync<RestException>(act);
@@ -142,7 +142,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                 CategoryName = "A"
             });
 
-            _mapper.Setup(repo => repo.Map<Transport>(It.IsAny<AddTransportRequestModel>())).Returns(new Transport()
+            _mapper.Setup(repo => repo.Map<Transport>(It.IsAny<AddTransportRequestApiModel>())).Returns(new Transport()
             {
                 CarCategory = new TransportCategory()
                 {
@@ -159,7 +159,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             _personalData.Setup(repo => repo.GetByFilterAsync(It.IsAny<Expression<Func<PersonalData, bool>>>())).ReturnsAsync((PersonalData)null);
 
             //Act
-            Func<Task> act = () => _service.AddTransport(It.IsAny<AddTransportRequestModel>(), It.IsAny<string>());
+            Func<Task> act = () => _service.AddTransport(It.IsAny<AddTransportRequestApiModel>(), It.IsAny<string>());
 
             //Assert
             await Assert.ThrowsAsync<RestException>(act);
@@ -191,7 +191,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                 CategoryName = "A"
             });
 
-            _mapper.Setup(repo => repo.Map<Transport>(It.IsAny<AddTransportRequestModel>())).Returns(new Transport()
+            _mapper.Setup(repo => repo.Map<Transport>(It.IsAny<AddTransportRequestApiModel>())).Returns(new Transport()
             {
                 CarCategory = new TransportCategory()
                 {
@@ -216,7 +216,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             _personalData.Setup(repo => repo.UpdateAsync(It.IsAny<Expression<Func<PersonalData, bool>>>(), It.IsAny<UpdateDefinition<PersonalData>>())).ReturnsAsync(mockResult.Object);
 
             //Act
-            Func<Task> act = () => _service.AddTransport(It.IsAny<AddTransportRequestModel>(), It.IsAny<string>());
+            Func<Task> act = () => _service.AddTransport(It.IsAny<AddTransportRequestApiModel>(), It.IsAny<string>());
 
             //Assert
             await Assert.ThrowsAsync<RestException>(act);
@@ -231,7 +231,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                 CategoryName = "A"
             });
 
-            _mapper.Setup(repo => repo.Map<Transport>(It.IsAny<AddTransportRequestModel>())).Returns(new Transport()
+            _mapper.Setup(repo => repo.Map<Transport>(It.IsAny<AddTransportRequestApiModel>())).Returns(new Transport()
             {
                 CarCategory = new TransportCategory()
                 {
@@ -257,7 +257,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             _personalData.Setup(repo => repo.UpdateAsync(It.IsAny<Expression<Func<PersonalData, bool>>>(), It.IsAny<UpdateDefinition<PersonalData>>())).ReturnsAsync(mockResult.Object);
 
             //Act
-            var result = await _service.AddTransport(It.IsAny<AddTransportRequestModel>(), It.IsAny<string>());
+            var result = await _service.AddTransport(It.IsAny<AddTransportRequestApiModel>(), It.IsAny<string>());
 
             //Assert
             Assert.NotNull(result);
