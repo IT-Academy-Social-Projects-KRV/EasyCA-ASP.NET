@@ -107,7 +107,7 @@ namespace AuthMicroservice.Domain.Services
                 }
 
                 var roles = await _userManager.GetRolesAsync(user);
-                var token = _jwtService.CreateJwtToken(user);
+                var token = await _jwtService.CreateJwtToken(user);
                 var refreshtoken = _jwtService.CreateRefreshToken();
 
                 user.RefreshToken = refreshtoken;

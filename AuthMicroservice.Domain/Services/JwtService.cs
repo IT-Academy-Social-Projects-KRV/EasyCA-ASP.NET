@@ -28,19 +28,20 @@ namespace AuthMicroservice.Domain.Services
             _configuration = configuration;
         }
 
-        public string CreateJwtToken(User user)
+        public async Task<string> CreateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Secret"));
-
-            var role = user.Roles.FirstOrDefault();
+           
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var role = userRoles.FirstOrDefault();
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("Id",user.Id.ToString()),
-                    new Claim("Role",role)
+                    new Claim(ClaimTypes.Role,role)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<double>("TokenExpires")),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
@@ -76,7 +77,7 @@ namespace AuthMicroservice.Domain.Services
 
             await _userManager.UpdateAsync(user);
 
-            var JWTToken = CreateJwtToken(user);
+            var JWTToken = await CreateJwtToken(user);
 
             return new AuthenticateResponseApiModel(user.Email, JWTToken, newRefreshToken.Token, roles.FirstOrDefault());
         }
