@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using CrudMicroservice.Domain.Interfaces;
 using System.Threading.Tasks;
 using CrudMicroservice.Domain.ApiModel.RequestApiModels;
@@ -13,16 +12,14 @@ namespace CrudMicroservice.WebApi
     public class EuroProtocolController : ControllerBase
     {
         private readonly IEuroProtocolService _euroProtocolService;
-        private readonly IConfiguration _configuration;
 
-        public EuroProtocolController(IEuroProtocolService euroProtocolService, IConfiguration configuration)
+        public EuroProtocolController(IEuroProtocolService euroProtocolService)
         {
             _euroProtocolService = euroProtocolService;
-            _configuration = configuration;
         }
 
         [HttpPost("CreateEuroProtocol")]
-        public async Task<IActionResult> RegisterEuroProtocol (EuroProtocolRequestModel euroProtocolRequest)
+        public async Task<IActionResult> RegisterEuroProtocol(EuroProtocolRequestModel euroProtocolRequest)
         {
             var response = await _euroProtocolService.RegistrationEuroProtocol(euroProtocolRequest);
             return Ok(response);
@@ -53,6 +50,13 @@ namespace CrudMicroservice.WebApi
         public async Task<IActionResult> GetAllCircumstances()
         {
             var response = await _euroProtocolService.GetAllCircumstances();
+            return Ok(response);
+        }
+
+        [HttpGet("GetEuroProtocolBySerialNumber")]
+        public async Task<IActionResult> GetEuroProtocolBySerialNumber(string serialNumber)
+        {
+            var response = await _euroProtocolService.GetEuroProtocolBySerialNumber(serialNumber);
             return Ok(response);
         }
     }

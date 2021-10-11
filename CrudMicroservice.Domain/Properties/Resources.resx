@@ -215,5 +215,10 @@
   </data>
   <data name="WrongData" xml:space="preserve">
     <value>You entered wrong data</value>
+  <data name="EuroProtocolsNotFound" xml:space="preserve">
+    <value>Euro protocols not found</value>
+  </data>
+  <data name="InspectorsNotFound" xml:space="preserve">
+    <value>Inspector not found</value>
   </data>
 </root>
