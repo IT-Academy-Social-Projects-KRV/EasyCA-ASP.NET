@@ -7,8 +7,7 @@ using MassTransit;
 using MassTransit.ExtensionsDependencyInjectionIntegration;
 
 namespace RabbitMQConfig
-{
-  
+{  
     public class ConfigurationMassTransit
     {
         public Action<IServiceCollectionBusConfigurator> Configurator { get; set; }

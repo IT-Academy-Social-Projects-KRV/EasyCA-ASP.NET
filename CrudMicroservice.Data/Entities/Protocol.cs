@@ -4,17 +4,19 @@ using MongoDbGenericRepository.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CrudMicroservice.Data.Entities
 {
-    [CollectionName("EuroProtocols")]
-    public class EuroProtocol
+    [CollectionName("Protocol")]
+    public class Protocol
     {
-        public EuroProtocol()
+        public Protocol()
         {
             SerialNumber = ObjectId.GenerateNewId().ToString();
         }
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
@@ -29,7 +31,7 @@ namespace CrudMicroservice.Data.Entities
 
         [BsonElement("AddressOfAccident")]
         [JsonProperty("AddressOfAccident")]
-        public AddressOfAccident Address { get; set; } 
+        public AddressOfAccident Address { get; set; }
 
         [BsonElement("SideA")]
         [JsonProperty("SideA")]
@@ -46,5 +48,6 @@ namespace CrudMicroservice.Data.Entities
         [BsonElement("ListOfWitnesses")]
         [JsonProperty("ListOfWitnesses")]
         public List<Witness> Witnesses { get; set; }
+
     }
 }

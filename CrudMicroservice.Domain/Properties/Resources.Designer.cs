@@ -19,7 +19,7 @@ namespace CrudMicroservice.Domain.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -250,6 +250,15 @@ namespace CrudMicroservice.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transport not found.
+        /// </summary>
+        public static string TransportClear {
+            get {
+                return ResourceManager.GetString("TransportClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coudn&apos;t delete the vehicle.
         /// </summary>
         public static string TransportDeleteFailed {
@@ -336,6 +345,15 @@ namespace CrudMicroservice.Domain.Properties {
         public static string UserRefreshTokenNotFound {
             get {
                 return ResourceManager.GetString("UserRefreshTokenNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You entered wrong data.
+        /// </summary>
+        public static string WrongData {
+            get {
+                return ResourceManager.GetString("WrongData", resourceCulture);
             }
         }
     }

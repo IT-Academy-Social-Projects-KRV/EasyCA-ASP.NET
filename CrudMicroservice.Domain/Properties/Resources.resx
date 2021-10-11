@@ -210,4 +210,10 @@
   <data name="PersonalDataNotUpdate" xml:space="preserve">
     <value>Personal information didn't change</value>
   </data>
+  <data name="TransportClear" xml:space="preserve">
+    <value>Transport not found</value>
+  </data>
+  <data name="WrongData" xml:space="preserve">
+    <value>You entered wrong data</value>
+  </data>
 </root>
