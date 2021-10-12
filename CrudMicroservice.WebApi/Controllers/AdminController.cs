@@ -30,5 +30,12 @@ namespace CrudMicroservice.WebApi.Controllers
             var response = await _adminService.GetAllInspectors();
             return Ok(response);
         }
+
+        [HttpPut("DeleteInspectorRole")]
+        public async Task<IActionResult> DeleteInspector(string email)
+        {
+            var response = await _adminService.DeleteInspector(email);
+            return Ok(response);
+        }
     }
 }
