@@ -65,9 +65,9 @@ namespace CrudMicroservice.Domain.Services
             throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RegistrationFailed"));
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> DeleteInspector(string email)
+        public async Task<ResponseApiModel<HttpStatusCode>> DeleteInspector(DeleteInspectorRequestApiModel data)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(data.Email);
 
             if (user == null)
             {
