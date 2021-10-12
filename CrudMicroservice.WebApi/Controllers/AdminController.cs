@@ -40,9 +40,9 @@ namespace CrudMicroservice.WebApi.Controllers
         }
 
         [HttpPut("DeleteInspectorRole")]
-        public async Task<IActionResult> DeleteInspector(string email)
+        public async Task<IActionResult> DeleteInspector(DeleteInspectorRequestApiModel data)
         {
-            var response = await _adminService.DeleteInspector(email);
+            var response = await _adminService.DeleteInspector(data);
             return Ok(response);
         }
     }
