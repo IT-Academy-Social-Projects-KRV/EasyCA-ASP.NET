@@ -48,5 +48,20 @@ namespace CrudMicroservice.Domain.Services
 
             return _mapper.Map<IEnumerable<UserResponseModel>>(list);
         }
+
+        public async Task<ResponseApiModel<HttpStatusCode>> DeleteInspector(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+           
+            await _userManager.RemoveFromRoleAsync(user, "inspector");
+            await _userManager.AddToRoleAsync(user, "participant");
+
+            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("InspectorDeleteSucceeded"));
+        }
     }
 }
