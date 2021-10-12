@@ -222,4 +222,22 @@
   <data name="InspectorsNotFound" xml:space="preserve">
     <value>Inspector not found</value>
   </data>
+  <data name="CircumstancesNotFound" xml:space="preserve">
+    <value>Circumstances not found</value>
+  </data>
+  <data name="CreatePersonalDataSuccess" xml:space="preserve">
+    <value>Creating personal data is success!</value>
+  </data>
+  <data name="PasswordChangeSuccess" xml:space="preserve">
+    <value>Password was changed successfully</value>
+  </data>
+  <data name="PersonalDataUpdateSuccess" xml:space="preserve">
+    <value>Update personal data is success!</value>
+  </data>
+  <data name="UserDataExists" xml:space="preserve">
+    <value>Personal Data already exist</value>
+  </data>
+  <data name="UserDataNotExists" xml:space="preserve">
+    <value>Personal Data is empty</value>
+  </data>
 </root>

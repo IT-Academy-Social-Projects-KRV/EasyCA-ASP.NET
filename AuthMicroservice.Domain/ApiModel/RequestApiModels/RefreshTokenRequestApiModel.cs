@@ -1,6 +1,6 @@
 ﻿namespace AuthMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class RefreshTokenRequestModel
+    public class RefreshTokenRequestApiModel
     {
         public string RefreshToken { get; set; }
     }

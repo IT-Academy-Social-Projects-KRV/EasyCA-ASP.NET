@@ -3,7 +3,7 @@ using CrudMicroservice.Data.Entities;
 
 namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class SideRequestModel
+    public class SideRequestApiModel
     {
         public string Email { get; set; }
         public string TransportId { get; set; }

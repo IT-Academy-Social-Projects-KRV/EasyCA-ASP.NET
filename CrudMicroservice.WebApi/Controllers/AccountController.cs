@@ -19,7 +19,7 @@ namespace CrudMicroservice.WebApi.Controllers
         }
 
         [HttpPut("UpdateData")]
-        public async Task<IActionResult> UpdatePersonalData(UserRequestModel data)
+        public async Task<IActionResult> UpdatePersonalData(UserRequestApiModel data)
         {
             var userId = User.FindFirst("Id")?.Value;
             var response = await _accountService.UpdatePersonalData(data, userId);
@@ -61,7 +61,7 @@ namespace CrudMicroservice.WebApi.Controllers
         }
 
         [HttpPost("CreatePersonalData")]
-        public async Task<IActionResult> CreatePersonalData(PersonalDataRequestModel data)
+        public async Task<IActionResult> CreatePersonalData(PersonalDataRequestApiModel data)
         {
             var userId = User.FindFirst("Id")?.Value;
             var response = await _accountService.CreatePersonalData(data, userId);
@@ -70,7 +70,7 @@ namespace CrudMicroservice.WebApi.Controllers
         }
 
         [HttpPost("ChangePassword")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordApiModel data)
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequestApiModel data)
         {
             var userId = User.FindFirst("Id")?.Value;
             var responce = await _accountService.ChangePassword(data.Password, data.OldPassword, userId);

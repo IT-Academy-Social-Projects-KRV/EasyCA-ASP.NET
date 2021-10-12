@@ -33,9 +33,9 @@ namespace AuthMicroservice.Domain.Services
             _emailService = emailService;
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> RegisterUser(RegisterApiModel userRequest)
+        public async Task<ResponseApiModel<HttpStatusCode>> RegisterUser(RegisterRequestApiModel userRequest)
         {
-            User user = _mapper.Map<User>(userRequest);
+            var user = _mapper.Map<User>(userRequest);
 
             var result = await _userManager.CreateAsync(user, userRequest.Password);
 
@@ -72,23 +72,7 @@ namespace AuthMicroservice.Domain.Services
             }
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> RegisterInspector(RegisterApiModel inspectorRequest)
-        {
-            User inspector = _mapper.Map<User>(inspectorRequest);
-
-            var result = await _userManager.CreateAsync(inspector, inspectorRequest.Password);
-
-            await _userManager.AddToRoleAsync(inspector, "inspector");
-
-            if (result.Succeeded)
-            {
-                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
-            }
-
-            throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RegistrationFailed"));
-        }
-
-        public async Task<AuthenticateResponseApiModel> LoginUser(LoginApiModel userRequest)
+        public async Task<AuthenticateResponseApiModel> LoginUser(LoginRequestApiModel userRequest)
         {
             var result = await _signInManager.PasswordSignInAsync(userRequest.Email, userRequest.Password, false, false);
 
@@ -98,12 +82,12 @@ namespace AuthMicroservice.Domain.Services
 
                 if (user == null)
                 {
-                    return null;
+                    throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("UserNotFound"));
                 }
 
                 if (!await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("EmailnotConfirmed"));
+                    throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("EmailNotConfirmed"));
                 }
 
                 var roles = await _userManager.GetRolesAsync(user);
@@ -123,15 +107,6 @@ namespace AuthMicroservice.Domain.Services
             }
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> AddInspector(RegisterApiModel data)
-        {
-            var mappedUser = _mapper.Map<User>(data);
-            await _userManager.CreateAsync(mappedUser, data.Password);
-            await _userManager.AddToRoleAsync(mappedUser, "inspector");
-
-            return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Creating inspector is success!");
-        }
-
         public async Task<ResponseApiModel<HttpStatusCode>> ConfirmEmailAsync(string email, string token)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -148,7 +123,7 @@ namespace AuthMicroservice.Domain.Services
 
             if (result.Succeeded)
             {
-                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Email confirm successfully!");
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("EmailConfirmedSuccessfully"));
             }
             else
             {
@@ -156,7 +131,7 @@ namespace AuthMicroservice.Domain.Services
             }
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> ForgotPassword(ForgotPasswordApiModel data)
+        public async Task<ResponseApiModel<HttpStatusCode>> ForgotPassword(ForgotPasswordRequestApiModel data)
         {
             var user = await _userManager.FindByEmailAsync(data.Email);
 
@@ -224,7 +199,7 @@ namespace AuthMicroservice.Domain.Services
             }
         }
 
-        public async Task<ResponseApiModel<HttpStatusCode>> ResendConfirmation(ResendConfirmationApiModel data)
+        public async Task<ResponseApiModel<HttpStatusCode>> ResendConfirmation(ResendConfirmationRequestApiModel data)
         {
             var user = await _userManager.FindByEmailAsync(data.Email);
 

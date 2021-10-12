@@ -192,4 +192,7 @@
   <data name="ConfirmationLinkNotSent" xml:space="preserve">
     <value>Couldn't send the confirmation link</value>
   </data>
+  <data name="EmailConfirmedSuccessfully" xml:space="preserve">
+    <value>Email confirm successfully!</value>
+  </data>
 </root>

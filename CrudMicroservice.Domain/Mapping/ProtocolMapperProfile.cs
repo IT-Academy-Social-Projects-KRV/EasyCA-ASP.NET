@@ -9,10 +9,10 @@ namespace CrudMicroservice.Domain.Mapping
     {
         public ProtocolMapperProfile()
         {
-            CreateMap<EuroProtocol, EuroProtocolRequestModel>().ReverseMap();
-            CreateMap<EuroProtocol, EuroProtocolResponseModel>().ReverseMap();
-            CreateMap<EuroProtocol, EuroProtocolSimpleResponseModel>().ReverseMap();
-            CreateMap<Circumstance, CircumstanceResponseModel>().ReverseMap();
+            CreateMap<EuroProtocol, EuroProtocolRequestApiModel>().ReverseMap();
+            CreateMap<EuroProtocol, EuroProtocolResponseApiModel>().ReverseMap();
+            CreateMap<EuroProtocol, EuroProtocolSimpleResponseApiModel>().ReverseMap();
+            CreateMap<Circumstance, CircumstanceResponseApiModel>().ReverseMap();
         }
     }
 }

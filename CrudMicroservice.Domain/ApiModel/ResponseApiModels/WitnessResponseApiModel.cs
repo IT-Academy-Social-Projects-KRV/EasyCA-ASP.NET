@@ -1,6 +1,6 @@
 ﻿namespace CrudMicroservice.Domain.ApiModel.ResponseApiModels
 {
-    public class WitnessResponseModel
+    public class WitnessResponseApiModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

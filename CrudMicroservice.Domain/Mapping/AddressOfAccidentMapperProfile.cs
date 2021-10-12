@@ -9,8 +9,8 @@ namespace CrudMicroservice.Domain.Mapping
     {
         public AddressOfAccidentMapperProfile()
         {
-            CreateMap<AddressOfAccident, AddressOfAccidentRequestModel>().ReverseMap();
-            CreateMap<AddressOfAccident, AddressOfAccidentResponseModel>().ReverseMap();
+            CreateMap<AddressOfAccident, AddressOfAccidentRequestApiModel>().ReverseMap();
+            CreateMap<AddressOfAccident, AddressOfAccidentResponseApiModel>().ReverseMap();
         }
     }
 }

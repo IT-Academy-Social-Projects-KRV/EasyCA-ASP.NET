@@ -1,6 +1,6 @@
 ﻿namespace AuthMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class RegisterApiModel
+    public class RegisterRequestApiModel
     {
         /// <summary>
         /// User email address. Used for login.

@@ -88,6 +88,15 @@ namespace AuthMicroservice.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email confirm successfully!.
+        /// </summary>
+        public static string EmailConfirmedSuccessfully {
+            get {
+                return ResourceManager.GetString("EmailConfirmedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email has not been confirmed.
         /// </summary>
         public static string EmailNotConfirmed {

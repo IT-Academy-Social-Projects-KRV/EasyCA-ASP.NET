@@ -6,17 +6,12 @@ using AuthMicroservice.Domain.ApiModel.ResponseApiModels;
 using AuthMicroservice.Domain.Errors;
 using AuthMicroservice.Domain.Interfaces;
 using AuthMicroservice.Domain.Properties;
-using Microsoft.Extensions.Configuration;
 
 namespace AuthMicroservice.Domain.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IConfiguration _configuration;
-        public EmailService(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        public EmailService() { }
 
         public async Task<ResponseApiModel<HttpStatusCode>> SendEmailAsync(string userEmail, string emailSubject, string message)
         {
@@ -33,6 +28,7 @@ namespace AuthMicroservice.Domain.Services
             MailMessage mailMessage = new(from, to);
             mailMessage.Subject = emailSubject;
             mailMessage.Body = message;
+
             try
             {
                 await smtp.SendMailAsync(mailMessage);

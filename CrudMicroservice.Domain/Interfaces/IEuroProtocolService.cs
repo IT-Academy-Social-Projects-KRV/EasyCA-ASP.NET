@@ -8,11 +8,11 @@ namespace CrudMicroservice.Domain.Interfaces
 {
     public interface IEuroProtocolService
     {
-        Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestModel data);
-        Task<ResponseApiModel<HttpStatusCode>> RegisterSideBEuroProtocol(SideRequestModel data);
-        Task<IEnumerable<EuroProtocolSimpleResponseModel>> FindAllEuroProtocolsByEmail(string email);
-        Task<ResponseApiModel<HttpStatusCode>> UpdateEuroProtocol(EuroProtocolRequestModel data);
-        Task<IEnumerable<CircumstanceResponseModel>> GetAllCircumstances();
-        Task<EuroProtocolFullResponseModel> GetEuroProtocolBySerialNumber(string serialNumber);
+        Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestApiModel data);
+        Task<ResponseApiModel<HttpStatusCode>> RegisterSideBEuroProtocol(SideRequestApiModel data);
+        Task<IEnumerable<EuroProtocolSimpleResponseApiModel>> FindAllEuroProtocolsByEmail(string email);
+        Task<ResponseApiModel<HttpStatusCode>> UpdateEuroProtocol(EuroProtocolRequestApiModel data);
+        Task<IEnumerable<CircumstanceResponseApiModel>> GetAllCircumstances();
+        Task<EuroProtocolFullResponseApiModel> GetEuroProtocolBySerialNumber(string serialNumber);
     }
 }

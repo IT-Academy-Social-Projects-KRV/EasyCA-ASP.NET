@@ -11,10 +11,8 @@ namespace CrudMicroservice.Domain.Mapping
         {
             AllowNullCollections = true;
 
-            CreateMap<PersonalData, PersonalDataResponseModel>().ReverseMap(); 
-
-            CreateMap<PersonalData, PersonalDataRequestModel>().ReverseMap();
-
+            CreateMap<PersonalData, PersonalDataResponseApiModel>().ReverseMap(); 
+            CreateMap<PersonalData, PersonalDataRequestApiModel>().ReverseMap();
         }
     }
 }

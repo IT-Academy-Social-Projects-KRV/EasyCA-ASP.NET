@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CrudMicroservice.Data.Entities;
 using CrudMicroservice.Data.Interfaces;
+using CrudMicroservice.Domain.ApiModel.RequestApiModels;
 using CrudMicroservice.Domain.ApiModel.ResponseApiModels;
 using CrudMicroservice.Domain.Errors;
 using CrudMicroservice.Domain.Interfaces;
@@ -25,7 +26,7 @@ namespace CrudMicroservice.Domain.Services
             _euroProtocols = euroProtocols;
         }
 
-        public async Task<IEnumerable<EuroProtocolResponseModel>> GetAllEuroProtocols()
+        public async Task<IEnumerable<EuroProtocolResponseApiModel>> GetAllEuroProtocols()
         {
             var list = await _euroProtocols.GetAllAsync();
 
@@ -34,10 +35,10 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("EuroProtocolsNotFound"));
             }
 
-            return _mapper.Map<IEnumerable<EuroProtocolResponseModel>>(list);
+            return _mapper.Map<IEnumerable<EuroProtocolResponseApiModel>>(list);
         }
 
-        public async Task<IEnumerable<UserResponseModel>> GetAllInspectors()
+        public async Task<IEnumerable<UserResponseApiModel>> GetAllInspectors()
         {
             var list = await _userManager.GetUsersInRoleAsync("inspector");
 
@@ -46,7 +47,22 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("InspectorsNotFound"));
             }
 
-            return _mapper.Map<IEnumerable<UserResponseModel>>(list);
+            return _mapper.Map<IEnumerable<UserResponseApiModel>>(list);
+        }
+
+        public async Task<ResponseApiModel<HttpStatusCode>> AddInspector(InspectorRequestApiModel inspectorRequest)
+        {
+            var inspector = _mapper.Map<User>(inspectorRequest);
+            var result = await _userManager.CreateAsync(inspector, inspectorRequest.Password);
+
+            await _userManager.AddToRoleAsync(inspector, "inspector");
+
+            if (result.Succeeded)
+            {
+                return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
+            }
+
+            throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("RegistrationFailed"));
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> DeleteInspector(string email)

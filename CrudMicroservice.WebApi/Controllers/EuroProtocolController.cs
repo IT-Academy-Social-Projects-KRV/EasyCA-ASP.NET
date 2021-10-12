@@ -19,14 +19,14 @@ namespace CrudMicroservice.WebApi
         }
 
         [HttpPost("CreateEuroProtocol")]
-        public async Task<IActionResult> RegisterEuroProtocol(EuroProtocolRequestModel euroProtocolRequest)
+        public async Task<IActionResult> RegisterEuroProtocol(EuroProtocolRequestApiModel euroProtocolRequest)
         {
             var response = await _euroProtocolService.RegistrationEuroProtocol(euroProtocolRequest);
             return Ok(response);
         }
 
         [HttpPost("RegisterSideBEuroProtocol")]
-        public async Task<IActionResult> RegisterSideBEuroProtocol(SideRequestModel SideRequest)
+        public async Task<IActionResult> RegisterSideBEuroProtocol(SideRequestApiModel SideRequest)
         {
             var response = await _euroProtocolService.RegisterSideBEuroProtocol(SideRequest);
             return Ok(response);
@@ -40,7 +40,7 @@ namespace CrudMicroservice.WebApi
         }
 
         [HttpPut("UpdateEuroProtocol")]
-        public async Task<IActionResult> UpdateEuroProtocol(EuroProtocolRequestModel data)
+        public async Task<IActionResult> UpdateEuroProtocol(EuroProtocolRequestApiModel data)
         {
             var response = await _euroProtocolService.UpdateEuroProtocol(data);
             return Ok(response);

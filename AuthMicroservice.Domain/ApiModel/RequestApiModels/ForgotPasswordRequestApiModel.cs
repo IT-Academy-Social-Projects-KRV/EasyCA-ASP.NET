@@ -1,6 +1,6 @@
 ﻿namespace AuthMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class ForgotPasswordApiModel
+    public class ForgotPasswordRequestApiModel
     {
         public string Email { get; set; }
         public string NewPassword { get; set; }
