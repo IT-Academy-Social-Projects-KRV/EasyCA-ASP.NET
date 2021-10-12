@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDbGenericRepository.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using MongoDbGenericRepository.Attributes;
 
 namespace CrudMicroservice.Data.Entities
 {

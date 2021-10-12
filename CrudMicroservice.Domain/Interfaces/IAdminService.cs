@@ -11,5 +11,6 @@ namespace CrudMicroservice.Domain.Interfaces
         Task<IEnumerable<EuroProtocolResponseApiModel>> GetAllEuroProtocols();
         Task<IEnumerable<UserResponseApiModel>> GetAllInspectors();
         Task<ResponseApiModel<HttpStatusCode>> AddInspector(InspectorRequestApiModel inspectorRequest);
+        Task<ResponseApiModel<HttpStatusCode>> DeleteInspector(string email);
     }
 }

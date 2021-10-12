@@ -20,7 +20,7 @@ namespace RabbitMQConfig
             var rabbitMQSection = configuration.GetSection("RabbitMQServer");
 
             if (rabbitMQSection == null)
-            {
+            {   
                 throw new Exception("Section is empty");
             }
 
