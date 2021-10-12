@@ -41,8 +41,8 @@ namespace RabbitMQConfig
                     {
                         cfg.Host($"rabbitmq://{url}/{host}", configurator =>
                         {
-                            configurator.Username("easy_ca_user");
-                            configurator.Password("Qwerty211@");
+                            configurator.Username(rabbitMQSection.GetValue<string>("UserName"));
+                            configurator.Password(rabbitMQSection.GetValue<string>("Password"));
                         });                      
                         cfg.ConfigureEndpoints(busFactory, SnakeCaseEndpointNameFormatter.Instance);
                     });

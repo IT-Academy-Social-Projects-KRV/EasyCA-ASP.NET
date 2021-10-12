@@ -9,10 +9,12 @@ namespace SearchMicroservice.WebAPI.Controllers
     public class SearchController : ControllerBase
     {
         private readonly ISearchService _searchService;
+
         public SearchController(ISearchService searchService)
         {
             _searchService = searchService;
         }
+
         [HttpGet("SearchTransport")]
         public async Task<IActionResult> Search(string search)
         {

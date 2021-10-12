@@ -17,7 +17,6 @@ namespace RabbitMQConfig.Models.Responses
         public string Color { get; set; }
         public int YearOfProduction { get; set; }
         public InsuaranceModelRabbitMQ InsuaranceNumber { get; set; }    
-
     }
     public class InsuaranceModelRabbitMQ
     {

@@ -9,10 +9,12 @@ namespace SearchMicroservice.Domain.Services
     public class SearchService : ISearchService
     {
         private readonly IClientFactory _clientFactory;
+
         public SearchService(IClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
         }
+
         public async Task<TransportResponseModelRabbitMQ> Search(string search)
         {
             var client = _clientFactory.CreateRequestClient<TransportRequestModelRabbitMQ>();
