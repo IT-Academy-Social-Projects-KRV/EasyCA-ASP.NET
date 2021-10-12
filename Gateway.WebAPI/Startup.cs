@@ -33,7 +33,6 @@ namespace Gateway.WebAPI
             services.AddCors();
 
             services.AddOcelot();
-            services.AddControllers();
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Secret"]));
             services.AddAuthentication(options =>
@@ -54,6 +53,8 @@ namespace Gateway.WebAPI
                     ClockSkew = TimeSpan.Zero
                 };
             });
+            
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,8 +64,6 @@ namespace Gateway.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            await app.UseOcelot();
 
             app.UseRouting();
 
@@ -76,6 +75,8 @@ namespace Gateway.WebAPI
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials());
+            
+            await app.UseOcelot();
 
             app.UseEndpoints(endpoints =>
             {
