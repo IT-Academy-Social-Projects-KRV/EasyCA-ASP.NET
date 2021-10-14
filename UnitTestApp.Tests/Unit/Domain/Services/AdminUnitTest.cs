@@ -104,6 +104,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             {
                 new User(),
             });
+
             _mapper.Setup(repo => repo.Map<List<UserResponseApiModel>>(It.IsAny<List<User>>())).Returns(new List<UserResponseApiModel>()
             {
                 new UserResponseApiModel()
@@ -111,6 +112,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     Email = "pinkevychdima@gmail.com"
                 },
             });
+
             //Act
             var result = await _service.GetAllInspectors();
 
@@ -124,6 +126,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         {
             //Arrange
             _userManager.Setup(repo => repo.GetUsersInRoleAsync("inspector")).ReturnsAsync(new List<User>());
+
             _mapper.Setup(repo => repo.Map<List<UserResponseApiModel>>(It.IsAny<List<User>>())).Returns(new List<UserResponseApiModel>()
             {
                 new UserResponseApiModel()
@@ -131,6 +134,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     Email = "pinkevychdima@gmail.com"
                 },
             });
+
             //Act
             Func<Task> act = () => _service.GetAllInspectors();
 
@@ -154,6 +158,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     SerialNumber="123",
                 },
             });
+
             //Act
             var result = await _service.GetAllEuroProtocols();
 
@@ -167,6 +172,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         {
             //Arrange
             _euroProtocols.Setup(repo => repo.GetAllAsync()).ReturnsAsync(new List<EuroProtocol>());
+
             _mapper.Setup(repo => repo.Map<List<EuroProtocolResponseApiModel>>(It.IsAny<List<User>>())).Returns(new List<EuroProtocolResponseApiModel>()
             {
                 new EuroProtocolResponseApiModel()
@@ -174,6 +180,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     SerialNumber="123",
                 },
             });
+
             //Act
             Func<Task> act = () => _service.GetAllEuroProtocols();
 
