@@ -283,7 +283,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             });
 
             //Act
-            var result = await _service.GetTransportById(transportSuccess.Id, transportSuccess.UserId);
+            var result = await _service.GetTransportById(transportSuccess.Id);
 
             //Assert
             Assert.IsType<TransportResponseApiModel>(result);
@@ -299,7 +299,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                 .ReturnsAsync((Transport)null);
 
             //Act
-            Func<Task> act = () => _service.GetTransportById(It.IsAny<string>(), It.IsAny<string>());
+            Func<Task> act = () => _service.GetTransportById(It.IsAny<string>());
 
             //Assert
             await Assert.ThrowsAsync<RestException>(act);

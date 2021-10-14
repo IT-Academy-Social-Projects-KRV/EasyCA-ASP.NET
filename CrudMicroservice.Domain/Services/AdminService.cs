@@ -8,6 +8,7 @@ using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Properties;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -30,7 +31,7 @@ namespace CrudMicroservice.Domain.Services
         {
             var list = await _euroProtocols.GetAllAsync();
 
-            if(list == null)
+            if (!list.AsQueryable().Any())
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("EuroProtocolsNotFound"));
             }
@@ -42,7 +43,7 @@ namespace CrudMicroservice.Domain.Services
         {
             var list = await _userManager.GetUsersInRoleAsync("inspector");
 
-            if (list == null)
+            if (!list.AsQueryable().Any())
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("InspectorsNotFound"));
             }
@@ -55,10 +56,9 @@ namespace CrudMicroservice.Domain.Services
             var inspector = _mapper.Map<User>(inspectorRequest);
             var result = await _userManager.CreateAsync(inspector, inspectorRequest.Password);
 
-            await _userManager.AddToRoleAsync(inspector, "inspector");
-
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(inspector, "inspector");
                 return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
             }
 
