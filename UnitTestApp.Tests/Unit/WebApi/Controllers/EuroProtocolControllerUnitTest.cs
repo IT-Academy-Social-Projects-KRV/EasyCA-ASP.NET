@@ -17,6 +17,7 @@ namespace UnitTestApp.Tests.Unit.WebApi.Controllers
     {
         private readonly Mock<IEuroProtocolService> _euroProtocolService = new Mock<IEuroProtocolService>();
         private readonly EuroProtocolController euroProtocolController;
+        
         public EuroProtocolControllerUnitTest()
         {
             euroProtocolController = new EuroProtocolController(_euroProtocolService.Object);
