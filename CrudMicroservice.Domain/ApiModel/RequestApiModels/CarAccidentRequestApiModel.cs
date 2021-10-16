@@ -3,21 +3,22 @@ using System.Collections.Generic;
 
 namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
 {
-    public class CarAccidentRequestModel
+    public class CarAccidentRequestApiModel
     {
-        public CarAccidentRequestModel()
+        public CarAccidentRequestApiModel()
         {
             RegistrationDateTime = DateTime.Now;
         }
         public string SerialNumber { get; set; }
         public DateTime RegistrationDateTime { get; set; }
-        public AddressOfAccidentRequestModel Address { get; set; }
-        public SideRequestModel SideOfAccident { get; set; }
+        public string InvolvedEmail { get; set; }
+        public AddressOfAccidentRequestApiModel Address { get; set; }
+        public SideRequestApiModel SideOfAccident { get; set; }
         public string AccidentCircumstances { get; set; }
         public string TrafficRuleId { get; set; }
         public string DriverExplanation { get; set; }
-        public IEnumerable<WitnessRequestModel> Witnesses { get; set; }
-        public IEnumerable<EvidenceRequestModel> Evidences { get; set; }
+        public IEnumerable<WitnessRequestApiModel> Witnesses { get; set; }
+        public IEnumerable<EvidenceRequestApiModel> Evidences { get; set; }
         public DateTime CourtDTG { get; set; }
         public bool IsDocumentTakenOff { get; set; }
     }

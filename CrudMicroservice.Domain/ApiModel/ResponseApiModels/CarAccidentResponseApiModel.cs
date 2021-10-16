@@ -3,17 +3,18 @@ using System.Collections.Generic;
 
 namespace CrudMicroservice.Domain.ApiModel.ResponseApiModels
 {
-    public class CarAccidentResponseModel
+    public class CarAccidentResponseApiModel
     {
         public string Id { get; set; }
         public DateTime RegistrationDateTime { get; set; }
-        public AddressOfAccidentResponseModel Address { get; set; }
-        public SideResponseModel SideOfAccident { get; set; }
+        public string InvolvedEmail { get; set; }
+        public AddressOfAccidentResponseApiModel Address { get; set; }
+        public SideResponseApiModel SideOfAccident { get; set; }
         public string AccidentCircumstances { get; set; }
         public string TrafficRuleId { get; set; }
         public string DriverExplanation { get; set; }
-        public IEnumerable<WitnessResponseModel> Witnesses { get; set; }
-        public IEnumerable<EvidenceResponseModel> Evidences { get; set; }
+        public IEnumerable<WitnessResponseApiModel> Witnesses { get; set; }
+        public IEnumerable<EvidenceResponseApiModel> Evidences { get; set; }
         public DateTime CourtDTG { get; set; }
         public bool IsDocumentTakenOff { get; set; }
     }

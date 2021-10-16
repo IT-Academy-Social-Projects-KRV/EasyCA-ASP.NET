@@ -240,4 +240,16 @@
   <data name="UserDataNotExists" xml:space="preserve">
     <value>Personal Data is empty</value>
   </data>
+  <data name="CAProtocolCreatedSuccess" xml:space="preserve">
+    <value>Protocol for car accident was created successfully!</value>
+  </data>
+  <data name="CAprotocolNotFound" xml:space="preserve">
+    <value>Requested protocols are not found, check input data</value>
+  </data>
+  <data name="CAProtocolUpdatefailed" xml:space="preserve">
+    <value>Requested Car Accident protocol update FAILED!</value>
+  </data>
+  <data name="CAProtocolUpdateSuccess" xml:space="preserve">
+    <value>Requested CA Protocol Updated SUCCESSFULLY!!</value>
+  </data>
 </root>

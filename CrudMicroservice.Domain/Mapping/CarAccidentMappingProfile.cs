@@ -9,8 +9,8 @@ namespace CrudMicroservice.Domain.Mapping
     {
         public CarAccidentMappingProfile()
         {
-            CreateMap<CarAccident, CarAccidentRequestModel>().ReverseMap();
-            CreateMap<CarAccident, CarAccidentResponseModel>().ReverseMap();
+            CreateMap<CarAccident, CarAccidentRequestApiModel>().ReverseMap();
+            CreateMap<CarAccident, CarAccidentResponseApiModel>().ReverseMap();
         }
     }
 }

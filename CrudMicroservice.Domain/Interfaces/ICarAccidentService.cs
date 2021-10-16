@@ -8,8 +8,8 @@ namespace CrudMicroservice.Domain.Interfaces
 {
     public interface ICarAccidentService
     {
-        Task<ResponseApiModel<HttpStatusCode>> RegistrationCarAccidentProtocol(CarAccidentRequestModel data);
-        Task<IEnumerable<EuroProtocolResponseModel>> FindAllCarAccidentProtocolsBySerial(string serial);
-        Task<ResponseApiModel<HttpStatusCode>> UpdateCarAccidentProtocol(CarAccidentRequestModel data);
+        Task<ResponseApiModel<HttpStatusCode>> RegistrationCarAccidentProtocol(CarAccidentRequestApiModel data);
+        Task<IEnumerable<CarAccidentResponseApiModel>> FindAllCarAccidentProtocolsByInvolvedEmail(string email);
+        Task<ResponseApiModel<HttpStatusCode>> UpdateCarAccidentProtocol(CarAccidentRequestApiModel data);
     }
 }
