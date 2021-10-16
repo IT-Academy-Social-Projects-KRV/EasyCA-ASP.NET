@@ -21,5 +21,6 @@ namespace CrudMicroservice.Data
         public IMongoCollection<TransportCategory> TransportCategories => _dbContext.GetCollection<TransportCategory>("TransportCategories");
         public IMongoCollection<Circumstance> Circumstances => _dbContext.GetCollection<Circumstance>("Circumstances");
         public IMongoCollection<EuroProtocol> EuroProtocols => _dbContext.GetCollection<EuroProtocol>("EuroProtocols");
+        public IMongoCollection<CarAccident> CarAccidents => _dbContext.GetCollection<CarAccident>("CarAccidents");
     }
 }
