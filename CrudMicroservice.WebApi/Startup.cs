@@ -10,7 +10,6 @@ using CrudMicroservice.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,6 +42,7 @@ namespace CrudMicroservice.WebApi
             services.AddTransient<ITransportService, TransportService>();
             services.AddTransient<IEuroProtocolService, EuroProtocolService>();
             services.AddTransient<IAdminService, AdminService>();
+            services.AddTransient<ICarAccidentService, CarAccidentService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

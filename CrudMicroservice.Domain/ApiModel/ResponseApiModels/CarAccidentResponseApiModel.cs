@@ -7,7 +7,7 @@ namespace CrudMicroservice.Domain.ApiModel.ResponseApiModels
     {
         public string Id { get; set; }
         public DateTime RegistrationDateTime { get; set; }
-        public string InvolvedEmail { get; set; }
+        public string InspectorId { get; set; }
         public AddressOfAccidentResponseApiModel Address { get; set; }
         public SideResponseApiModel SideOfAccident { get; set; }
         public string AccidentCircumstances { get; set; }

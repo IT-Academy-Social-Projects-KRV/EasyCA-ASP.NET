@@ -18,9 +18,9 @@ namespace CrudMicroservice.Data.Entities
         [JsonProperty("SerialNumber")]
         public string SerialNumber { get; set; }
 
-        [BsonElement("InvolvedEmail")]
-        [JsonProperty("InvolvedEmail")]
-        public string InvolvedEmail { get; set; }
+        [BsonElement("InspectorId")]
+        [JsonProperty("InspectorId")]
+        public string InspectorId { get; set; }
 
         [BsonElement("RegistrationDateTime")]
         [JsonProperty("RegistrationDateTime")]

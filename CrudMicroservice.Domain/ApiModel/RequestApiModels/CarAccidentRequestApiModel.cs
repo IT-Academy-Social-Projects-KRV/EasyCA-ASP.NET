@@ -11,7 +11,7 @@ namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
         }
         public string SerialNumber { get; set; }
         public DateTime RegistrationDateTime { get; set; }
-        public string InvolvedEmail { get; set; }
+        public string InspectorId { get; set; }
         public AddressOfAccidentRequestApiModel Address { get; set; }
         public SideRequestApiModel SideOfAccident { get; set; }
         public string AccidentCircumstances { get; set; }
