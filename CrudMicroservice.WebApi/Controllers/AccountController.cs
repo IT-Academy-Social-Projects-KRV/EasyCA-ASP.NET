@@ -73,9 +73,9 @@ namespace CrudMicroservice.WebApi.Controllers
         public async Task<IActionResult> ChangePassword(ChangePasswordRequestApiModel data)
         {
             var userId = User.FindFirst("Id")?.Value;
-            var responce = await _accountService.ChangePassword(data.Password, data.OldPassword, userId);
+            var response = await _accountService.ChangePassword(data.Password, data.OldPassword, userId);
 
-            return Ok(responce);
+            return Ok(response);
         }
     }
 }
