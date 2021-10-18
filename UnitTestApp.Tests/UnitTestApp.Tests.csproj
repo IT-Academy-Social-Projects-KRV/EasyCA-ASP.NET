@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthMicroservice.Domain\AuthMicroservice.Domain.csproj" />
+    <ProjectReference Include="..\AuthMicroservice.WebAPI\AuthMicroservice.WebAPI.csproj" />
     <ProjectReference Include="..\CrudMicroservice.Domain\CrudMicroservice.Domain.csproj" />
     <ProjectReference Include="..\CrudMicroservice.WebApi\CrudMicroservice.WebApi.csproj" />
   </ItemGroup>
