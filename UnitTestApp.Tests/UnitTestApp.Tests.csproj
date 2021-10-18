@@ -24,7 +24,6 @@
   <ItemGroup>
     <Folder Include="Integration\" />
     <Folder Include="Unit\Data\" />
-    <Folder Include="Unit\WebApi\Controllers\" />
   </ItemGroup>
 
 </Project>
