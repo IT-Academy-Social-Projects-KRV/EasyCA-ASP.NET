@@ -41,7 +41,7 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("CAprotocolNotFound"));
             }
             
-            var mappedCAProtocols = _mapper.Map<IEnumerable<CarAccident>, IEnumerable<CarAccidentResponseApiModel>>(carAccidentProtocols);
+            var mappedCAProtocols = _mapper.Map<IEnumerable<CarAccidentResponseApiModel>>(carAccidentProtocols);
             
             return mappedCAProtocols;
         }

@@ -17,5 +17,6 @@ namespace CrudMicroservice.Domain.ApiModel.ResponseApiModels
         public IEnumerable<EvidenceResponseApiModel> Evidences { get; set; }
         public DateTime CourtDTG { get; set; }
         public bool IsDocumentTakenOff { get; set; }
+        public bool IsClosed { get; set; }
     }
 }

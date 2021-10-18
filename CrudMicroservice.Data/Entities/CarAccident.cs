@@ -61,5 +61,9 @@ namespace CrudMicroservice.Data.Entities
         [BsonElement("IsDocumentTakenOff")]
         [JsonProperty("IsDocumentTakenOff")]
         public bool IsDocumentTakenOff { get; set; }
+
+        [BsonElement("IsDocumentTakenOff")]
+        [JsonProperty("IsDocumentTakenOff")]
+        public bool IsClosed { get; set; }
     }
 }
