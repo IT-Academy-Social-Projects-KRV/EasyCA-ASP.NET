@@ -11,6 +11,7 @@ using CrudMicroservice.Domain.ApiModel.RequestApiModels;
 using CrudMicroservice.Domain.ApiModel.ResponseApiModels;
 using CrudMicroservice.Domain.Errors;
 using CrudMicroservice.Domain.Services;
+using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 using Moq;
 using Xunit;
@@ -20,14 +21,27 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
     public class EuroProtocolUnitTest
     {
         private readonly Mock<IGenericRepository<EuroProtocol>> _euroProtocols = new Mock<IGenericRepository<EuroProtocol>>();
+        private readonly Mock<IGenericRepository<Circumstance>> _circumstances = new Mock<IGenericRepository<Circumstance>>();
+        private readonly Mock<IGenericRepository<Transport>> _transport = new Mock<IGenericRepository<Transport>>();
+        private readonly Mock<IGenericRepository<PersonalData>> _personalData = new Mock<IGenericRepository<PersonalData>>();
+        private readonly Mock<UserManager<User>> _userManager = new Mock<UserManager<User>>();
         private readonly Mock<IMapper> _mapper = new Mock<IMapper>();
         private readonly EuroProtocolService _euroProtocolService;
         private readonly EuroProtocol _euroProtocolSuccess = new EuroProtocol() { SerialNumber = "0112345", SideA = new Side() { Email = "kosmin@gmail.com" } };
 
         public EuroProtocolUnitTest()
         {
-            _euroProtocolService = new EuroProtocolService(_mapper.Object, _euroProtocols.Object);
+            _userManager = GetMockUserManager();
+            _euroProtocolService = new EuroProtocolService(_mapper.Object, _euroProtocols.Object,
+                _circumstances.Object, _transport.Object, _personalData.Object, _userManager.Object);
         }
+
+        private Mock<UserManager<User>> GetMockUserManager()
+        {
+            var userStoreMock = new Mock<IUserStore<User>>();
+            return new Mock<UserManager<User>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
+        }
+
 
         private EuroProtocolRequestApiModel EuroModel()
         {
@@ -206,12 +220,12 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                 SideA = new Side() { Email = "kosmin@gmail.com" }
             };
             _euroProtocols.Setup(repo => repo.GetAllByFilterAsync(It.IsAny<Expression<Func<EuroProtocol, bool>>>())).ReturnsAsync(new List<EuroProtocol>());
-            _mapper.Setup(s => s.Map<List<EuroProtocolResponseApiModel>>(protocol)).Returns(new List<EuroProtocolResponseApiModel>()
+            _mapper.Setup(s => s.Map<List<EuroProtocolSimpleResponseApiModel>>(protocol)).Returns(new List<EuroProtocolSimpleResponseApiModel>()
             {
-                new EuroProtocolResponseApiModel ()
+                new EuroProtocolSimpleResponseApiModel ()
                 {
                     SerialNumber = protocol.SerialNumber,
-                    SideA = new SideResponseApiModel() {Email = protocol.SideA.Email}
+                    Address = new AddressOfAccident() {City = "Rivne" }
                 }
             });
 
@@ -219,7 +233,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             var result = await _euroProtocolService.FindAllEuroProtocolsByEmail(_euroProtocolSuccess.SideA.Email);
 
             //Assert
-            Assert.IsType<List<EuroProtocolResponseApiModel>>(result.ToList());
+            Assert.IsType<List<EuroProtocolSimpleResponseApiModel>>(result.ToList());
             Assert.NotNull(result);
         }
 
