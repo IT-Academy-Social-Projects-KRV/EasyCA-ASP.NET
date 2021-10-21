@@ -30,8 +30,7 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
         }
         public static bool IsMatching(string firstName)
         {
-            string pattern = @"^[А-ЩЬЮЯЇІЄҐA-Z][а-щьюяїієґa-z]*$";
-            Regex firstNameRegex = new Regex(pattern);
+            Regex firstNameRegex = new Regex(@"^[А-ЩЬЮЯЇІЄҐA-Z][а-щьюяїієґa-z]*$");
 
             if (firstNameRegex.IsMatch(firstName))
             {
@@ -56,16 +55,14 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
         }
         public static bool IsValidEmail(string email)
         {
-            string theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
-                                   + "@"
-                                   + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))\z";
-
             if (string.IsNullOrWhiteSpace(email))
             {
                 return false;
             }
 
-            Regex emailValidation = new Regex(theEmailPattern);
+            Regex emailValidation = new Regex(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                                           + "@"
+                                           + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))\z");
 
             if (emailValidation.IsMatch(email))
             {
@@ -78,26 +75,23 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
         }
         public static bool IsPhoneNumber(string phoneNumber)
         {
-            string phoneNumberPattern = @"[0-9]{10}$";
-            Regex phoneValidation = new Regex(phoneNumberPattern);
+            Regex phoneValidation = new Regex(@"[0-9]{10}$");
 
             if (phoneNumber == null) return false;
             
-           if (phoneValidation.IsMatch(phoneNumber))
-              {
-                    return true;
-              }
-           else
-              {
-                    Console.WriteLine("Error in PHN");
-                    return false;
-              } 
+            if (phoneValidation.IsMatch(phoneNumber))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            } 
         }
         public static bool IsUsername(string username)
         {
             // start with a letter, allow letter or number, length between 6 to 12.
-            string userNamePattern = @"^[a-zA-Z][a-zA-Z0-9]{6,12}$";
-            Regex regex = new Regex(userNamePattern);
+            Regex regex = new Regex(@"^[a-zA-Z][a-zA-Z0-9]{6,12}$");
 
             if (regex.IsMatch(username))
             {
