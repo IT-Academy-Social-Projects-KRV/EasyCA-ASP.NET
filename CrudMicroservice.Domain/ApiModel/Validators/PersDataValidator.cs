@@ -25,8 +25,7 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
         }
         public static bool IsIPN(string taxpayerIPN)
         {
-            string patternIPN = @"[0-9]{10}";
-            Regex isIPN = new Regex(patternIPN);
+            Regex isIPN = new Regex(@"[0-9]{10}");
 
             if (isIPN.IsMatch(taxpayerIPN))
             {
@@ -51,8 +50,7 @@ namespace EasyCA.Core.Domain.ApiModels.Validators
         }
         public static bool IsValidJob(string jobsString)
         {
-            string jobPattern = @"^[А-ЩЬЮЯЇІЄҐA-Zа-щьюяїієґa-z]{3,20}$";
-            Regex newJob = new Regex(jobPattern);
+            Regex newJob = new Regex(@"^[А-ЩЬЮЯЇІЄҐA-Zа-щьюяїієґa-z]{3,20}$");
 
             if (newJob.IsMatch(jobsString))
             {

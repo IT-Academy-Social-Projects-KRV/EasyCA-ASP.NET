@@ -1,11 +1,8 @@
 ﻿using FluentValidation;
 using CrudMicroservice.Data.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CrudMicroservice.Domain.ApiModel.Validators
 {
@@ -30,6 +27,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
         public static bool IsValidSerialNumber(string serialNumber)
         {
             string serialNumberPattern = @"^[0-9]{8}$";
+
             if (Regex.IsMatch(serialNumber, serialNumberPattern))
             {
                 return true;
@@ -74,8 +72,6 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
             {
                 return false;
             }
-
         }
-
     }
 }

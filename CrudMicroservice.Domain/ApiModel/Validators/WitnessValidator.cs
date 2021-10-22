@@ -1,11 +1,6 @@
 ﻿using FluentValidation;
 using CrudMicroservice.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CrudMicroservice.Domain.ApiModel.Validators
 {
@@ -32,10 +27,9 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
 
         public static bool IsValidFirstName(string firstName)
         {
-            string firstNamePattern = @"^[А-ЩЬЮЯЇІЄҐA-Z][а-щьюяїієґa-z]*$";
-            Regex firstNameRegex = new Regex(firstNamePattern);
+            Regex firstNameRegex = new Regex(@"^[А-ЩЬЮЯЇІЄҐA-Z][а-щьюяїієґa-z]*$");
 
-            if (Regex.IsMatch(firstName, firstNamePattern))
+            if (firstNameRegex.IsMatch(firstName))
             {
                 return true;
             }
@@ -68,8 +62,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
 
         public static bool IsPhoneNumber(string phoneNumber)
         {
-            string phoneNumberPattern = @"[0-9]{10}$";
-            Regex phoneValidation = new Regex(phoneNumberPattern);
+            Regex phoneValidation = new Regex(@"[0-9]{10}$");
 
             if (phoneNumber == null) return false;
 

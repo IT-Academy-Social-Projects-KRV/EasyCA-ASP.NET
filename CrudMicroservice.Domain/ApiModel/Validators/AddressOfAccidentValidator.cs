@@ -1,11 +1,6 @@
 ﻿using FluentValidation;
 using CrudMicroservice.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CrudMicroservice.Domain.ApiModel.Validators
 {
@@ -49,6 +44,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
         public static bool IsValidCoordinate(string coord)
         {
             string coordPattern = @"^[0-9]{2}\.[0-9]{6}$";
+
             if (Regex.IsMatch(coord, coordPattern))
             {
                 return true;

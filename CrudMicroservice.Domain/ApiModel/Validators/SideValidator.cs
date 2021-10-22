@@ -1,11 +1,8 @@
 ﻿using FluentValidation;
 using CrudMicroservice.Data.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CrudMicroservice.Domain.ApiModel.Validators
 {
@@ -26,12 +23,12 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
             RuleFor(n => n.Circumstances).Cascade(CascadeMode).NotEmpty().
                  WithMessage("You must have at least one circumstance").Must(IsValidCircumstances).
                  WithMessage("Something went wrong");
-            
         }
 
         public static bool IsValidEmail(string email)
         {
             string emailPattern = @"^[a-zA-Z0-9_.><=$#*&%!+-]+@[a-zA-Z0-9-]+\.[a-z0-9-.]+$";
+
             if (string.IsNullOrWhiteSpace(email))
             {
                 return false;
@@ -49,8 +46,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
 
         public static bool IsValidDriverLicenseSerial(string driverLicenseSerial)
         {
-            string driverLicenseSerialPattern = @"[А-ЩЬЮЯЇІЄҐA-Z]{3}[0-9]{6}$";
-            Regex driverLicenseSerialValidation = new Regex(driverLicenseSerialPattern);
+            Regex driverLicenseSerialValidation = new Regex(@"[А-ЩЬЮЯЇІЄҐA-Z]{3}[0-9]{6}$");
 
             if (driverLicenseSerial == null) return false;
 
