@@ -3,7 +3,6 @@ using FluentValidation;
 using System.Text.RegularExpressions;
 using CrudMicroservice.Data.Entities;
 using System.Collections.Generic;
-using MongoDB.Bson;
 
 namespace CrudMicroservice.Domain.ApiModel.Validators
 {
@@ -27,8 +26,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
         }
         public static bool IsValidDriverLicense(string driverNumber)
         {
-            string patternDr = @"^[А-ЩЬЮЯЇІЄҐA-ZЯ]{3}[0-9]{6}";
-            Regex driverSerial = new Regex(patternDr);
+            Regex driverSerial = new Regex(@"^[А-ЩЬЮЯЇІЄҐA-ZЯ]{3}[0-9]{6}");
 
             if (driverSerial.IsMatch(driverNumber))
             {
@@ -59,9 +57,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
         }
         public static bool IsValidExpDate(DateTime expirationDate)
         {
-            DateTime today = DateTime.Today;
-
-            if (expirationDate > today)
+            if (expirationDate > DateTime.Today)
             {
                 return true;
             }

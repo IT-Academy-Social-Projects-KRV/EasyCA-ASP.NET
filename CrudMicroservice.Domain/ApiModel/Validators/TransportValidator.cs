@@ -33,8 +33,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
         }
         public static bool IsValidProducer(string producer)
         {
-            string prodPattern = @"^[А-ЩЬЮЯЇІЄҐA-Z]{1}[А-ЩЬЮЯЇІЄҐA-Zа-щьюяїієґa-z]*$";
-            Regex prodCompany = new Regex(prodPattern);
+            Regex prodCompany = new Regex(@"^[А-ЩЬЮЯЇІЄҐA-Z]{1}[А-ЩЬЮЯЇІЄҐA-Zа-щьюяїієґa-z]*$");
             
             if (prodCompany.IsMatch(producer))
             {
@@ -47,8 +46,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
         }
         public static bool IsValidModel(string model)
         {
-            string modelPattern = @"\w*$";
-            Regex modelCheck = new Regex(modelPattern);
+            Regex modelCheck = new Regex(@"\w*$");
 
             if (modelCheck.IsMatch(model))
             {

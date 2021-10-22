@@ -32,7 +32,7 @@ namespace CrudMicroservice.Data.Entities
 
         [BsonElement("SideOfAccident")]
         [JsonProperty("SideOfAccident")]
-        public Side SideOfAccident { get; set; }
+        public SideCA SideOfAccident { get; set; }
 
         [BsonElement("AccidentCircumstances")]
         [JsonProperty("AccidentCircumstances")]
@@ -52,7 +52,7 @@ namespace CrudMicroservice.Data.Entities
 
         [BsonElement("ListOfEvidences")]
         [JsonProperty("ListOfEvidences")]
-        public List<Evidence> Evidences { get; set; }
+        public List<EvidenceCA> Evidences { get; set; }
 
         [BsonElement("CourtDTG")]
         [JsonProperty("CourtDTG")]

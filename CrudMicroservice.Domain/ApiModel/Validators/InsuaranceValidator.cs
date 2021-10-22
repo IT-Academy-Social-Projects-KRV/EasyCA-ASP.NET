@@ -22,6 +22,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
         {
             List<string> validCompanies = new List<string>() 
             {
+                //I think we have problems, maybe we must also use this company names in English ?
                 "СК Універсальна", "НАСК ОРАНТА", "УАСК АСКА", "СК ГРАВЕ УКРАЇНА",
                 "СК ІНГО", "КНЯЖА ВІЄННА ІНШУРАНС ГРУП", "СТ Гарантія", "СК Євроінс Україна",
                 "АСКО-Донбас Північний", "ОМЕГА", "Скарбниця", "УПСК", "Оранта-Січ", "УТСК",
@@ -43,8 +44,7 @@ namespace CrudMicroservice.Domain.ApiModel.Validators
         }
         public static bool IsValidSerial(string serial)
         {
-            string pattern = @"[А-ЩЬЮЯЇІЄҐA-Z]{2}[0-9]{7}";
-            Regex insuaranceSerial = new Regex(pattern);
+            Regex insuaranceSerial = new Regex(@"[А-ЩЬЮЯЇІЄҐA-Z]{2}[0-9]{7}");
 
             if (insuaranceSerial.IsMatch(serial))
             {
