@@ -1,0 +1,78 @@
+version: '3.4'
+
+networks:
+  easyca-network:
+    driver: bridge
+
+services:
+  authmicroservice.webapi:
+    image: ${DOCKER_REGISTRY-}authmicroservicewebapi
+    build:
+      context: .
+      dockerfile: AuthMicroservice.WebAPI/Dockerfile
+    ports:
+      - "5000:80"
+    networks:
+      easyca-network:
+        aliases:
+          - easyca-auth
+
+  crudmicroservice.webapi:
+    image: ${DOCKER_REGISTRY-}crudmicroservicewebapi
+    build:
+      context: .
+      dockerfile: CrudMicroservice.WebApi/Dockerfile
+    ports:
+      - "5001:80"
+    networks:
+      easyca-network:
+        aliases:
+          - easyca-crud
+
+  gateway.webapi:
+    image: ${DOCKER_REGISTRY-}gatewaywebapi
+    build:
+      context: .
+      dockerfile: Gateway.WebAPI/Dockerfile
+    ports:
+      - "5500:80"
+    networks:
+      easyca-network:
+        aliases:
+          - easyca-gateway
+
+  searchmicroservice.webapi:
+    image: ${DOCKER_REGISTRY-}searchmicroservicewebapi
+    build:
+      context: .
+      dockerfile: SearchMicroservice.WebAPI/Dockerfile
+    ports:
+      - "5003:80"
+    networks:
+      easyca-network:
+        aliases:
+          - easyca-search
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    networks:
+      easyca-network:
+        aliases:
+          - easyca-rabbitmq
+  
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      easyca-network:
+        aliases:
+          - easyca-mongodb
