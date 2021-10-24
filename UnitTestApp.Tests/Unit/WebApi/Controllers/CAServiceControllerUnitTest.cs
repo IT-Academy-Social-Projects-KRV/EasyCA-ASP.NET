@@ -11,8 +11,6 @@ using CrudMicroservice.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
-using CrudMicroservice.Data.Entities;
-using System.Security.Principal;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
