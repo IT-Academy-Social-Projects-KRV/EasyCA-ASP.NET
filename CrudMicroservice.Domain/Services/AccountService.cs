@@ -2,17 +2,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using CrudMicroservice.Data.Entities;
 using CrudMicroservice.Data.Interfaces;
 using CrudMicroservice.Domain.ApiModel.RequestApiModels;
 using CrudMicroservice.Domain.ApiModel.ResponseApiModels;
 using CrudMicroservice.Domain.Errors;
+using CrudMicroservice.Domain.Helpers;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Properties;
-using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
-using CrudMicroservice.Domain.Helpers;
 
 namespace CrudMicroservice.Domain.Services
 {
@@ -23,7 +23,7 @@ namespace CrudMicroservice.Domain.Services
         private readonly IGenericRepository<PersonalData> _personalData;
         private readonly IHelper _helper;
 
-        public AccountService(UserManager<User> userManager, IMapper mapper, IGenericRepository<PersonalData> personalData,IHelper helper)
+        public AccountService(UserManager<User> userManager, IMapper mapper, IGenericRepository<PersonalData> personalData, IHelper helper)
         {
             _userManager = userManager;
             _mapper = mapper;

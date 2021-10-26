@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using CrudMicroservice.Data.Entities;
@@ -26,7 +23,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         private readonly Mock<IMapper> _mapper = new Mock<IMapper>();
         private readonly Mock<UserManager<User>> _userManager = new Mock<UserManager<User>>();
         private readonly AccountService _service;
-        private readonly Mock<IHelper> _helper=new Mock<IHelper>();
+        private readonly Mock<IHelper> _helper = new Mock<IHelper>();
 
         public AccountUnitTest()
         {
@@ -63,9 +60,9 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             {
                 PersonalDataId = "123",
                 Id = "7d13eff6-71ca-4cc7-9b36-859f78ff39dd"
-            };       
+            };
             _helper.Setup(x => x.GetUser(It.IsAny<string>())).Returns(user);
-        
+
             // Act
             Func<Task> result = () => _service.CreatePersonalData(It.IsAny<PersonalDataRequestApiModel>(), user.Id);
 
@@ -108,14 +105,14 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             };
             UserRequestApiModel data = new UserRequestApiModel()
             {
-               PersonalData=new PersonalDataRequestApiModel() {}
+                PersonalData = new PersonalDataRequestApiModel() { }
             };
 
             _helper.Setup(x => x.GetUser(It.IsAny<string>())).Returns(user);
             _mapper.Setup(x => x.Map<PersonalData>(It.IsAny<PersonalDataRequestApiModel>())).Returns(new PersonalData()
             {
                 IPN = "321",
-                Id="123"
+                Id = "123"
             });
 
             var replaceResult = new Mock<ReplaceOneResult>();
@@ -133,7 +130,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             Assert.NotNull(result);
             Assert.IsType<ResponseApiModel<HttpStatusCode>>(result);
         }
-    
+
 
         [Fact]
         public async Task UpdatePersonalData_UserNotFound_ThrowsException()
