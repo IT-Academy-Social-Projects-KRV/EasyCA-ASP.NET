@@ -4,6 +4,7 @@ using CrudMicroservice.Data;
 using CrudMicroservice.Data.Entities;
 using CrudMicroservice.Data.Interfaces;
 using CrudMicroservice.Domain.Consumers;
+using CrudMicroservice.Domain.Helpers;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Services;
 using CrudMicroservice.WebApi.Middleware;
@@ -43,6 +44,7 @@ namespace CrudMicroservice.WebApi
             services.AddTransient<IEuroProtocolService, EuroProtocolService>();
             services.AddTransient<IAdminService, AdminService>();
             services.AddTransient<ICarAccidentService, CarAccidentService>();
+            services.AddTransient<IHelper, Helper>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
