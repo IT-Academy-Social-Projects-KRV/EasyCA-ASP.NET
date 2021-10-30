@@ -9,6 +9,7 @@ namespace CrudMicroservice.Domain.Interfaces
     public interface IAdminService
     {
         Task<IEnumerable<EuroProtocolResponseApiModel>> GetAllEuroProtocols();
+        Task<IEnumerable<CarAccidentResponseApiModel>> GetAllCAProtocols();
         Task<IEnumerable<UserResponseApiModel>> GetAllInspectors();
         Task<ResponseApiModel<HttpStatusCode>> AddInspector(InspectorRequestApiModel inspectorRequest);
         Task<ResponseApiModel<HttpStatusCode>> DeleteInspector(DeleteInspectorRequestApiModel data);

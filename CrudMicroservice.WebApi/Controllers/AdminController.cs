@@ -25,6 +25,13 @@ namespace CrudMicroservice.WebApi.Controllers
             return Ok(response);
         }
 
+        [HttpGet("GetAllCAProtocols")]
+        public async Task<IActionResult> GetAllCAProtocols()
+        {
+            var response = await _adminService.GetAllCAProtocols();
+            return Ok(response);
+        }
+
         [HttpGet("GetAllInspectors")]
         public async Task<IActionResult> GetAllInspectors()
         {

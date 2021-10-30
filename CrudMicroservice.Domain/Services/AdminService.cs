@@ -19,11 +19,13 @@ namespace CrudMicroservice.Domain.Services
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<EuroProtocol> _euroProtocols;
+        private readonly IGenericRepository<CarAccident> _CAProtocols;
 
-        public AdminService(UserManager<User> userManager, IMapper mapper, IGenericRepository<EuroProtocol> euroProtocols)
+        public AdminService(UserManager<User> userManager, IMapper mapper, IGenericRepository<EuroProtocol> euroProtocols, IGenericRepository<CarAccident> CAProtocols)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _CAProtocols = CAProtocols;
             _euroProtocols = euroProtocols;
         }
 
@@ -37,6 +39,18 @@ namespace CrudMicroservice.Domain.Services
             }
 
             return _mapper.Map<IEnumerable<EuroProtocolResponseApiModel>>(list);
+        }
+
+        public async Task<IEnumerable<CarAccidentResponseApiModel>> GetAllCAProtocols()
+        {
+            var list = await _CAProtocols.GetAllAsync();
+
+            if (!list.AsQueryable().Any())
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("CAprotocolNotFound"));
+            }
+
+            return _mapper.Map<IEnumerable<CarAccidentResponseApiModel>>(list);
         }
 
         public async Task<IEnumerable<UserResponseApiModel>> GetAllInspectors()

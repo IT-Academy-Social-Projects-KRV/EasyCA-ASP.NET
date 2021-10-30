@@ -114,6 +114,36 @@ namespace UnitTestApp.Tests.Unit.WebApi.Controllers
         }
 
         [Fact]
+        public async Task GetAllCAProtocols_ReturnsSuccess()
+        {
+            //Arrange
+            _adminService.Setup(repo => repo.GetAllCAProtocols()).ReturnsAsync(new List<CarAccidentResponseApiModel>());
+
+            //Act
+            var result = await adminController.GetAllCAProtocols() as OkObjectResult;
+            var resultValue = result.Value as List<CarAccidentResponseApiModel>;
+
+            //Assert
+            Assert.IsType<List<CarAccidentResponseApiModel>>(resultValue);
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task GetAllCAProtocols_ReturnsFailed()
+        {
+            //Arrange
+            _adminService.Setup(repo => repo.GetAllCAProtocols()).ThrowsAsync(new RestException(HttpStatusCode.NotFound, "Failed"));
+
+            //Act
+            Func<Task> act = () => adminController.GetAllCAProtocols();
+
+            //Assert
+            var result = await Assert.ThrowsAsync<RestException>(act);
+            Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+            Assert.Equal("Failed", result.Message);
+        }
+
+        [Fact]
         public async Task DeleteInspector_ReturnsSuccess()
         {
             //Arrange
