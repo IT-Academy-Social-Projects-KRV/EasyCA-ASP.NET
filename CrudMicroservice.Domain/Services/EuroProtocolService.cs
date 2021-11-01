@@ -11,6 +11,7 @@ using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Errors;
 using CrudMicroservice.Domain.Properties;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace CrudMicroservice.Domain.Services
 {
@@ -36,6 +37,16 @@ namespace CrudMicroservice.Domain.Services
 
         public async Task<ResponseApiModel<HttpStatusCode>> RegistrationEuroProtocol(EuroProtocolRequestApiModel data)
         {
+            var lastCA = await _euroProtocols.GetLastItem(x => x.RegistrationDateTime < DateTime.Now);
+
+            if (!Int32.TryParse(lastCA.SerialNumber, out int res))
+            {
+                throw new RestException(HttpStatusCode.NotFound, "Invalid number");
+            }
+
+            res += 1;
+            data.SerialNumber = res.ToString();
+
             var euroProtocol = _mapper.Map<EuroProtocol>(data);
 
             await _euroProtocols.CreateAsync(euroProtocol);

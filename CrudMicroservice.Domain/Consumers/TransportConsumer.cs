@@ -16,6 +16,7 @@ namespace CrudMicroservice.Domain.Consumers
     {
         private readonly IGenericRepository<Transport> _transportRepository;
         private readonly IMapper _mapper;
+
         public TransportConsumer(IGenericRepository<Transport> transportRepository, IMapper mapper)
         {
             _transportRepository = transportRepository;
