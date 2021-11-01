@@ -10,11 +10,6 @@ namespace CrudMicroservice.Data.Entities
     [CollectionName("EuroProtocols")]
     public class EuroProtocol
     {
-        public EuroProtocol()
-        {
-            SerialNumber = ObjectId.GenerateNewId().ToString();
-        }
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }

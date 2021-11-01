@@ -105,10 +105,18 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         public async Task RegistrationCarAccidentProtocol_ReturnSuccess()
         {
             //Arrange
+            _carAccidentList.Setup(repo => repo.GetLastItem(It.IsAny<Predicate<CarAccident>>())).ReturnsAsync(new CarAccident() 
+            { 
+                SerialNumber = "11111111",
+                SideOfAccident = new SideCA(),
+                Witnesses = new List<Witness>(),
+                Evidences= new List<EvidenceCA>(),
+                Address = new AddressOfAccident()
+            });
             _mapper.Setup(repo => repo.Map<CarAccident>(It.IsAny<CarAccidentRequestApiModel>())).Returns(new CarAccident());
 
             //Act
-            var result = await _carAccidentService.RegistrationCarAccidentProtocol(It.IsAny<CarAccidentRequestApiModel>(), It.IsAny<string>());
+            var result = await _carAccidentService.RegistrationCarAccidentProtocol(CarAccidentProtocol(), It.IsAny<string>());
 
             //Assert
             Assert.NotNull(result);
