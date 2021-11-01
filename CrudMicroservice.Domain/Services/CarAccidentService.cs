@@ -66,5 +66,19 @@ namespace CrudMicroservice.Domain.Services
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("CAProtocolUpdateSuccess"));
         }
+
+        public async Task<IEnumerable<CarAccidentResponseApiModel>> FindAllPersonsCAProtocolsForInspector(string personDriverId)
+        {
+            var personsCarAccidentProtocols = await _carAccidentProtocols.GetAllByFilterAsync(x => x.SideOfAccident.DriverLicenseSerial == personDriverId);
+            
+            if (personsCarAccidentProtocols == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("CAprotocolNotFound"));
+            }
+
+            var mappedPersonsCAProtocols = _mapper.Map<IEnumerable<CarAccidentResponseApiModel>>(personsCarAccidentProtocols);
+
+            return mappedPersonsCAProtocols;
+        }
     }
 }

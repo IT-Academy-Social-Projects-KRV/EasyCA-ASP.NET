@@ -40,5 +40,12 @@ namespace CrudMicroservice.WebApi.Controllers
             var response = await _carAccidentService.UpdateCarAccidentProtocol(data);
             return Ok(response);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> FindAllPersonsCAProtocolsForInspector(string personDriverId)
+        {
+            var response = await _carAccidentService.FindAllPersonsCAProtocolsForInspector(personDriverId);
+            return Ok(response);
+        }
     }
 }
