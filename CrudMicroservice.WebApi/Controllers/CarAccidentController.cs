@@ -18,7 +18,7 @@ namespace CrudMicroservice.WebApi.Controllers
             _carAccidentService = carAccidentService;
         }
 
-        [HttpPost]
+        [HttpPost("CreateCA")]
         public async Task<IActionResult> CarAccidentRegistration(CarAccidentRequestApiModel data)
         {
             var inspectorNumber = User.FindFirst("Id")?.Value;
@@ -26,7 +26,7 @@ namespace CrudMicroservice.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet]
+        [HttpGet("GetAllCAByInspector")]
         public async Task<IActionResult> FindAllCarAccidentProtocolsByInvolvedId()
         {
             var inspectorNumber = User.FindFirst("Id")?.Value;
@@ -34,14 +34,14 @@ namespace CrudMicroservice.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
+        [HttpPut("UpdateCA")]
         public async Task<IActionResult> UpdateCarAccidentProtocol(CarAccidentRequestApiModel data)
         {
             var response = await _carAccidentService.UpdateCarAccidentProtocol(data);
             return Ok(response);
         }
 
-        [HttpGet]
+        [HttpGet("GetAllPersonsCAByInspector")]
         public async Task<IActionResult> FindAllPersonsCAProtocolsForInspector(string personDriverId)
         {
             var response = await _carAccidentService.FindAllPersonsCAProtocolsForInspector(personDriverId);
