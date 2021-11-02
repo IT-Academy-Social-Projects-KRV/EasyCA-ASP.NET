@@ -122,5 +122,34 @@ namespace UnitTestApp.Tests.Unit.WebApi.Controllers
             Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
             Assert.Equal("Failed", result.Message);
         }
+
+        [Fact]
+        public async Task FindAllPersonsCAProtocolsForInspector_ReturnSuccess()
+        {
+            //Arrange
+            _carAccidentService.Setup(repo => repo.FindAllPersonsCAProtocolsForInspector(It.IsAny<string>())).ReturnsAsync(new List<CarAccidentResponseApiModel>() { });
+
+            //Act
+            var result = await _carAccidentController.FindAllPersonsCAProtocolsForInspector("PVK112233") as OkObjectResult;
+            var resultValue = result.Value as List<CarAccidentResponseApiModel>;
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<List<CarAccidentResponseApiModel>>(resultValue);
+        }
+
+        [Fact]
+        public async Task FindAllPersonsCAProtocolsForInspector_ReturnFailed()
+        {
+            //Arrange
+            _carAccidentService.Setup(repo => repo.FindAllPersonsCAProtocolsForInspector(It.IsAny<string>())).ThrowsAsync(new NullReferenceException());
+
+            //Act
+            Func<Task> act = () => _carAccidentController.FindAllPersonsCAProtocolsForInspector("PVK112233");
+
+            //Assert
+            var result = await Assert.ThrowsAsync<NullReferenceException>(act);
+            Assert.NotNull(result);
+        }
     }
 }
