@@ -15,5 +15,6 @@ namespace CrudMicroservice.Data.Interfaces
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<List<TEntity>> GetAllByFilterAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> GetByFilterAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> GetLastItem(Predicate<TEntity> predicate);
     }
 }

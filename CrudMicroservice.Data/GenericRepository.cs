@@ -59,5 +59,12 @@ namespace CrudMicroservice.Data
         {
             return await _dbCollection.Find(predicate).ToListAsync();
         }
+
+        public async Task<TEntity> GetLastItem(Predicate<TEntity> predicate)
+        {
+            var list = await _dbCollection.Find(Builders<TEntity>.Filter.Empty).ToListAsync();
+
+            return list.FindLast(predicate);
+        }
     }
 }

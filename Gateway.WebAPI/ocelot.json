@@ -77,7 +77,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/CarAccident",
+      "DownstreamPathTemplate": "/api/CarAccident/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -85,7 +85,7 @@
           "Port": 5001
         }
       ],
-      "UpstreamPathTemplate": "/api/CarAccident",
+      "UpstreamPathTemplate": "/api/CarAccident/{everything}",
       "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE", "OPTIONS" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",

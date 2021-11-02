@@ -11,5 +11,6 @@ namespace CrudMicroservice.Domain.Interfaces
         Task<ResponseApiModel<HttpStatusCode>> RegistrationCarAccidentProtocol(CarAccidentRequestApiModel data, string inspectorId);
         Task<IEnumerable<CarAccidentResponseApiModel>> FindAllCarAccidentProtocolsByInvolvedId(string inspectorId);
         Task<ResponseApiModel<HttpStatusCode>> UpdateCarAccidentProtocol(CarAccidentRequestApiModel data);
+        Task<IEnumerable<CarAccidentResponseApiModel>> FindAllPersonsCAProtocolsForInspector(string personDriverId);
     }
 }

@@ -18,6 +18,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
 {
     public class AdminUnitTest
     {
+        private readonly Mock<IGenericRepository<CarAccident>> _CAProtocols = new Mock<IGenericRepository<CarAccident>>();
         private readonly Mock<IGenericRepository<EuroProtocol>> _euroProtocols = new Mock<IGenericRepository<EuroProtocol>>();
         private readonly Mock<UserManager<User>> _userManager = new Mock<UserManager<User>>();
         private readonly Mock<IMapper> _mapper = new Mock<IMapper>();
@@ -27,7 +28,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         public AdminUnitTest()
         {
             _userManager = GetMockUserManager();
-            _service = new AdminService(_userManager.Object, _mapper.Object, _euroProtocols.Object);
+            _service = new AdminService(_userManager.Object, _mapper.Object, _euroProtocols.Object, _CAProtocols.Object);
         }
 
         private Mock<UserManager<User>> GetMockUserManager()
@@ -225,6 +226,52 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
 
             //Act
             Func<Task> act = () => _service.DeleteInspector(inspector);
+
+            //Assert
+            await Assert.ThrowsAsync<RestException>(act);
+        }
+
+        [Fact]
+        public async Task GetAllCAProtocols_ReturnsSuccess()
+        {
+            //Arrange
+            _CAProtocols.Setup(repo => repo.GetAllAsync()).ReturnsAsync(new List<CarAccident>()
+            {
+                new CarAccident(),
+            });
+
+            _mapper.Setup(repo => repo.Map<List<CarAccidentResponseApiModel>>(It.IsAny<List<User>>())).Returns(new List<CarAccidentResponseApiModel>()
+            {
+                new CarAccidentResponseApiModel()
+                {
+                    SerialNumber="123",
+                },
+            });
+
+            //Act
+            var result = await _service.GetAllCAProtocols();
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.IsType<List<CarAccidentResponseApiModel>>(result.ToList());
+        }
+
+        [Fact]
+        public async Task GetAllCAProtocols_ReturnsFailed()
+        {
+            //Arrange
+            _CAProtocols.Setup(repo => repo.GetAllAsync()).ReturnsAsync(new List<CarAccident>());
+
+            _mapper.Setup(repo => repo.Map<List<CarAccidentResponseApiModel>>(It.IsAny<List<User>>())).Returns(new List<CarAccidentResponseApiModel>()
+            {
+                new CarAccidentResponseApiModel()
+                {
+                    SerialNumber="123",
+                },
+            });
+
+            //Act
+            Func<Task> act = () => _service.GetAllCAProtocols();
 
             //Assert
             await Assert.ThrowsAsync<RestException>(act);
