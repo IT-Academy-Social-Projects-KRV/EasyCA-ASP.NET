@@ -1,11 +1,14 @@
 ﻿using System.Threading.Tasks;
 using FileMicroservice.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FileMicroservice.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FileController : ControllerBase
     {
         private readonly IFileService _fileService;
@@ -22,9 +25,9 @@ namespace FileMicroservice.WebAPI.Controllers
         }
 
         [HttpPost("UploadFiles")]
-        public async Task<IActionResult> UploadFiles()
+        public async Task<IActionResult> UploadFiles([FromForm] IFormCollection formData )
         {
-            var response = await _fileService.UploadFiles(Request.Form.Files);
+            var response = await _fileService.UploadFiles(formData.Files);
             return Ok(response);
         }
 

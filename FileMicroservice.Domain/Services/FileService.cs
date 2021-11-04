@@ -15,6 +15,7 @@ namespace FileMicroservice.Domain.Services
     {
         private readonly FileDbContext _dbContext;
         private readonly IGridFSBucket _bucket;
+
         public FileService(FileDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -24,6 +25,7 @@ namespace FileMicroservice.Domain.Services
         public async Task<IEnumerable<DownloadFileResponseApiModel>> DownloadFiles(string[] fileIds)
         {
             var fileList = new List<DownloadFileResponseApiModel>();
+
             foreach (var fileId in fileIds)
             {
                 if (!ObjectId.TryParse(fileId, out var id))
@@ -69,6 +71,7 @@ namespace FileMicroservice.Domain.Services
                 stream.Close();
                 idList.Add(id.ToString());
             }
+
             return new ResponseApiModel<IEnumerable<string>>(idList, true, "Success!");
         }
     }
