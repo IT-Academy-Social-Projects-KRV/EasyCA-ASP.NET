@@ -37,13 +37,10 @@ namespace UnitTestApp.Tests.Unit.WebApi.Controllers
             accountController.ControllerContext.HttpContext = new DefaultHttpContext() { User = user };
         }
 
-
-
         [Fact]
         public async Task UpdatePersonalData_ReturnsSuccess()
         {
             //Arrange
-
             _accountService.Setup(repo => repo.UpdatePersonalData(It.IsAny<UserRequestApiModel>(),It.IsAny<string>())).ReturnsAsync(new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, "Success"));
 
             //Act
@@ -74,7 +71,6 @@ namespace UnitTestApp.Tests.Unit.WebApi.Controllers
         public async Task GetPersonalData_ReturnsSuccess()
         {
             //Arrange
-
             _accountService.Setup(repo => repo.GetPersonalData(It.IsAny<string>())).ReturnsAsync(new PersonalDataResponseApiModel());
 
             //Act
@@ -105,7 +101,6 @@ namespace UnitTestApp.Tests.Unit.WebApi.Controllers
         public async Task GetUserById_ReturnsSuccess()
         {
             //Arrange
-
             _accountService.Setup(repo => repo.GetUserById(It.IsAny<string>())).ReturnsAsync(new UserResponseApiModel());
 
             //Act
