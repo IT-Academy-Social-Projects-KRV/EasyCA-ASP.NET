@@ -20,6 +20,7 @@ namespace UnitTestApp.Tests.Unit.WebApi.Controllers
         private readonly Mock<IAccountService> _accountService = new Mock<IAccountService>();
         private readonly AccountController accountController;
         private readonly ChangePasswordRequestApiModel changePasswordRequestApiModel;
+
         public AccountControllerUnitTest()
         {
             accountController = new AccountController(_accountService.Object);
