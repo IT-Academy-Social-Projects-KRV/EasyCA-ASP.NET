@@ -25,7 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchMicroservice.Domain",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchMicroservice.WebAPI", "SearchMicroservice.WebAPI\SearchMicroservice.WebAPI.csproj", "{2E03BC39-705E-4AA5-B5F7-84883DD8E450}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQConfig", "RabbitMQConfig\RabbitMQConfig.csproj", "{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQConfig", "RabbitMQConfig\RabbitMQConfig.csproj", "{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileMicroservice.WebAPI", "FileMicroservice.WebAPI\FileMicroservice.WebAPI.csproj", "{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileMicroservice.Data", "FileMicroservice.Data\FileMicroservice.Data.csproj", "{B8A30F44-9765-4D4E-8D28-76DBBF571B79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileMicroservice.Domain", "FileMicroservice.Domain\FileMicroservice.Domain.csproj", "{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +87,18 @@ Global
 		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8A30F44-9765-4D4E-8D28-76DBBF571B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A30F44-9765-4D4E-8D28-76DBBF571B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A30F44-9765-4D4E-8D28-76DBBF571B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A30F44-9765-4D4E-8D28-76DBBF571B79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
