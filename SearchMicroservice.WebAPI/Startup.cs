@@ -8,6 +8,7 @@ using RabbitMQConfig;
 using RabbitMQConfig.Models.Requests;
 using SearchMicroservice.Domain.Interfaces;
 using SearchMicroservice.Domain.Services;
+using SearchMicroservice.WebAPI.Middleware;
 
 namespace SearchMicroservice.WebAPI
 {
@@ -78,6 +79,8 @@ namespace SearchMicroservice.WebAPI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

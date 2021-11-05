@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using SearchMicroservice.Domain.Interfaces;
-using System.Threading.Tasks;
 
 namespace SearchMicroservice.WebAPI.Controllers
 {

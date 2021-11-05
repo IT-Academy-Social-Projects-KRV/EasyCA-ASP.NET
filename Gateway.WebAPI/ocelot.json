@@ -93,6 +93,18 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/Search/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Search/{everything}",
+      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE", "OPTIONS" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/File/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
