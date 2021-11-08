@@ -24,6 +24,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         private readonly Mock<IMapper> _mapper = new Mock<IMapper>();
         private readonly CarAccidentService _carAccidentService;
         private readonly Mock<UserManager<User>> _userManager = new Mock<UserManager<User>>();
+        private readonly Mock<IGenericRepository<PersonalData>> _personalDataList = new Mock<IGenericRepository<PersonalData>>();
         private readonly CarAccident _carAccidentProtocolSuccess = new CarAccident()
         {
             SerialNumber = "DA128846",
@@ -39,7 +40,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         public CAServiceUnitTest()
         {
             _userManager = GetMockUserManager();
-            _carAccidentService = new CarAccidentService(_mapper.Object, _carAccidentList.Object);
+            _carAccidentService = new CarAccidentService(_mapper.Object, _carAccidentList.Object, _userManager.Object,_personalDataList.Object);
         }
 
         private Mock<UserManager<User>> GetMockUserManager()
@@ -271,5 +272,96 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             await Assert.ThrowsAsync<RestException>(act);
         }
 
+        [Fact]
+        public async Task GetUsersDriverLicense_ReturnSuccess()
+        {
+            //Arrange
+            _userManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(new User()
+            {
+                Id = "ID123",
+                FirstName = "Thomas",
+                PersonalDataId = "7777777"
+            });
+
+            _personalDataList.Setup(x => x.GetByFilterAsync(It.IsAny<Expression<Func<PersonalData, bool>>>()))
+                .ReturnsAsync(new PersonalData()
+                {
+                    UserDriverLicense = new DriverLicense() { LicenseSerialNumber = "PVX112233"}
+                });
+
+            _mapper.Setup(x => x.Map<PersonalDataResponseApiModel>(It.IsAny<PersonalData>()))
+               .Returns(new PersonalDataResponseApiModel()
+               {
+                   UserDriverLicense = new DriverLicense() { LicenseSerialNumber = "PVX112233" }
+               });
+
+            //Act
+            var result = await _carAccidentService.GetUsersDriverLicense(It.IsAny<string>());
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.IsType<string>(result.ToString());
+        }
+
+        [Fact]
+        public async Task GetUsersDriverLicense_ReturnFailed()
+        {
+            // Arrange
+            _userManager.Setup(repo => repo.FindByIdAsync(It.IsAny<string>())).ReturnsAsync((User)null);
+
+            // Act 
+            Func<Task> act = () => _carAccidentService.GetUsersDriverLicense(It.IsAny<string>());
+
+            // Assert
+            await Assert.ThrowsAsync<RestException>(act);
+        }
+
+        [Fact]
+        public async Task FindAllCAProtocolsForPerson_ReturnSuccess()
+        {
+            //Arrange
+            var side = new SideCA()
+            {
+                DriverLicenseSerial = "PVK112233"
+            };
+            var sideResponseApiModel = new SideCAResponseApiModel()
+            {
+                DriverLicenseSerial = "PVK112233"
+            };
+
+            var carAccidentList = new CarAccident()
+            {
+                SideOfAccident = side
+            };
+            _carAccidentList.Setup(repo => repo.GetAllByFilterAsync(It.IsAny<Expression<Func<CarAccident, bool>>>())).ReturnsAsync(new List<CarAccident>());
+            _mapper.Setup(x => x.Map<List<CarAccidentResponseApiModel>>(carAccidentList)).Returns(new List<CarAccidentResponseApiModel>()
+            {
+                new CarAccidentResponseApiModel()
+                {
+                     SideOfAccident = sideResponseApiModel
+                }
+            });
+
+            //Act
+
+            var result = await _carAccidentService.FindAllCAProtocolsForPerson(_carAccidentProtocolSuccess.SideOfAccident.DriverLicenseSerial);
+
+            //Assert
+            Assert.IsType<List<CarAccidentResponseApiModel>>(result.ToList());
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async Task FindAllCAProtocolsForPerson_ReturnFailed()
+        {
+            //Arrange
+            _carAccidentList.Setup(x => x.GetAllByFilterAsync(It.IsAny<Expression<Func<CarAccident, bool>>>())).ReturnsAsync((List<CarAccident>)null);
+
+            //Act
+            Func<Task> act = () => _carAccidentService.FindAllCAProtocolsForPerson(It.IsAny<string>());
+
+            //Assert
+            await Assert.ThrowsAsync<RestException>(act);
+        }
     }
 }
