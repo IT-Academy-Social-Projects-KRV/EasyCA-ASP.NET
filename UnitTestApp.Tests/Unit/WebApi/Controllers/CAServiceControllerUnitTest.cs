@@ -151,5 +151,34 @@ namespace UnitTestApp.Tests.Unit.WebApi.Controllers
             var result = await Assert.ThrowsAsync<NullReferenceException>(act);
             Assert.NotNull(result);
         }
+
+        [Fact]
+        public async Task FindAllCAProtocolsForPerson_ReturnSuccess()
+        {
+            //Arrange
+            _carAccidentService.Setup(repo => repo.FindAllCAProtocolsForPerson(It.IsAny<string>())).ReturnsAsync(new List<CarAccidentResponseApiModel>() { });
+
+            //Act
+            var result = await _carAccidentController.FindAllCAProtocolsForPerson() as OkObjectResult;
+            var resultValue = result.Value as List<CarAccidentResponseApiModel>;
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<List<CarAccidentResponseApiModel>>(resultValue);
+        }
+
+        [Fact]
+        public async Task FindAllCAProtocolsForPerson_ReturnFailed()
+        {
+            //Arrange
+            _carAccidentService.Setup(repo => repo.FindAllCAProtocolsForPerson(It.IsAny<string>())).ThrowsAsync(new NullReferenceException());
+
+            //Act
+            Func<Task> act = () => _carAccidentController.FindAllCAProtocolsForPerson();
+
+            //Assert
+            var result = await Assert.ThrowsAsync<NullReferenceException>(act);
+            Assert.NotNull(result);
+        }
     }
 }
