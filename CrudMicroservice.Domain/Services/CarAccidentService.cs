@@ -121,6 +121,11 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
             }
 
+            if(user.PersonalDataId==null)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserPersonalDataNotFound"));
+            }
+
             var persData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
             string userDriverLicense = persData.UserDriverLicense.LicenseSerialNumber;
             return userDriverLicense;
