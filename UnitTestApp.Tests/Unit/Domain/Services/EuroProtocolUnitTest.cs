@@ -152,10 +152,17 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
         public async Task RegistrationEuroProtocol_Success()
         {
             //Arrange
+            _euroProtocols.Setup(repo=>repo.GetLastItem(It.IsAny<Predicate<EuroProtocol>>())).ReturnsAsync(new EuroProtocol()
+            {
+                SerialNumber = "11111111",
+                SideA = new Side(),
+                SideB = new Side(),
+                Witnesses = new List<Witness>()
+            });
             _mapper.Setup(repo => repo.Map<EuroProtocol>(It.IsAny<EuroProtocolRequestApiModel>())).Returns(new EuroProtocol());
 
             //Act
-            var result = await _euroProtocolService.RegistrationEuroProtocol(It.IsAny<EuroProtocolRequestApiModel>());
+            var result = await _euroProtocolService.RegistrationEuroProtocol(EuroModel());
 
             //Assert
             Assert.NotNull(result);

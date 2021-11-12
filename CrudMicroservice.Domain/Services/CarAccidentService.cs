@@ -10,6 +10,8 @@ using CrudMicroservice.Domain.ApiModel.ResponseApiModels;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Errors;
 using CrudMicroservice.Domain.Properties;
+using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace CrudMicroservice.Domain.Services
 {
@@ -17,25 +19,40 @@ namespace CrudMicroservice.Domain.Services
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<CarAccident> _carAccidentProtocols;
-                
-        public CarAccidentService(IMapper mapper, IGenericRepository<CarAccident> carAccidentProtocols)
+        private readonly UserManager<User> _userManager;
+        private readonly IGenericRepository<PersonalData> _personalData;
+
+        public CarAccidentService(IMapper mapper, IGenericRepository<CarAccident> carAccidentProtocols, UserManager<User> usermanager, IGenericRepository<PersonalData> personalData)
         {
             _mapper = mapper;
             _carAccidentProtocols = carAccidentProtocols;
+            _userManager = usermanager;
+            _personalData = personalData;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> RegistrationCarAccidentProtocol(CarAccidentRequestApiModel data, string inspectorId)
         {
+            var lastCA = await _carAccidentProtocols.GetLastItem(x => x.RegistrationDateTime < DateTime.Now);
+
+            if(!Int32.TryParse(lastCA.SerialNumber, out int res))
+            {
+                throw new RestException(HttpStatusCode.NotFound, "Invalid number");    
+            }
+
+            res += 1;
+            data.SerialNumber = res.ToString();
+           
             var carAccidentProtocol = _mapper.Map<CarAccident>(data);
             carAccidentProtocol.InspectorId = inspectorId;
             await _carAccidentProtocols.CreateAsync(carAccidentProtocol);
+            
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("CAProtocolCreatedSuccess"));
         }
         
         public async Task<IEnumerable<CarAccidentResponseApiModel>> FindAllCarAccidentProtocolsByInvolvedId(string inspectorId)
         {
             var carAccidentProtocols = await _carAccidentProtocols.GetAllByFilterAsync(x => x.InspectorId == inspectorId);
-            
+
             if (carAccidentProtocols == null)
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("CAprotocolNotFound"));
@@ -65,6 +82,48 @@ namespace CrudMicroservice.Domain.Services
             }
 
             return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("CAProtocolUpdateSuccess"));
+        }
+
+        public async Task<IEnumerable<CarAccidentResponseApiModel>> FindAllPersonsCAProtocolsForInspector(string personDriverId)
+        {
+            var personsCarAccidentProtocols = await _carAccidentProtocols.GetAllByFilterAsync(x => x.SideOfAccident.DriverLicenseSerial == personDriverId);
+            
+            if (personsCarAccidentProtocols == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("CAprotocolNotFound"));
+            }
+
+            var mappedPersonsCAProtocols = _mapper.Map<IEnumerable<CarAccidentResponseApiModel>>(personsCarAccidentProtocols);
+
+            return mappedPersonsCAProtocols;
+        }
+
+        public async Task<IEnumerable<CarAccidentResponseApiModel>> FindAllCAProtocolsForPerson(string personDriverId)
+        {
+            var personsCarAccidentProtocols = await _carAccidentProtocols.GetAllByFilterAsync(x => x.SideOfAccident.DriverLicenseSerial == personDriverId);
+            
+            if (personsCarAccidentProtocols == null)
+            {
+                throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("CAprotocolNotFound"));
+            }
+
+            var mappedPersonsCAProtocols = _mapper.Map<IEnumerable<CarAccidentResponseApiModel>>(personsCarAccidentProtocols);
+
+            return mappedPersonsCAProtocols;
+        }
+
+        public async Task<string> GetUsersDriverLicense(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new RestException(HttpStatusCode.Unauthorized, Resources.ResourceManager.GetString("UserNotFound"));
+            }
+
+            var persData = await _personalData.GetByFilterAsync(x => x.Id == user.PersonalDataId);
+            string userDriverLicense = persData.UserDriverLicense.LicenseSerialNumber;
+            return userDriverLicense;
         }
     }
 }

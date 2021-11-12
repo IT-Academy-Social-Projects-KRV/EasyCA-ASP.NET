@@ -29,6 +29,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQConfig", "RabbitMQC
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3C367291-52C3-450E-8A82-4C5E993BBD15}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileMicroservice.WebAPI", "FileMicroservice.WebAPI\FileMicroservice.WebAPI.csproj", "{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileMicroservice.Data", "FileMicroservice.Data\FileMicroservice.Data.csproj", "{B8A30F44-9765-4D4E-8D28-76DBBF571B79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileMicroservice.Domain", "FileMicroservice.Domain\FileMicroservice.Domain.csproj", "{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +93,18 @@ Global
 		{3C367291-52C3-450E-8A82-4C5E993BBD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C367291-52C3-450E-8A82-4C5E993BBD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C367291-52C3-450E-8A82-4C5E993BBD15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8A30F44-9765-4D4E-8D28-76DBBF571B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A30F44-9765-4D4E-8D28-76DBBF571B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A30F44-9765-4D4E-8D28-76DBBF571B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A30F44-9765-4D4E-8D28-76DBBF571B79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD0D8714-90A7-4B61-A2C2-809F8BFF3252}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

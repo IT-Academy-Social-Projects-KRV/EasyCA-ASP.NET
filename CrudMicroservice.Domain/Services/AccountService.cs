@@ -2,14 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using CrudMicroservice.Data.Entities;
 using CrudMicroservice.Data.Interfaces;
 using CrudMicroservice.Domain.ApiModel.RequestApiModels;
 using CrudMicroservice.Domain.ApiModel.ResponseApiModels;
 using CrudMicroservice.Domain.Errors;
+using CrudMicroservice.Domain.Helpers;
 using CrudMicroservice.Domain.Interfaces;
 using CrudMicroservice.Domain.Properties;
-using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 
@@ -20,17 +21,19 @@ namespace CrudMicroservice.Domain.Services
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<PersonalData> _personalData;
+        private readonly IHelper _helper;
 
-        public AccountService(UserManager<User> userManager, IMapper mapper, IGenericRepository<PersonalData> personalData)
+        public AccountService(UserManager<User> userManager, IMapper mapper, IGenericRepository<PersonalData> personalData, IHelper helper)
         {
             _userManager = userManager;
             _mapper = mapper;
             _personalData = personalData;
+            _helper = helper;
         }
 
         public async Task<ResponseApiModel<HttpStatusCode>> CreatePersonalData(PersonalDataRequestApiModel data, string userId)
         {
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+            var user = _helper.GetUser(userId);
 
             if (user == null)
             {
@@ -55,7 +58,7 @@ namespace CrudMicroservice.Domain.Services
 
         public async Task<ResponseApiModel<HttpStatusCode>> UpdatePersonalData(UserRequestApiModel data, string userId)
         {
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+            var user = _helper.GetUser(userId);
 
             if (user == null)
             {
@@ -67,7 +70,7 @@ namespace CrudMicroservice.Domain.Services
                 throw new RestException(HttpStatusCode.BadRequest, Resources.ResourceManager.GetString("UserDataNotExist"));
             }
 
-            var personalData = _mapper.Map<PersonalDataRequestApiModel, PersonalData>(data.PersonalData);
+            var personalData = _mapper.Map<PersonalData>(data.PersonalData);
             personalData.Id = user.PersonalDataId;
             var result = await _personalData.ReplaceAsync(x => x.Id == user.PersonalDataId, personalData);
 

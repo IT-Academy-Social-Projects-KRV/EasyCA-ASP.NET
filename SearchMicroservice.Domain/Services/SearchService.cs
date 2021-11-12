@@ -1,7 +1,9 @@
 ﻿using MassTransit;
 using RabbitMQConfig.Models.Requests;
 using RabbitMQConfig.Models.Responses;
+using SearchMicroservice.Domain.Errors;
 using SearchMicroservice.Domain.Interfaces;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace SearchMicroservice.Domain.Services
@@ -22,6 +24,11 @@ namespace SearchMicroservice.Domain.Services
             {
                 Filter = search
             });
+            
+            if(response.Message.Id==null)
+            {
+                throw new RestException(HttpStatusCode.BadRequest,"Wrong Data or transport not found");
+            }
 
             return response.Message;
         }
