@@ -10,7 +10,6 @@ COPY ["CrudMicroservice.WebApi/CrudMicroservice.WebApi.csproj", "CrudMicroservic
 COPY ["RabbitMQConfig/RabbitMQConfig.csproj", "RabbitMQConfig/"]
 COPY ["CrudMicroservice.Domain/CrudMicroservice.Domain.csproj", "CrudMicroservice.Domain/"]
 COPY ["CrudMicroservice.Data/CrudMicroservice.Data.csproj", "CrudMicroservice.Data/"]
-COPY [".docker-config/appsettings.json", "CrudMicroservice.WebApi/appsettings.json"]
 RUN dotnet restore "CrudMicroservice.WebApi/CrudMicroservice.WebApi.csproj"
 COPY . .
 WORKDIR "/src/CrudMicroservice.WebApi"
@@ -18,6 +17,8 @@ RUN dotnet build "CrudMicroservice.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "CrudMicroservice.WebApi.csproj" -c Release -o /app/publish
+COPY [".docker-config/appsettings.json", "/app/publish/"]
+
 
 FROM base AS final
 WORKDIR /app

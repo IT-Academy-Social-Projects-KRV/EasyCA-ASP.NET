@@ -9,7 +9,6 @@ WORKDIR /src
 COPY ["FileMicroservice.WebAPI/FileMicroservice.WebAPI.csproj", "FileMicroservice.WebAPI/"]
 COPY ["FileMicroservice.Data/FileMicroservice.Data.csproj", "FileMicroservice.Data/"]
 COPY ["FileMicroservice.Domain/FileMicroservice.Domain.csproj", "FileMicroservice.Domain/"]
-COPY [".docker-config/appsettings.json", "FileMicroservice.WebApi/appsettings.json"]
 RUN dotnet restore "FileMicroservice.WebAPI/FileMicroservice.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/FileMicroservice.WebAPI"
@@ -17,6 +16,7 @@ RUN dotnet build "FileMicroservice.WebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "FileMicroservice.WebAPI.csproj" -c Release -o /app/publish
+COPY [".docker-config/appsettings.json", "/app/publish/"]
 
 FROM base AS final
 WORKDIR /app

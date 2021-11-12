@@ -9,7 +9,6 @@ WORKDIR /src
 COPY ["SearchMicroservice.WebAPI/SearchMicroservice.WebAPI.csproj", "SearchMicroservice.WebAPI/"]
 COPY ["SearchMicroservice.Domain/SearchMicroservice.Domain.csproj", "SearchMicroservice.Domain/"]
 COPY ["RabbitMQConfig/RabbitMQConfig.csproj", "RabbitMQConfig/"]
-COPY [".docker-config/appsettings.json", "SearchMicroservice.WebApi/appsettings.json"]
 RUN dotnet restore "SearchMicroservice.WebAPI/SearchMicroservice.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/SearchMicroservice.WebAPI"
@@ -17,6 +16,7 @@ RUN dotnet build "SearchMicroservice.WebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "SearchMicroservice.WebAPI.csproj" -c Release -o /app/publish
+COPY [".docker-config/appsettings.json", "/app/publish/"]
 
 FROM base AS final
 WORKDIR /app

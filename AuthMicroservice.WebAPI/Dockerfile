@@ -9,7 +9,6 @@ WORKDIR /src
 COPY ["AuthMicroservice.WebAPI/AuthMicroservice.WebAPI.csproj", "AuthMicroservice.WebAPI/"]
 COPY ["AuthMicroservice.Domain/AuthMicroservice.Domain.csproj", "AuthMicroservice.Domain/"]
 COPY ["AuthMicroservice.Data/AuthMicroservice.Data.csproj", "AuthMicroservice.Data/"]
-COPY [".docker-config/appsettings.json", "AuthMicroservice.WebApi/appsettings.json"]
 RUN dotnet restore "AuthMicroservice.WebAPI/AuthMicroservice.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/AuthMicroservice.WebAPI"
@@ -17,6 +16,7 @@ RUN dotnet build "AuthMicroservice.WebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "AuthMicroservice.WebAPI.csproj" -c Release -o /app/publish
+COPY [".docker-config/appsettings.json", "/app/publish/"]
 
 FROM base AS final
 WORKDIR /app
