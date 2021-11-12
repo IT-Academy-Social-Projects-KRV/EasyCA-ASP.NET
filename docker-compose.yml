@@ -53,6 +53,18 @@ services:
         aliases:
           - easyca-search
 
+  filemicroservice.webapi:
+    image: ${DOCKER_REGISTRY-}filemicroservicewebapi
+    build:
+      context: .
+      dockerfile: FileMicroservice.WebAPI/Dockerfile
+    ports:
+      - "5005:80"
+    networks:
+      easyca-network:
+        aliases:
+          - easyca-file
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'

@@ -7,6 +7,8 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Gateway.WebAPI/Gateway.WebAPI.csproj", "Gateway.WebAPI/"]
+COPY [".docker-config/appsettings.json", "Gateway.WebApi/appsettings.json"]
+COPY [".docker-config/ocelot.json", "Gateway.WebApi/ocelot.json"]
 RUN dotnet restore "Gateway.WebAPI/Gateway.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/Gateway.WebAPI"

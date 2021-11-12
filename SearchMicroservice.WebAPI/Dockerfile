@@ -9,6 +9,7 @@ WORKDIR /src
 COPY ["SearchMicroservice.WebAPI/SearchMicroservice.WebAPI.csproj", "SearchMicroservice.WebAPI/"]
 COPY ["SearchMicroservice.Domain/SearchMicroservice.Domain.csproj", "SearchMicroservice.Domain/"]
 COPY ["RabbitMQConfig/RabbitMQConfig.csproj", "RabbitMQConfig/"]
+COPY [".docker-config/appsettings.json", "SearchMicroservice.WebApi/appsettings.json"]
 RUN dotnet restore "SearchMicroservice.WebAPI/SearchMicroservice.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/SearchMicroservice.WebAPI"

@@ -9,6 +9,7 @@ WORKDIR /src
 COPY ["AuthMicroservice.WebAPI/AuthMicroservice.WebAPI.csproj", "AuthMicroservice.WebAPI/"]
 COPY ["AuthMicroservice.Domain/AuthMicroservice.Domain.csproj", "AuthMicroservice.Domain/"]
 COPY ["AuthMicroservice.Data/AuthMicroservice.Data.csproj", "AuthMicroservice.Data/"]
+COPY [".docker-config/appsettings.json", "AuthMicroservice.WebApi/appsettings.json"]
 RUN dotnet restore "AuthMicroservice.WebAPI/AuthMicroservice.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/AuthMicroservice.WebAPI"
