@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchMicroservice.WebAPI",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQConfig", "RabbitMQConfig\RabbitMQConfig.csproj", "{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3C367291-52C3-450E-8A82-4C5E993BBD15}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileMicroservice.WebAPI", "FileMicroservice.WebAPI\FileMicroservice.WebAPI.csproj", "{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileMicroservice.Data", "FileMicroservice.Data\FileMicroservice.Data.csproj", "{B8A30F44-9765-4D4E-8D28-76DBBF571B79}"
@@ -87,6 +89,10 @@ Global
 		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0E5BBFA-DACD-4EA3-99B7-2421B144B4EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C367291-52C3-450E-8A82-4C5E993BBD15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C367291-52C3-450E-8A82-4C5E993BBD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C367291-52C3-450E-8A82-4C5E993BBD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C367291-52C3-450E-8A82-4C5E993BBD15}.Release|Any CPU.Build.0 = Release|Any CPU
 		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{338AECE8-B3BE-4BF9-AF52-88AC5C16FA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
