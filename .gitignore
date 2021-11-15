@@ -392,9 +392,6 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 
-#Batch file of start project
-start-project.bat
-
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
