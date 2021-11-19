@@ -52,7 +52,7 @@ namespace CrudMicroservice.Data.Entities
 
         [BsonElement("ListOfEvidences")]
         [JsonProperty("ListOfEvidences")]
-        public List<EvidenceCA> Evidences { get; set; }
+        public List<Evidence> Evidences { get; set; }
 
         [BsonElement("CourtDTG")]
         [JsonProperty("CourtDTG")]
@@ -61,9 +61,5 @@ namespace CrudMicroservice.Data.Entities
         [BsonElement("IsDocumentTakenOff")]
         [JsonProperty("IsDocumentTakenOff")]
         public bool IsDocumentTakenOff { get; set; }
-
-        [BsonElement("IsClosed")]
-        [JsonProperty("IsClosed")]
-        public bool IsClosed { get; set; }
     }
 }

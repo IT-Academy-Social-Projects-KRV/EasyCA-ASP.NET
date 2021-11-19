@@ -87,16 +87,15 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                         IsVictim = false
                     }
                 },
-                Evidences = new List<EvidenceCARequestApiModel>()
+                Evidences = new List<EvidenceRequestApiModel>()
                 {
-                    new EvidenceCARequestApiModel()
+                    new EvidenceRequestApiModel()
                     {
                         PhotoSchema = "Photoschema1.jpg",
                     }
                 },
                 CourtDTG = new DateTime(2021, 11, 4, 12, 0,0 ),
                 IsDocumentTakenOff = false,
-                IsClosed = false
             };
 
             return carAccidentProtocol;
@@ -111,7 +110,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                 SerialNumber = "11111111",
                 SideOfAccident = new SideCA(),
                 Witnesses = new List<Witness>(),
-                Evidences= new List<EvidenceCA>(),
+                Evidences= new List<Evidence>(),
                 Address = new AddressOfAccident()
             });
             _mapper.Setup(repo => repo.Map<CarAccident>(It.IsAny<CarAccidentRequestApiModel>())).Returns(new CarAccident());
@@ -183,10 +182,9 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             //Arrange
             _mapper.Setup(repo => repo.Map<CarAccident>(It.IsAny<CarAccidentRequestApiModel>())).Returns(new CarAccident()
             {
-                IsClosed = false,
                 IsDocumentTakenOff = false,
                 Witnesses = new List<Witness>() { new Witness() { FirstName = "Ivan", LastName = "Shvornikov" } },
-                Evidences = new List<EvidenceCA>() { new EvidenceCA() { PhotoSchema = "Shema.jpg" } },
+                Evidences = new List<Evidence>() { new Evidence() { PhotoSchema = "Shema.jpg" } },
                 CourtDTG = new DateTime()
             });
             var mockResult = new Mock<UpdateResult>();
@@ -208,10 +206,9 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
             //Arrange
             _mapper.Setup(repo => repo.Map<CarAccident>(It.IsAny<CarAccidentRequestApiModel>())).Returns(new CarAccident()
             {
-                IsClosed = false,
                 IsDocumentTakenOff = false,
                 Witnesses = new List<Witness>() { new Witness() { FirstName = "Ivan", LastName = "Shvornikov" } },
-                Evidences = new List<EvidenceCA>() { new EvidenceCA() { PhotoSchema = "Shema.jpg" } },
+                Evidences = new List<Evidence>() { new Evidence() { PhotoSchema = "Shema.jpg" } },
                 CourtDTG = new DateTime()
             });
             var mockResult = new Mock<UpdateResult>();

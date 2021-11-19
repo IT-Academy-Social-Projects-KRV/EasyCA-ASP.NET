@@ -19,9 +19,8 @@ namespace CrudMicroservice.Domain.ApiModel.RequestApiModels
         public string TrafficRuleId { get; set; }
         public string DriverExplanation { get; set; }
         public IEnumerable<WitnessRequestApiModel> Witnesses { get; set; }
-        public IEnumerable<EvidenceCARequestApiModel> Evidences { get; set; }
+        public IEnumerable<EvidenceRequestApiModel> Evidences { get; set; }
         public DateTime CourtDTG { get; set; }
         public bool IsDocumentTakenOff { get; set; }
-        public bool IsClosed { get; set; }
     }
 }
