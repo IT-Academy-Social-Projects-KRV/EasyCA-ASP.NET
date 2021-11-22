@@ -69,12 +69,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     {
                         new Evidence()
                         {
-                            Explanation = "Vinovat, durak, ispravlius",
-                            PhotoSchema = "Photoschema.jpg",
-                            Attachments = new List<string>()
-                            {
-                                "Attachments.doc"
-                            }
+                           PhotoSchema = "Photoschema.jpg",
                         }
                     },
                     DriverLicenseSerial = "ПВК128894",
@@ -91,12 +86,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     {
                         new Evidence()
                         {
-                            Explanation = "Tsey Olen naihav meni na ruku",
                             PhotoSchema = "Photoschema1.jpg",
-                            Attachments = new List<string>()
-                            {
-                                "Attachments1.doc"
-                            }
                         }
                     },
                     DriverLicenseSerial = "ПSК138826",
@@ -131,12 +121,7 @@ namespace UnitTestApp.Tests.Unit.Domain.Services
                     {
                         new Evidence()
                         {
-                            Explanation = "Tsey Olen naihav meni na ruku",
                             PhotoSchema = "Photoschema1.jpg",
-                            Attachments = new List<string>()
-                            {
-                                "Attachments1.doc"
-                            }
                         }
                     },
                 DriverLicenseSerial = "ПSК138826",
