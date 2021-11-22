@@ -72,6 +72,9 @@ namespace CrudMicroservice.Domain.Services
 
             if (result.Succeeded)
             {
+                var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(inspector);
+                await _userManager.ConfirmEmailAsync(inspector, confirmEmailToken);
+
                 await _userManager.AddToRoleAsync(inspector, "inspector");
                 return new ResponseApiModel<HttpStatusCode>(HttpStatusCode.OK, true, Resources.ResourceManager.GetString("RegistrationSucceeded"));
             }
