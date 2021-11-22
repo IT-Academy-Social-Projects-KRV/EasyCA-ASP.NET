@@ -8,6 +8,6 @@ namespace CrudMicroservice.Data.Entities
     {
         [BsonElement("PhotoSchema")]
         [JsonProperty("PhotoSchema")]
-        public string PhotoSchema { get; set; }        
+        public object PhotoSchema { get; set; }        
     }
 }
