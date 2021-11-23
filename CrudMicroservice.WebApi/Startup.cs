@@ -11,6 +11,7 @@ using CrudMicroservice.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -81,7 +82,7 @@ namespace CrudMicroservice.WebApi
             .AddMongoDbStores<User, Role, string>
             (
                 Configuration.GetConnectionString("MongoDb"), Configuration["DbName"]
-            );
+            ).AddDefaultTokenProviders();
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Secret"]));
             services.AddAuthentication(options =>
