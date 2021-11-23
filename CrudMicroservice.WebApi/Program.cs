@@ -28,6 +28,9 @@ namespace CrudMicroservice.WebApi
                     AppUserSeed.SeedUserData(userManager).Wait();
                     TransportCategorySeed.SeedTransportCategoryData(context).Wait();
                     CircumstanceAppSeed.SeedCircumstances(context).Wait();
+                    TransportSeed.SeedTransportData(context).Wait();
+                    EuroProtocolSeed.SeedCarAccidentData(context).Wait();
+                    CarAccidentSeed.SeedCarAccidentData(context).Wait();
                 }
                 catch (Exception ex)
                 {

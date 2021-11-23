@@ -26,6 +26,7 @@ namespace CrudMicroservice.Data.Seeds
                     },
                     new User
                     {
+                        Id = "9017ee4a-8b32-4b74-bb8a-f0c06f515209",
                         FirstName = "Dmytro",
                         LastName = "Pinkevych",
                         PersonalDataId = null,
@@ -36,6 +37,7 @@ namespace CrudMicroservice.Data.Seeds
                     },
                     new User
                     {
+                        Id = "db4ee48b-5379-400b-93f1-d586cf6ae794",
                         FirstName = "Ivan",
                         LastName = "Kosmin",
                         PersonalDataId = null,
@@ -56,13 +58,14 @@ namespace CrudMicroservice.Data.Seeds
                     },
                     new User
                     {
+                        Id="52774ed6-26c9-41c7-accd-5445144d1241",
                         FirstName = "Liza",
                         LastName = "Shemetovska",
                         PersonalDataId = null,
                         UserName = "Shemetovska@gmail.com",
                         Email="Shemetovska@gmail.com",
                         RefreshToken = null,
-                        EmailConfirmed = true
+                        EmailConfirmed = true,
                     }
                 };
                 foreach (var user in users)
@@ -70,6 +73,8 @@ namespace CrudMicroservice.Data.Seeds
                     await manager.CreateAsync(user, "Qwerty211@");
                     await manager.AddToRoleAsync(user, "admin");
                 }
+                await manager.AddToRoleAsync(users.Find(x => x.Email == "Shemetovska@gmail.com"), "inspector");
+                await manager.RemoveFromRoleAsync(users.Find(x => x.Email == "Shemetovska@gmail.com"), "admin");
             }
         }
     }
