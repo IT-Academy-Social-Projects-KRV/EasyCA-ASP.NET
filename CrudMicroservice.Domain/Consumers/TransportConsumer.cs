@@ -33,7 +33,7 @@ namespace CrudMicroservice.Domain.Consumers
         {
             var filter = context.Message.Filter;
 
-            Transport transport = new Transport();
+            Transport transport = null;
 
             Regex regVin = new Regex(@"^(([a-h,A-H,j-n,J-N,p-z,P-Z,0-9]{9})([a-h,A-H,j-n,J-N,p,P,r-t,R-T,v-z,V-Z,0-9])([a-h,A-H,j-n,J-N,p-z,P-Z,0-9])(\d{6}))$");
             Regex regCarPlate = new Regex(@"^[АВСРІ]{1}[АIВСЕНКМТРХОЄ]{1}\d{4}[А-Я]{2}$");
@@ -49,7 +49,7 @@ namespace CrudMicroservice.Domain.Consumers
                 transport = await _transportRepository.GetByFilterAsync(x => x.CarPlate == filter);
             }
 
-            if (transport.Id != null)
+            if (transport != null && transport.Id != null)
             {
                 var epList = await _euroProtocolRepository.GetAllByFilterAsync(x => x.SideA.TransportId == transport.Id || x.SideB.TransportId == transport.Id);
                 var caList = await _carAccidentRepository.GetAllByFilterAsync(x => x.SideOfAccident.TransportId == transport.Id);
