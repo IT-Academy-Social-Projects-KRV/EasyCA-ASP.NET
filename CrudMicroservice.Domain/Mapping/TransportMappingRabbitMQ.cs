@@ -15,12 +15,7 @@ namespace CrudMicroservice.Domain.Mapping
         public TransportMappingRabbitMQ()
         {
             CreateMap<Transport, TransportResponseModelRabbitMQ>()
-               .ForMember(x => x.CategoryName, opt => opt.MapFrom(src => src.CarCategory.CategoryName))
-               .ForMember(x => x.InsuaranceNumber, opt => opt.MapFrom(src => new InsuaranceModelRabbitMQ()
-               {
-                   CompanyName = src.InsuaranceNumber.CompanyName,
-                   SerialNumber = src.InsuaranceNumber.SerialNumber
-               }));
+               .ForMember(x => x.CategoryName, opt => opt.MapFrom(src => src.CarCategory.CategoryName));
          
         }       
     }
