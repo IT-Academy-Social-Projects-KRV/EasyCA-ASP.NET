@@ -19,6 +19,10 @@ namespace SearchMicroservice.Domain.Services
 
         public async Task<TransportResponseModelRabbitMQ> Search(string search)
         {
+            if(string.IsNullOrEmpty(search))
+            {
+                throw new RestException(HttpStatusCode.BadRequest, "Search string can`t be null");
+            }
             var client = _clientFactory.CreateRequestClient<TransportRequestModelRabbitMQ>();
             var response = await client.GetResponse<TransportResponseModelRabbitMQ>(new TransportRequestModelRabbitMQ()
             {
@@ -27,7 +31,7 @@ namespace SearchMicroservice.Domain.Services
             
             if(response.Message.Id==null)
             {
-                throw new RestException(HttpStatusCode.BadRequest,"Wrong Data or transport not found");
+                throw new RestException(HttpStatusCode.BadRequest,"Invalid data or transport not found");
             }
 
             return response.Message;

@@ -10,12 +10,7 @@
         public string CarPlate { get; set; }
         public string Color { get; set; }
         public int YearOfProduction { get; set; }
-        public InsuaranceModelRabbitMQ InsuaranceNumber { get; set; }    
-    }
-    public class InsuaranceModelRabbitMQ
-    {
-        public string CompanyName { get; set; }
-        public string SerialNumber { get; set; }
+        public int CarAccidentsRegistered { get; set; }
     }
 }
 
