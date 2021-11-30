@@ -156,7 +156,7 @@ namespace CrudMicroservice.Domain.Services
             var transportSideA = await _transports.GetByFilterAsync(t => t.Id == euroProtocol.SideA.TransportId);
             var transportSideB = await _transports.GetByFilterAsync(t => t.Id == euroProtocol.SideB.TransportId);
 
-            if (transportSideA == null || transportSideB == null)
+            if (transportSideA == null)
             {
                 throw new RestException(HttpStatusCode.NotFound, Resources.ResourceManager.GetString("TransportNotFound"));
             }
